@@ -1,0 +1,30 @@
+{
+  "manifest_version": 2,
+  "name": "FSO Livtest",
+  "description": "Description goes here ...",
+  "version": "0.0.1",
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+  "content_scripts": [{
+    "run_at": "document_end",
+    "matches": ["<all_urls>"],
+    "js": ["js/document_end.js"]
+  }, {
+    "run_at": "document_idle",
+    "matches": ["<all_urls>"],
+    "js": ["js/document_idle.js", "js/ui.js"]
+  }],
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webNavigation",
+    "*://*/*"
+  ]
+}
