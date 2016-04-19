@@ -13,13 +13,17 @@
     "persistent": true
   },
   "content_scripts": [{
+    "run_at": "document_start",
+    "matches": ["<all_urls>"],
+    "css": ["css/ui.css"]
+  },{
     "run_at": "document_end",
     "matches": ["<all_urls>"],
-    "js": ["js/document_end.js"]
+    "js": ["js/document_end.js", "js/ui.js"]
   }, {
     "run_at": "document_idle",
     "matches": ["<all_urls>"],
-    "js": ["js/document_idle.js", "js/ui.js"]
+    "js": ["js/document_idle.js"]
   }],
   "permissions": [
     "storage",

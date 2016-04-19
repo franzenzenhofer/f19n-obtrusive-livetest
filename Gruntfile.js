@@ -44,7 +44,8 @@ module.exports = function(grunt) {
           sourceMap: false
         },
         files: {
-          "<%= grunt.config.get('buildDir') %>/css/application.css": "src/stylesheets/application.sass"
+          "<%= grunt.config.get('buildDir') %>/css/application.css": "src/stylesheets/application.sass",
+          "<%= grunt.config.get('buildDir') %>/css/ui.css": "src/stylesheets/ui.sass"
         }
       }
     },
