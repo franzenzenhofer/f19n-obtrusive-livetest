@@ -1,0 +1,17 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "globals": {
+    "chrome": true,
+  },
+  "rules": {
+    "no-console": 0,
+    "no-empty-label": 0,
+    "no-labels": 0,
+    "react/prop-types": 0,
+    "no-constant-condition": 0,
+    "max-len": 0,
+    "arrow-body-style": 0,
+    "new-cap": 0,
+  }
+}

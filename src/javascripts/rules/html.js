@@ -1,7 +1,7 @@
 import { ruleResult } from './../lib/utils';
 
 export const hasCanonicalTags = (data) => {
-  const { html, document, location } = data;
+  const { document, location } = data;
 
   let text = null;
   let type = 'info';
@@ -18,4 +18,11 @@ export const hasCanonicalTags = (data) => {
   }
 
   return text ? ruleResult('HEAD', text, type) : null;
+};
+
+
+export const countLinks = (data) => {
+  const { document } = data;
+  const links = document.querySelectorAll('a').length;
+  return ruleResult('STATS', `${links} A-Tags found`, 'info');
 };

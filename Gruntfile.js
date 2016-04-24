@@ -45,7 +45,8 @@ module.exports = function(grunt) {
         },
         files: {
           "<%= grunt.config.get('buildDir') %>/css/application.css": "src/stylesheets/application.sass",
-          "<%= grunt.config.get('buildDir') %>/css/ui.css": "src/stylesheets/ui.sass"
+          "<%= grunt.config.get('buildDir') %>/css/ui.css": "src/stylesheets/ui.sass",
+          "<%= grunt.config.get('buildDir') %>/css/content_styles.css": "src/stylesheets/content_styles.sass"
         }
       }
     },
@@ -82,6 +83,7 @@ module.exports = function(grunt) {
             application: "./src/javascripts/application.js",
              background: "./src/javascripts/background.js",
                      ui: "./src/javascripts/ui.js",
+         content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",
           document_idle: "./src/javascripts/document_idle.js",
         },
@@ -93,11 +95,12 @@ module.exports = function(grunt) {
           extensions: [
             '',
             '.js',
+            '.jsx',
           ],
         },
         module: {
           loaders: [
-            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader?presets[]=es2015" }
+            { test: /\.js$/, exclude: /node_modules/, loader: "babel-loader?presets[]=es2015,presets[]=react" }
           ]
         },
         failOnError: true,

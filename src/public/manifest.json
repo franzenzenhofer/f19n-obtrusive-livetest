@@ -12,14 +12,19 @@
     "scripts": ["js/background.js"],
     "persistent": true
   },
+  "web_accessible_resources": [
+    "ui.html",
+    "js/ui.js",
+    "css/ui.css"
+  ],
   "content_scripts": [{
     "run_at": "document_start",
     "matches": ["<all_urls>"],
-    "css": ["css/ui.css"]
+    "css": ["css/content_styles.css"]
   },{
     "run_at": "document_end",
     "matches": ["<all_urls>"],
-    "js": ["js/document_end.js", "js/ui.js"]
+    "js": ["js/document_end.js", "js/content_script.js"]
   }, {
     "run_at": "document_idle",
     "matches": ["<all_urls>"],

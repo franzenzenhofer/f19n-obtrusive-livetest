@@ -8,10 +8,10 @@ export const normalizeHeaders = (responseHeaders) => {
 };
 
 
-export const ruleResult = (label, value, type = 'info') => {
+export const ruleResult = (label, message, type = 'info') => {
   return {
     label,
-    value,
+    message,
     type,
   };
 };

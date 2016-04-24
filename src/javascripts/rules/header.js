@@ -2,7 +2,7 @@ import { ruleResult } from './../lib/utils';
 
 export const xRobotsTag = (data) => {
   const { responseHeaders } = data;
-  return responseHeaders['x-robots-tag'] ? result('HTTP', `X-Robots-Tag: ${responseHeaders['x-robots-tag']}`, 'warning') : null;
+  return responseHeaders['x-robots-tag'] ? ruleResult('HTTP', `X-Robots-Tag: ${responseHeaders['x-robots-tag']}`, 'warning') : null;
 };
 
 export const contentEncodingNotGzip = (data) => {
@@ -12,8 +12,8 @@ export const contentEncodingNotGzip = (data) => {
 };
 
 export const statusCodeNot200 = (data) => {
-  const { statusCode } = data;
-  return Number(statusCode) !== 200 ? ruleResult('HTTP', `HTTP ${statusCode}`, 'warning') : null;
+  const { statusCode, responseHeaders: { location } } = data;
+  return Number(statusCode) !== 200 ? ruleResult('HTTP', `HTTP ${statusCode} -> ${location}`, 'warning') : null;
 };
 
 export const documentSize = (data) => {
@@ -21,5 +21,5 @@ export const documentSize = (data) => {
   const contentLength = responseHeaders['content-length'];
   const encoding = responseHeaders['content-encoding'];
   const contentSizeInKb = contentLength / 1024;
-  return encoding === 'gzip' &&  contentSizeInKb > 14.6 ? ruleResult('SPEED', `HTML size gzip: ${contentSizeInKb}`, 'warning') : null;
+  return encoding === 'gzip' && contentSizeInKb > 14.6 ? ruleResult('SPEED', `HTML size gzip: ${contentSizeInKb}`, 'warning') : null;
 };
