@@ -40,11 +40,22 @@ const filter = {
 
 let results = [];
 let domProcessed = false;
+let timeout = null;
 
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
   console.log('onBeforeNavigate', data);
-  results = [];
-  domProcessed = false;
+  if (timeout) { clearTimeout(timeout); }
+  timeout = setTimeout(() => {
+    results = [];
+    domProcessed = false;
+  }, 1000);
+}, filter);
+
+chrome.webNavigation.onCommitted.addListener((data) => {
+  console.log('onCommmited', data);
+  if (data.frameId === 0 && data.transitionType === 'link' && data.transitionQualifiers.findIndex(q => q === 'client_redirect') !== -1) {
+    results = results.concat([ruleResult('CLIENT REDIRECT', data.url)]);
+  }
 }, filter);
 
 chrome.webRequest.onBeforeSendHeaders.addListener((data) => {
