@@ -5,6 +5,7 @@ import {
   contentEncodingNotGzip,
   statusCodeNot200,
   documentSize,
+  statusCode200,
 } from './rules/header';
 
 import {
@@ -18,6 +19,7 @@ import {
 
 
 const headerRules = [
+  statusCode200,
   xRobotsTag,
   contentEncodingNotGzip,
   statusCodeNot200,
@@ -45,7 +47,7 @@ const clearResultsDelayed = (key) => {
   store[key].timeout = setTimeout(() => {
     store[key].results = [];
     store[key].domProcessed = false;
-  }, 1000);
+  }, 2000);
 };
 
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
@@ -75,7 +77,6 @@ chrome.webRequest.onBeforeRequest.addListener((data) => {
 chrome.webRequest.onHeadersReceived.addListener((data) => {
   console.log('onHeadersReceived', data);
   data['responseHeaders'] = normalizeHeaders(data.responseHeaders);
-  store[data.tabId].results = store[data.tabId].results.concat([ruleResult(data.method, data.url)]);
   store[data.tabId].results = store[data.tabId].results.concat(headerRules.map(rule => rule(data)));
   chrome.storage.local.set({ [data.tabId]: store[data.tabId].results });
   clearResultsDelayed(data.tabId);
