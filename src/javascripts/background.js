@@ -5,7 +5,6 @@ import {
   contentEncodingNotGzip,
   statusCodeNot200,
   documentSize,
-  statusCode200,
 } from './rules/header';
 
 import {
@@ -19,7 +18,6 @@ import {
 
 
 const headerRules = [
-  statusCode200,
   xRobotsTag,
   contentEncodingNotGzip,
   statusCodeNot200,
@@ -66,6 +64,7 @@ chrome.webNavigation.onCommitted.addListener((data) => {
 
 chrome.webRequest.onBeforeSendHeaders.addListener((data) => {
   console.log('onBeforeSendHeaders', data);
+  store[data.tabId].results = store[data.tabId].results.concat(ruleResult('HTTP', `${data.method} ${data.url}`));
   clearResultsDelayed(data.tabId);
 }, filter);
 

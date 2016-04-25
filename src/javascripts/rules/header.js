@@ -16,11 +16,6 @@ export const statusCodeNot200 = (data) => {
   return Number(statusCode) !== 200 ? ruleResult('HTTP', `HTTP ${statusCode} -> ${location}`, 'warning') : null;
 };
 
-export const statusCode200 = (data) => {
-  const { statusCode, url } = data;
-  return Number(statusCode) === 200 ? ruleResult('HTTP', `GET ${url}`, 'info') : null;
-};
-
 export const documentSize = (data) => {
   const { responseHeaders } = data;
   const contentLength = responseHeaders['content-length'];
