@@ -2,4 +2,44 @@ body, html
   margin: 0
 
 body
-  color: white
+  color: #111
+  background: #fff
+  font-family: 'Helvetica Neue', Verdana, Arial
+  font-size: 12px
+
+table
+  width: 100%
+
+  tr
+    &:last-child td
+      border: none
+
+    &.info .label span
+      background: lightblue
+
+    &.warning .label span
+      background: orange
+      color: white
+
+  th, td
+    padding: 6px 5px
+
+    &.type
+      width: 20px
+      text-align: center
+
+    &.label
+      width: 80px
+
+      span
+        background: #ccc
+        border-radius: 2px
+        display: inline-block
+        padding: 2px 4px
+
+  th
+    text-align: left
+    border-bottom: 1px #111 solid
+
+  td
+    border-bottom: 1px #efefef solid

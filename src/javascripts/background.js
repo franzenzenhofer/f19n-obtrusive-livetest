@@ -42,13 +42,17 @@ let results = [];
 let domProcessed = false;
 let timeout = null;
 
-chrome.webNavigation.onBeforeNavigate.addListener((data) => {
-  console.log('onBeforeNavigate', data);
+const clearResultsDelayed = () => {
   if (timeout) { clearTimeout(timeout); }
   timeout = setTimeout(() => {
     results = [];
     domProcessed = false;
   }, 1000);
+};
+
+chrome.webNavigation.onBeforeNavigate.addListener((data) => {
+  console.log('onBeforeNavigate', data);
+  clearResultsDelayed();
 }, filter);
 
 chrome.webNavigation.onCommitted.addListener((data) => {
@@ -56,29 +60,36 @@ chrome.webNavigation.onCommitted.addListener((data) => {
   if (data.frameId === 0 && data.transitionType === 'link' && data.transitionQualifiers.findIndex(q => q === 'client_redirect') !== -1) {
     results = results.concat([ruleResult('CLIENT REDIRECT', data.url)]);
   }
+  clearResultsDelayed();
 }, filter);
 
 chrome.webRequest.onBeforeSendHeaders.addListener((data) => {
   console.log('onBeforeSendHeaders', data);
+  clearResultsDelayed();
 }, filter);
 
 chrome.webRequest.onBeforeRequest.addListener((data) => {
   console.log('onBeforeRequest', data);
+  clearResultsDelayed();
 }, filter);
 
 chrome.webRequest.onHeadersReceived.addListener((data) => {
   console.log('onHeadersReceived', data);
+  if (timeout) { clearTimeout(timeout); }
   data['responseHeaders'] = normalizeHeaders(data.responseHeaders);
   results = results.concat([ruleResult(data.method, data.url)]);
   results = results.concat(headerRules.map(rule => rule(data)));
   chrome.storage.local.set({ results });
+  clearResultsDelayed();
 }, filter, ['responseHeaders']);
 
-chrome.webRequest.onCompleted.addListener(() => {
-  console.log('onCompleted');
+chrome.webRequest.onCompleted.addListener((data) => {
+  console.log('onCompleted', data);
+  clearResultsDelayed();
 }, filter);
 
-chrome.runtime.onMessage.addListener((request) => {
+chrome.runtime.onMessage.addListener((request, sender, cb) => {
+  console.log(request, sender, cb);
   if (request.event === 'document_end') {
     const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
     results = results.concat(HTMLRules.map(rule => rule(data)));

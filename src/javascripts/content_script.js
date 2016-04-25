@@ -1,7 +1,7 @@
 import $ from 'npm-zepto';
 
 $('*').each((index, element) => {
-  if ($(element).css('position') === 'fixed') {
+  if ($(element).css('position') === 'fixed' && $(element).css('top') === '0px') {
     $(element).css({ top: 100 });
   }
 });

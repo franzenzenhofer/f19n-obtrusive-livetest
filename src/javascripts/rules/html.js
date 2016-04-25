@@ -24,5 +24,7 @@ export const hasCanonicalTags = (data) => {
 export const countLinks = (data) => {
   const { document } = data;
   const links = document.querySelectorAll('a').length;
-  return ruleResult('STATS', `${links} A-Tags found`, 'info');
+  const divs = document.querySelectorAll('div').length;
+  const ps = document.querySelectorAll('p').length;
+  return ruleResult('STATS', `${links} a, ${divs} div, ${ps} p`, 'info');
 };

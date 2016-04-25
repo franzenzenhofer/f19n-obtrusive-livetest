@@ -14,8 +14,8 @@
   },
   "web_accessible_resources": [
     "ui.html",
-    "js/ui.js",
-    "css/ui.css"
+    "js/*.js",
+    "css/*.css"
   ],
   "content_scripts": [{
     "run_at": "document_start",
