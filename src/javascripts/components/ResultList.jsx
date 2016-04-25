@@ -12,8 +12,7 @@ export default class ResultList extends Component {
   }
 
   onStoreChange(data) {
-    console.log('update', data);
-    this.setState({ results: data.results.newValue });
+    this.setState({ results: data.newValue });
   }
 
   resultItems(resultData, index) {

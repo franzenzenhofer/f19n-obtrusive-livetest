@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 
 import ResultList from './components/ResultList';
 
-chrome.storage.local.get('results', (data) => {
-  ReactDOM.render(<ResultList results={data.results} />, document.getElementById('app'));
+chrome.runtime.sendMessage('tabIdPls', (response) => {
+  chrome.storage.local.get(String(response.tabId), (results) => {
+    ReactDOM.render(<ResultList results={results[String(response.tabId)]} />, document.getElementById('app'));
+  });
 });

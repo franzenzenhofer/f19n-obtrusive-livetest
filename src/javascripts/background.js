@@ -38,70 +38,71 @@ const filter = {
   types: ['main_frame'],
 };
 
-let results = [];
-let domProcessed = false;
-let timeout = null;
+const store = {};
 
-const clearResultsDelayed = () => {
-  if (timeout) { clearTimeout(timeout); }
-  timeout = setTimeout(() => {
-    results = [];
-    domProcessed = false;
+const clearResultsDelayed = (key) => {
+  if (store[key].timeout) { clearTimeout(store[key].timeout); }
+  store[key].timeout = setTimeout(() => {
+    store[key].results = [];
+    store[key].domProcessed = false;
   }, 1000);
 };
 
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
-  console.log('onBeforeNavigate', data);
-  clearResultsDelayed();
+  store[data.tabId] = store[data.tabId] || { results: [], timeout: null, domProcessed: false };
+  clearResultsDelayed(data.tabId);
 }, filter);
 
 chrome.webNavigation.onCommitted.addListener((data) => {
   console.log('onCommmited', data);
   if (data.frameId === 0 && data.transitionType === 'link' && data.transitionQualifiers.findIndex(q => q === 'client_redirect') !== -1) {
-    results = results.concat([ruleResult('CLIENT REDIRECT', data.url)]);
+    store[data.tabId].results = store[data.tabId].results.concat([ruleResult('CLIENT REDIRECT', data.url)]);
+    chrome.storage.local.set({ [data.tabId]: store[data.tabId].results });
   }
-  clearResultsDelayed();
+  clearResultsDelayed(data.tabId);
 }, filter);
 
 chrome.webRequest.onBeforeSendHeaders.addListener((data) => {
   console.log('onBeforeSendHeaders', data);
-  clearResultsDelayed();
+  clearResultsDelayed(data.tabId);
 }, filter);
 
 chrome.webRequest.onBeforeRequest.addListener((data) => {
   console.log('onBeforeRequest', data);
-  clearResultsDelayed();
+  clearResultsDelayed(data.tabId);
 }, filter);
 
 chrome.webRequest.onHeadersReceived.addListener((data) => {
   console.log('onHeadersReceived', data);
-  if (timeout) { clearTimeout(timeout); }
   data['responseHeaders'] = normalizeHeaders(data.responseHeaders);
-  results = results.concat([ruleResult(data.method, data.url)]);
-  results = results.concat(headerRules.map(rule => rule(data)));
-  chrome.storage.local.set({ results });
-  clearResultsDelayed();
+  store[data.tabId].results = store[data.tabId].results.concat([ruleResult(data.method, data.url)]);
+  store[data.tabId].results = store[data.tabId].results.concat(headerRules.map(rule => rule(data)));
+  chrome.storage.local.set({ [data.tabId]: store[data.tabId].results });
+  clearResultsDelayed(data.tabId);
 }, filter, ['responseHeaders']);
 
 chrome.webRequest.onCompleted.addListener((data) => {
   console.log('onCompleted', data);
-  clearResultsDelayed();
+  clearResultsDelayed(data.tabId);
 }, filter);
 
-chrome.runtime.onMessage.addListener((request, sender, cb) => {
-  console.log(request, sender, cb);
+chrome.runtime.onMessage.addListener((request, sender, callback) => {
+  if (request === 'tabIdPls') {
+    callback({ tabId: sender.tab.id });
+  }
+
   if (request.event === 'document_end') {
     const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
-    results = results.concat(HTMLRules.map(rule => rule(data)));
-    chrome.storage.local.set({ results });
+    store[sender.tab.id].results = store[sender.tab.id].results.concat(HTMLRules.map(rule => rule(data)));
+    chrome.storage.local.set({ [sender.tab.id]: store[sender.tab.id].results });
   }
 
   if (request.event === 'document_idle') {
-    if (!domProcessed) {
+    if (!store[sender.tab.id].domProcessed) {
       const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
-      results = results.concat(DOMRules.map(rule => rule(data)));
-      chrome.storage.local.set({ results });
-      domProcessed = true;
+      store[sender.tab.id].results = store[sender.tab.id].results.concat(DOMRules.map(rule => rule(data)));
+      store[sender.tab.id].domProcessed = true;
+      chrome.storage.local.set({ [sender.tab.id]: store[sender.tab.id].results });
     }
   }
 });

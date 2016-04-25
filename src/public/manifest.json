@@ -32,6 +32,7 @@
   }],
   "permissions": [
     "storage",
+    "tabs",
     "webRequest",
     "webNavigation",
     "*://*/*"
