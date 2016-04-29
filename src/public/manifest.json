@@ -13,7 +13,8 @@
     "persistent": true
   },
   "web_accessible_resources": [
-    "ui.html",
+    "panel.html",
+    "rules.html",
     "js/*.js",
     "css/*.css"
   ],

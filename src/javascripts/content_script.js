@@ -1,6 +1,6 @@
 import $ from 'npm-zepto';
 
-const $wrapper = $('<div class="fso-panel-wrapper"><iframe src=' + chrome.extension.getURL('ui.html') + '></iframe></div>');
+const $wrapper = $('<div class="fso-panel-wrapper"><iframe src=' + chrome.extension.getURL('panel.html') + '></iframe></div>');
 $('body').append($wrapper);
 
 const wrapperWidth = $wrapper.width();

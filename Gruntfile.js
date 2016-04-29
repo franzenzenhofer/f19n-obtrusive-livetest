@@ -45,7 +45,8 @@ module.exports = function(grunt) {
         },
         files: {
           "<%= grunt.config.get('buildDir') %>/css/application.css": "src/stylesheets/application.sass",
-          "<%= grunt.config.get('buildDir') %>/css/ui.css": "src/stylesheets/ui.sass",
+          "<%= grunt.config.get('buildDir') %>/css/panel.css": "src/stylesheets/panel.sass",
+          "<%= grunt.config.get('buildDir') %>/css/rules.css": "src/stylesheets/rules.sass",
           "<%= grunt.config.get('buildDir') %>/css/content_styles.css": "src/stylesheets/content_styles.sass"
         }
       }
@@ -82,7 +83,8 @@ module.exports = function(grunt) {
         entry: {
             application: "./src/javascripts/application.js",
              background: "./src/javascripts/background.js",
-                     ui: "./src/javascripts/ui.js",
+                  panel: "./src/javascripts/panel.js",
+                  rules: "./src/javascripts/rules.js",
          content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",
           document_idle: "./src/javascripts/document_idle.js",

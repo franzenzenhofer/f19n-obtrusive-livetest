@@ -45,7 +45,7 @@ const clearResultsDelayed = (key) => {
   store[key].timeout = setTimeout(() => {
     store[key].results = [];
     store[key].domProcessed = false;
-  }, 2000);
+  }, 500);
 };
 
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
