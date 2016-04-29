@@ -19,25 +19,19 @@ export default class ResultList extends Component {
     return <ResultItem {...resultData} key={`result-${index}`} />;
   }
 
-  resultHeader() {
-    return (
-      <thead>
-        <tr>
-          <th className="type">Type</th>
-          <th className="label">Label</th>
-          <th className="message">Message</th>
-        </tr>
-      </thead>
-    );
-  }
-
   render() {
     return (
-      <table>
-        <tbody>
+      <div className="fso-panel">
+        <div className="header">
+          <h2 className="brand">FSO Live Test</h2>
+          <div className="controls">
+            <a className="close">close panel</a>
+          </div>
+        </div>
+        <div className="results">
           {this.state.results.filter(r => r).map(this.resultItems.bind(this))}
-        </tbody>
-      </table>
+        </div>
+      </div>
     );
   }
 }

@@ -1,18 +1,22 @@
-html
-  top: 100px !important
-  position: relative !important
+$panelWidth: 350px
 
-.FSOWidget
+html
+  left: $panelWidth !important
+  position: relative !important
+  width: calc(100% - #{$panelWidth}) !important
+
+.fso-panel-wrapper
   position: fixed
   top: 0px
   left: 0px
-  right: 0px
-  height: 100px
+  bottom: 0px
+  width: $panelWidth
   z-index: 99999
 
   iframe
     position: relative
     width: 100%
-    height: 100px
+    width: $panelWidth
+    height: 100%
     border: none
     box-shadow: 0px 2px 2px rgba(0,0,0,0.2)

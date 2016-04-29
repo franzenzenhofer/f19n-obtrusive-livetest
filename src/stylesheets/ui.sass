@@ -3,43 +3,28 @@ body, html
 
 body
   color: #111
-  background: #fff
+  background: #efefef
   font-family: 'Helvetica Neue', Verdana, Arial
   font-size: 12px
 
-table
-  width: 100%
+.fso-panel
 
-  tr
-    &:last-child td
-      border: none
+  .header
+    position: relative
+    padding: 2px 5px
+    
+    .brand
+      margin: 0
+      padding: 0
+  
+    a.close
+      position: absolute
+      right: 5px
+      top: 5px
+      cursor: pointer
 
-    &.info .label span
-      background: lightblue
+  .results
 
-    &.warning .label span
-      background: orange
-      color: white
-
-  th, td
-    padding: 6px 5px
-
-    &.type
-      width: 20px
-      text-align: center
-
-    &.label
-      width: 80px
-
-      span
-        background: #ccc
-        border-radius: 2px
-        display: inline-block
-        padding: 2px 4px
-
-  th
-    text-align: left
-    border-bottom: 1px #111 solid
-
-  td
-    border-bottom: 1px #efefef solid
+    .result
+      border-bottom: 1px #ccc solid
+      padding: 5px
