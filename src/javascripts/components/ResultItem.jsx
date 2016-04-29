@@ -12,7 +12,7 @@ export default function ResultItem(props) {
     <tr className={type}>
       <td className="type">{typeIcon(type)}</td>
       <td className="label"><span>{label}</span></td>
-      <td className="message">{message}</td>
+      <td className="message" dangerouslySetInnerHTML={{ __html: message }}></td>
     </tr>
   );
 }
