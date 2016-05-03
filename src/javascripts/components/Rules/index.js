@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Rule from '../Rule';
 
 import update from 'react-addons-update';
+import Sandbox from '../../lib/Sandbox';
 
 export default class Rules extends Component {
   constructor(props) {
@@ -49,7 +50,7 @@ export default class Rules extends Component {
         window.removeEventListener('message', evaluated);
       };
       window.addEventListener('message', evaluated);
-      this.refs.sandbox.contentWindow.postMessage({ command: 'validateRule', body, name }, '*');
+      Sandbox.postMessage({ command: 'validateRule', body, name }, '*');
     };
     reader.readAsText(file);
   }
@@ -57,7 +58,6 @@ export default class Rules extends Component {
   render() {
     return (
       <div className="fso-rules">
-        <iframe src="sandbox.html" ref="sandbox" style={{ display: 'none' }} />
         <h2>Rules</h2>
         <div className="add-rule">
           <input type="file" ref="file" />

@@ -18,6 +18,7 @@
   "web_accessible_resources": [
     "panel.html",
     "rules.html",
+    "sandbox.html",
     "js/*.js",
     "css/*.css"
   ],

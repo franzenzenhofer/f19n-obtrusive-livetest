@@ -1,4 +1,5 @@
 import { fromPairs } from 'lodash';
+import EventCollection from './EventCollection';
 
 export const normalizeHeaders = (responseHeaders) => {
   const responseHeaderPairs = responseHeaders.map((responseHeader) => {
@@ -16,6 +17,10 @@ export const ruleResult = (label, message, type = 'info') => {
   };
 };
 
+export const runRule = (rule, events) => {
+  const ruleFunc = eval(`(${rule})`);
+  return ruleFunc(events);
+};
 
 export const validateRule = (rule) => {
   let result = null;
@@ -29,12 +34,17 @@ export const validateRule = (rule) => {
   }
 
   if (ruleFunc) {
-    const sampleResult = ruleFunc({ html: '<p>...</p>' });
-    if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type)) {
-      result.result = sampleResult;
-    } else {
-      result.valid = false;
-      result.error = { name: 'Invalid return value', message: 'Result needs to contain at least label, message and type. Result was: ' + JSON.stringify(sampleResult) };
+    try {
+      const sampleResult = ruleFunc(new EventCollection([{ type: 'testEvent' }]));
+      if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type)) {
+        result.result = sampleResult;
+      } else {
+        result.valid = false;
+        result.error = { name: 'Invalid return value', message: 'Result needs to contain at least label, message and type. Result was: ' + JSON.stringify(sampleResult) };
+      }
+    } catch (e) {
+      const { message, stack, lineNumber, name } = e;
+      result = { valid: false, error: { name, message, stack, lineNumber } };
     }
   }
 

@@ -1,108 +1,99 @@
-import { normalizeHeaders, ruleResult } from './lib/utils';
+import { normalizeHeaders } from './lib/utils';
 
-import {
-  xRobotsTag,
-  contentEncodingNotGzip,
-  statusCodeNot200,
-  documentSize,
-} from './rules/header';
+import EventCollector from './lib/EventCollector';
 
-import {
-  hasCanonicalTags,
-  countLinks,
-} from './rules/html';
-
-import {
-  outgoingNofollowLinks,
-} from './rules/dom';
-
-
-const headerRules = [
-  xRobotsTag,
-  contentEncodingNotGzip,
-  statusCodeNot200,
-  documentSize,
-];
-
-const HTMLRules = [
-  hasCanonicalTags,
-  countLinks,
-];
-
-const DOMRules = [
-  outgoingNofollowLinks,
-];
+import update from 'react-addons-update';
 
 const filter = {
   urls: ['<all_urls>'],
   types: ['main_frame'],
 };
 
-const store = {};
+const collector = {};
+const events = {};
 
-const clearResultsDelayed = (key) => {
-  if (store[key].timeout) { clearTimeout(store[key].timeout); }
-  store[key].timeout = setTimeout(() => {
-    store[key].results = [];
-    store[key].domProcessed = false;
-  }, 500);
+const findOrCreateCollector = (tabId) => {
+  collector[tabId] = collector[tabId] || new EventCollector({
+    onFinished: (e) => {
+      console.log(`DataCollector finished for tabId: ${tabId}`, e);
+      events[tabId] = e;
+    },
+  });
+  return collector[tabId];
 };
 
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
-  store[data.tabId] = store[data.tabId] || { results: [], timeout: null, domProcessed: false };
-  clearResultsDelayed(data.tabId);
+  const { tabId } = data;
+  if (data.frameId === 0) {
+    findOrCreateCollector(tabId).pushEvent(data, 'onBeforeNavigate');
+  }
 }, filter);
 
 chrome.webNavigation.onCommitted.addListener((data) => {
-  console.log('onCommmited', data);
-  if (data.frameId === 0 && data.transitionType === 'link' && data.transitionQualifiers.findIndex(q => q === 'client_redirect') !== -1) {
-    store[data.tabId].results = store[data.tabId].results.concat([ruleResult('CLIENT REDIRECT', data.url)]);
-    chrome.storage.local.set({ [data.tabId]: store[data.tabId].results });
+  const { tabId } = data;
+  if (data.frameId === 0) {
+    findOrCreateCollector(tabId).pushEvent(data, 'onCommitted');
   }
-  clearResultsDelayed(data.tabId);
 }, filter);
 
 chrome.webRequest.onBeforeSendHeaders.addListener((data) => {
-  console.log('onBeforeSendHeaders', data);
-  store[data.tabId].results = store[data.tabId].results.concat(ruleResult('HTTP', `${data.method} ${data.url}`));
-  clearResultsDelayed(data.tabId);
+  const { tabId } = data;
+  findOrCreateCollector(tabId).pushEvent(data, 'onBeforeSendHeaders');
 }, filter);
 
 chrome.webRequest.onBeforeRequest.addListener((data) => {
-  console.log('onBeforeRequest', data);
-  clearResultsDelayed(data.tabId);
+  const { tabId } = data;
+  findOrCreateCollector(tabId).pushEvent(data, 'onBeforeRequest');
 }, filter);
 
 chrome.webRequest.onHeadersReceived.addListener((data) => {
-  console.log('onHeadersReceived', data);
-  data['responseHeaders'] = normalizeHeaders(data.responseHeaders);
-  store[data.tabId].results = store[data.tabId].results.concat(headerRules.map(rule => rule(data)));
-  chrome.storage.local.set({ [data.tabId]: store[data.tabId].results });
-  clearResultsDelayed(data.tabId);
+  const { tabId, responseHeaders } = data;
+  findOrCreateCollector(tabId).pushEvent(update(data, { responseHeaders: { $set: normalizeHeaders(responseHeaders) } }), 'onHeadersReceived');
 }, filter, ['responseHeaders']);
 
 chrome.webRequest.onCompleted.addListener((data) => {
-  console.log('onCompleted', data);
-  clearResultsDelayed(data.tabId);
+  const { tabId } = data;
+  findOrCreateCollector(tabId).pushEvent(data, 'onCompleted');
 }, filter);
+
+chrome.tabs.onRemoved.addListener((tabId) => {
+  events[tabId] = [];
+  collector[tabId] = null;
+});
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
   if (request === 'tabIdPls') {
     callback({ tabId: sender.tab.id });
   }
 
+  if (request === 'panelReady') {
+    const tabId = sender.tab.id;
+
+    const addResult = (result) => {
+      chrome.storage.local.get(String(tabId), (data) => {
+        const results = data[String(tabId)] || [];
+        chrome.storage.local.set({ [String(tabId)]: update(results, { $push: [result] }) });
+      });
+    };
+
+    chrome.storage.local.get('rules', (data) => {
+      data.rules.forEach((rule) => {
+        chrome.tabs.sendMessage(tabId, { command: 'runRule', name: rule.name, body: rule.body, args: events[tabId] }, (result) => {
+          addResult(result);
+        });
+      });
+    });
+  }
+
   if (request.event === 'document_end') {
     const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
-    store[sender.tab.id].results = store[sender.tab.id].results.concat(HTMLRules.map(rule => rule(data)));
-    chrome.storage.local.set({ [sender.tab.id]: store[sender.tab.id].results });
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(data, 'documentEnd');
   }
 
   if (request.event === 'document_idle') {
-    if (!store[sender.tab.id].domProcessed) {
-      const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
-      store[sender.tab.id].results = store[sender.tab.id].results.concat(DOMRules.map(rule => rule(data)));
-      store[sender.tab.id].domProcessed = true;
-      chrome.storage.local.set({ [sender.tab.id]: store[sender.tab.id].results });
-    }
+    const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(data, 'documentIdle');
   }
 });
