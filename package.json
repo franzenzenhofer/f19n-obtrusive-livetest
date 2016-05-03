@@ -35,7 +35,8 @@
     "classnames": "^2.2.4",
     "lodash": "^4.11.1",
     "npm-zepto": "^1.1.7",
-    "react": "^15.0.1",
+    "react": "^15.0.2",
+    "react-addons-update": "^15.0.2",
     "react-dom": "^15.0.1"
   }
 }

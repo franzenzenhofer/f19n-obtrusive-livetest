@@ -85,6 +85,7 @@ module.exports = function(grunt) {
              background: "./src/javascripts/background.js",
                   panel: "./src/javascripts/panel.js",
                   rules: "./src/javascripts/rules.js",
+                sandbox: "./src/javascripts/sandbox.js",
          content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",
           document_idle: "./src/javascripts/document_idle.js",
@@ -94,6 +95,12 @@ module.exports = function(grunt) {
           filename: "[name].js",
         },
         resolve: {
+          modulesDirectories: [
+            'javascripts/containers',
+            'javascripts/components',
+            'javascripts/lib',
+            'node_modules',
+          ],
           extensions: [
             '',
             '.js',

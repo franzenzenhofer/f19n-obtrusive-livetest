@@ -12,6 +12,9 @@
     "scripts": ["js/background.js"],
     "persistent": true
   },
+  "sandbox": {
+    "pages": ["sandbox.html"]
+  },
   "web_accessible_resources": [
     "panel.html",
     "rules.html",
