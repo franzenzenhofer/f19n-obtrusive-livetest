@@ -23,8 +23,13 @@ export default class Rules extends Component {
     }
   }
 
-  onChange(index, data) {
-    console.log(index, data);
+  onUpdateRule(index, data) {
+    chrome.storage.local.set(
+      update(
+        { rules: this.state.rules },
+        { rules: { [index]: { $merge: data } } }
+      )
+    );
   }
 
   removeRule(index) {
@@ -80,7 +85,7 @@ export default class Rules extends Component {
           {this.state.addRule.error ? <p>{this.state.addRule.error}</p> : null}
         </div>
         <div className="rules">
-          {this.state.rules.map((rule, index) => <Rule {...rule} onChange={(data) => this.updateRule(index, data)} onRemoveClick={() => this.removeRule(index)} key={`rule_${index}`} />)}
+          {this.state.rules.map((rule, index) => <Rule {...rule} onUpdate={(data) => this.onUpdateRule(index, data)} onRemoveClick={() => this.removeRule(index)} key={`rule_${index}`} />)}
         </div>
       </div>
     );

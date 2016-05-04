@@ -1,7 +1,5 @@
 import { normalizeHeaders } from './lib/utils';
-
 import EventCollector from './lib/EventCollector';
-
 import update from 'react-addons-update';
 
 const filter = {
