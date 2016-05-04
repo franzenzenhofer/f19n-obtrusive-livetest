@@ -68,18 +68,13 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
 
   if (request === 'panelReady') {
     const tabId = sender.tab.id;
-
-    const addResult = (result) => {
-      chrome.storage.local.get(String(tabId), (data) => {
-        const results = data[String(tabId)] || [];
-        chrome.storage.local.set({ [String(tabId)]: update(results, { $push: [result] }) });
-      });
-    };
+    const results = [];
 
     chrome.storage.local.get('rules', (data) => {
       data.rules.forEach((rule) => {
         chrome.tabs.sendMessage(tabId, { command: 'runRule', name: rule.name, body: rule.body, args: events[tabId] }, (result) => {
-          addResult(result);
+          results.push(result);
+          chrome.storage.local.set({ [String(tabId)]: results });
         });
       });
     });

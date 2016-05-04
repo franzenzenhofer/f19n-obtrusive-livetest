@@ -31,7 +31,7 @@ export default class ResultList extends Component {
           <h2 className="brand">FSO Live Test</h2>
           <div className="controls">
             <a className="close">close panel</a>
-            <a className="rules" target="_parent" href={chrome.extension.getURL('rules.html')}>rules</a>
+            <a className="rules" href={chrome.extension.getURL('rules.html')}>rules</a>
           </div>
         </div>
         <div className="results">

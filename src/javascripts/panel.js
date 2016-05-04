@@ -4,13 +4,18 @@ import ReactDOM from 'react-dom';
 import ResultList from './components/ResultList';
 import Sandbox from './lib/Sandbox';
 
+const callbacks = {};
+
+window.addEventListener('message', (result) => {
+  callbacks[result.data.runId](result.data);
+});
+
 chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
   const { body, name, command, args } = request;
   if (command === 'runRule') {
-    window.addEventListener('message', (a) => {
-      sendResponse(a.data);
-    });
-    Sandbox.postMessage({ command: 'runRule', name, body, args }, '*');
+    const runId = Math.round(Math.random() * 10000000);
+    callbacks[runId] = sendResponse;
+    Sandbox.postMessage({ command: 'runRule', name, body, args, runId }, '*');
   }
   return true;
 });

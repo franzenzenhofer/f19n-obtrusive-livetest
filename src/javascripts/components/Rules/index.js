@@ -23,6 +23,10 @@ export default class Rules extends Component {
     }
   }
 
+  onChange(index, data) {
+    console.log(index, data);
+  }
+
   removeRule(index) {
     chrome.storage.local.set(
       update(
@@ -32,23 +36,34 @@ export default class Rules extends Component {
     );
   }
 
-  addRule() {
+  addRule(data) {
+    chrome.storage.local.set(
+      update(
+        { rules: this.state.rules },
+        { rules: { $push: [data] } }
+      )
+    );
+  }
+
+  handleAddRule() {
     const reader = new FileReader();
     const file = this.refs.file.files[0];
 
     reader.onload = (upload) => {
       const body = upload.target.result;
       const name = file.name;
+
       const evaluated = (event) => {
         const { valid, error, result } = event.data;
         if (valid) {
-          chrome.storage.local.set({ rules: this.state.rules.concat([{ name, body, result }]) });
+          this.addRule({ name, body, result });
           this.refs.file.value = '';
         } else {
           this.setState({ addRule: { error: `${error.name}: ${error.message}` } });
         }
         window.removeEventListener('message', evaluated);
       };
+
       window.addEventListener('message', evaluated);
       Sandbox.postMessage({ command: 'validateRule', body, name }, '*');
     };
@@ -61,11 +76,11 @@ export default class Rules extends Component {
         <h2>Rules</h2>
         <div className="add-rule">
           <input type="file" ref="file" />
-          <input type="submit" value="Add rule" onClick={this.addRule.bind(this)} />
+          <input type="submit" value="Add rule" onClick={this.handleAddRule.bind(this)} />
           {this.state.addRule.error ? <p>{this.state.addRule.error}</p> : null}
         </div>
         <div className="rules">
-          {this.state.rules.map((rule, index) => <Rule {...rule} onRemoveClick={() => this.removeRule(index)} key={`rule_${index}`} />)}
+          {this.state.rules.map((rule, index) => <Rule {...rule} onChange={(data) => this.updateRule(index, data)} onRemoveClick={() => this.removeRule(index)} key={`rule_${index}`} />)}
         </div>
       </div>
     );
