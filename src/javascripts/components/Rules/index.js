@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import Rule from '../Rule';
 
 import update from 'react-addons-update';
-import Sandbox from '../../lib/Sandbox';
+import { validateRule } from '../../lib/Sandbox';
 
 export default class Rules extends Component {
   constructor(props) {
@@ -24,28 +24,12 @@ export default class Rules extends Component {
   }
 
   onUpdateRule(index, data) {
-    const evaluated = (event) => {
-      const { valid, error } = event.data;
-      if (valid) {
-        chrome.storage.local.set(
-          update(
-            { rules: this.state.rules },
-            { rules: { [index]: { $merge: data } } }
-          )
-        );
-      } else {
-        chrome.storage.local.set(
-          update(
-            { rules: this.state.rules },
-            { rules: { [index]: { $merge: { errors: error.message } } } }
-          )
-        );
-      }
-      window.removeEventListener('message', evaluated);
-    };
-
-    window.addEventListener('message', evaluated);
-    Sandbox.postMessage({ command: 'validateRule', body: data.body }, '*');
+    chrome.storage.local.set(
+      update(
+        { rules: this.state.rules },
+        { rules: { [index]: { $merge: data } } }
+      )
+    );
   }
 
   removeRule(index) {
@@ -74,19 +58,15 @@ export default class Rules extends Component {
       const body = upload.target.result;
       const name = file.name;
 
-      const evaluated = (event) => {
-        const { valid, error, result } = event.data;
+      validateRule(body, (data) => {
+        const { valid, error, result } = data;
         if (valid) {
           this.addRule({ name, body, result });
           this.refs.file.value = '';
         } else {
           this.setState({ addRule: { error: `${error.name}: ${error.message}` } });
         }
-        window.removeEventListener('message', evaluated);
-      };
-
-      window.addEventListener('message', evaluated);
-      Sandbox.postMessage({ command: 'validateRule', body, name }, '*');
+      });
     };
     reader.readAsText(file);
   }

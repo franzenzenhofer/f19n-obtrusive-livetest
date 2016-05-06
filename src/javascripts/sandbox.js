@@ -4,11 +4,13 @@ import EventCollection from './lib/EventCollection';
 window.addEventListener('message', (event) => {
   const { command, body, args, runId } = event.data;
   if (command === 'validateRule') {
-    event.source.postMessage(validateRule(body), event.origin);
+    let result = validateRule(body);
+    result = Object.assign(result || {}, { runId });
+    event.source.postMessage(result, event.origin);
   }
   if (command === 'runRule') {
-    const result = runRule(body, new EventCollection(args));
-    result.runId = runId;
+    let result = runRule(body, new EventCollection(args));
+    result = Object.assign(result || {}, { runId });
     event.source.postMessage(result, event.origin);
   }
 });

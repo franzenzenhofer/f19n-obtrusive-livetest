@@ -11,13 +11,11 @@ export default class ResultList extends Component {
     chrome.storage.onChanged.addListener(onStoreChange);
   }
 
-  componentDidMount() {
-    chrome.runtime.sendMessage('panelReady');
-  }
-
   onStoreChange(data) {
     const tabId = Object.keys(data)[0];
-    this.setState({ results: data[tabId].newValue });
+    if (tabId === this.props.tabId) {
+      this.setState({ results: data[tabId].newValue });
+    }
   }
 
   resultItems(resultData, index) {

@@ -2,19 +2,29 @@ import { normalizeHeaders } from './lib/utils';
 import EventCollector from './lib/EventCollector';
 import update from 'react-addons-update';
 
+import { runRule } from './lib/Sandbox';
+
 const filter = {
   urls: ['<all_urls>'],
   types: ['main_frame'],
 };
 
 const collector = {};
-const events = {};
 
 const findOrCreateCollector = (tabId) => {
   collector[tabId] = collector[tabId] || new EventCollector({
-    onFinished: (e) => {
-      console.log(`DataCollector finished for tabId: ${tabId}`, e);
-      events[tabId] = e;
+    onFinished: (events) => {
+      console.log(`DataCollector finished for tabId: ${tabId}`, events);
+      const results = [];
+
+      chrome.storage.local.get('rules', (data) => {
+        data.rules.forEach((rule) => {
+          runRule(rule, events, (result) => {
+            results.push(result);
+            chrome.storage.local.set({ [String(tabId)]: results });
+          });
+        });
+      });
     },
   });
   return collector[tabId];
@@ -55,7 +65,6 @@ chrome.webRequest.onCompleted.addListener((data) => {
 }, filter);
 
 chrome.tabs.onRemoved.addListener((tabId) => {
-  events[tabId] = [];
   collector[tabId] = null;
 });
 
@@ -64,29 +73,13 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     callback({ tabId: sender.tab.id });
   }
 
-  if (request === 'panelReady') {
-    const tabId = sender.tab.id;
-    const results = [];
-
-    chrome.storage.local.get('rules', (data) => {
-      data.rules.forEach((rule) => {
-        chrome.tabs.sendMessage(tabId, { command: 'runRule', name: rule.name, body: rule.body, args: events[tabId] }, (result) => {
-          results.push(result);
-          chrome.storage.local.set({ [String(tabId)]: results });
-        });
-      });
-    });
-  }
-
   if (request.event === 'document_end') {
-    const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
     const tabId = sender.tab.id;
-    findOrCreateCollector(tabId).pushEvent(data, 'documentEnd');
+    findOrCreateCollector(tabId).pushEvent(request.data, 'documentEnd');
   }
 
   if (request.event === 'document_idle') {
-    const data = Object.assign({}, request.data, { document: (new DOMParser()).parseFromString(request.data.html, 'text/html') });
     const tabId = sender.tab.id;
-    findOrCreateCollector(tabId).pushEvent(data, 'documentIdle');
+    findOrCreateCollector(tabId).pushEvent(request.data, 'documentIdle');
   }
 });
