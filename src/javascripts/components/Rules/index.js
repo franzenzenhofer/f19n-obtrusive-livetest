@@ -24,12 +24,28 @@ export default class Rules extends Component {
   }
 
   onUpdateRule(index, data) {
-    chrome.storage.local.set(
-      update(
-        { rules: this.state.rules },
-        { rules: { [index]: { $merge: data } } }
-      )
-    );
+    const evaluated = (event) => {
+      const { valid, error } = event.data;
+      if (valid) {
+        chrome.storage.local.set(
+          update(
+            { rules: this.state.rules },
+            { rules: { [index]: { $merge: data } } }
+          )
+        );
+      } else {
+        chrome.storage.local.set(
+          update(
+            { rules: this.state.rules },
+            { rules: { [index]: { $merge: { errors: error.message } } } }
+          )
+        );
+      }
+      window.removeEventListener('message', evaluated);
+    };
+
+    window.addEventListener('message', evaluated);
+    Sandbox.postMessage({ command: 'validateRule', body: data.body }, '*');
   }
 
   removeRule(index) {
