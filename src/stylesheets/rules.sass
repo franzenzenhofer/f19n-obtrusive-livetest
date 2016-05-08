@@ -1,3 +1,18 @@
+.edit-rule
+  .error
+    background: #c9302c
+    border-radius: 5px
+    padding: 10px
+    color: white
+
+  input
+    margin: 10px 0
+    padding: 5px
+    width: 100%
+
+  .ace_editor
+    margin: 10px 0
+
 .fso-rules
   margin: 0 auto
   max-width: 800px
@@ -10,6 +25,7 @@
         padding: 5px 0
 
         &.name
+          cursor: pointer
           span
             color: #ccc
 
@@ -17,13 +33,8 @@
           width: 200px
           text-align: right
 
-          a
-            display: inline-block
+          button
             margin: 0 5px
-            cursor: pointer
-            background: #efefef
-            border-radius: 2px
-            padding: 3px 5px
 
       tr
         border-bottom: 1px #ccc solid
@@ -32,7 +43,7 @@
           td.name
             text-decoration: line-through
 
-  .add-rule
+  .add-rule, .edit-rule
     .error
       background: #c9302c
       border-radius: 5px

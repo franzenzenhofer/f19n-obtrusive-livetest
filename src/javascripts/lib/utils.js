@@ -10,8 +10,9 @@ export const normalizeHeaders = (responseHeaders) => {
 };
 
 
-export const ruleResult = (label, message, type = 'info') => {
+export const ruleResult = (priority, label, message, type = 'info') => {
   return {
+    priority,
     label,
     message,
     type,
@@ -37,7 +38,7 @@ export const validateRule = (rule) => {
   if (ruleFunc) {
     try {
       const sampleResult = ruleFunc(new EventCollection(sampleEvents));
-      if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type)) {
+      if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type && sampleResult.priority)) {
         result.result = sampleResult;
       } else {
         result.valid = false;

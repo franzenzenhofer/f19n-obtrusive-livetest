@@ -9,6 +9,11 @@ export default class AddRule extends Component {
       error: null,
     };
     this.handleAddRule = this.handleAddRule.bind(this);
+    this.addEmptyRule = this.addEmptyRule.bind(this);
+  }
+
+  addEmptyRule() {
+    this.props.onAddRule({ name: 'Empty rule', body: 'function(collection){\n  return null;\n}', result: null }, true);
   }
 
   handleAddRule() {
@@ -40,6 +45,7 @@ export default class AddRule extends Component {
         <input type="file" ref="file" />
         <input type="submit" value="upload" onClick={this.handleAddRule} />
         {this.state.error ? <p className="error"><b>{this.state.error.name}</b>: {this.state.error.message}</p> : null}
+        <p><button onClick={this.addEmptyRule}>Add empty rule</button></p>
       </div>
     );
   }
