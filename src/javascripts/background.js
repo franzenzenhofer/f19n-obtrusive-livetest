@@ -17,11 +17,17 @@ const findOrCreateCollector = (tabId) => {
       console.log(`DataCollector finished for tabId: ${tabId}`, events);
       const results = [];
 
+      // Empty results in case of no (or disabled) rules
+      chrome.storage.local.remove([String(tabId)]);
+
       chrome.storage.local.get('rules', (data) => {
-        data.rules.forEach((rule) => {
+        const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
+        enabledRules.forEach((rule) => {
           runRule(rule, events, (result) => {
-            results.push(result);
-            chrome.storage.local.set({ [String(tabId)]: results });
+            if (result) {
+              results.push(result);
+              chrome.storage.local.set({ [String(tabId)]: results });
+            }
           });
         });
       });

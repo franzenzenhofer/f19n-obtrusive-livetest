@@ -1,3 +1,40 @@
 .fso-rules
   margin: 0 auto
   max-width: 800px
+
+  .rules
+    table.rules-list
+      width: 100%
+
+      td
+        padding: 5px 0
+
+        &.name
+          span
+            color: #ccc
+
+        &.actions
+          width: 200px
+          text-align: right
+
+          a
+            display: inline-block
+            margin: 0 5px
+            cursor: pointer
+            background: #efefef
+            border-radius: 2px
+            padding: 3px 5px
+
+      tr
+        border-bottom: 1px #ccc solid
+
+        &.disabled
+          td.name
+            text-decoration: line-through
+
+  .add-rule
+    .error
+      background: #c9302c
+      border-radius: 5px
+      padding: 10px
+      color: white

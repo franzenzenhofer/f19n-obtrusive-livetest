@@ -5,7 +5,11 @@ const stack = [];
 const callbacks = {};
 
 window.addEventListener('message', (result) => {
-  callbacks[result.data.runId](result.data);
+  const runId = result.data.runId;
+  const data = result.data;
+  delete data.runId;
+  callbacks[runId](result.data);
+  delete callbacks[runId];
 });
 
 proxyIframe = document.createElement('iframe');

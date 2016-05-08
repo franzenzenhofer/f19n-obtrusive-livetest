@@ -1,5 +1,6 @@
 import { fromPairs } from 'lodash';
 import EventCollection from './EventCollection';
+import sampleEvents from '../constants/sampleEvents';
 
 export const normalizeHeaders = (responseHeaders) => {
   const responseHeaderPairs = responseHeaders.map((responseHeader) => {
@@ -35,12 +36,12 @@ export const validateRule = (rule) => {
 
   if (ruleFunc) {
     try {
-      const sampleResult = ruleFunc(new EventCollection([{ type: 'testEvent' }]));
+      const sampleResult = ruleFunc(new EventCollection(sampleEvents));
       if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type)) {
         result.result = sampleResult;
       } else {
         result.valid = false;
-        result.error = { name: 'Invalid return value', message: 'Result needs to contain at least label, message and type. Result was: ' + JSON.stringify(sampleResult) };
+        result.error = { name: 'Invalid return value', message: `Result needs to contain at least label, message and type. Result was: ${JSON.stringify(sampleResult)}` };
       }
     } catch (e) {
       const { message, stack, lineNumber, name } = e;
