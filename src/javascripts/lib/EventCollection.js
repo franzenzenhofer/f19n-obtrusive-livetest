@@ -18,10 +18,14 @@ export default class EventCollection {
   }
 
   documentIdleEvent() {
-    return this.lastEventOfType('documentIdle');
+    const event = this.lastEventOfType('documentIdle');
+    const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+    return Object.assign(event, { document });
   }
 
   documentEndEvent() {
-    return this.lastEventOfType('documentEnd');
+    const event = this.lastEventOfType('documentEnd');
+    const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+    return Object.assign(event, { document });
   }
 }
