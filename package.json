@@ -33,6 +33,7 @@
   },
   "dependencies": {
     "babel-preset-react": "^6.5.0",
+    "brace": "^0.8.0",
     "classnames": "^2.2.4",
     "lodash": "^4.11.1",
     "npm-zepto": "^1.1.7",
