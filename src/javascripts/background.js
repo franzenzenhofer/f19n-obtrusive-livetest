@@ -2,6 +2,8 @@ import { normalizeHeaders } from './lib/utils';
 import EventCollector from './lib/EventCollector';
 import update from 'react-addons-update';
 
+import { isEmpty } from 'lodash';
+
 import { runRule } from './lib/Sandbox';
 
 const filter = {
@@ -14,21 +16,19 @@ const collector = {};
 const findOrCreateCollector = (tabId) => {
   collector[tabId] = collector[tabId] || new EventCollector({
     onFinished: (events) => {
-      console.log(`DataCollector finished for tabId: ${tabId}`, events);
-      const results = [];
-
-      // Empty results in case of no (or disabled) rules
-      chrome.storage.local.remove([String(tabId)]);
-
+      // Fetch rules from storage
       chrome.storage.local.get('rules', (data) => {
+        // Take only enabled rules
         const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
-        enabledRules.forEach((rule) => {
-          runRule(rule, events, (result) => {
-            if (result) {
-              results.push(result);
-              chrome.storage.local.set({ [String(tabId)]: results });
-            }
-          });
+        const promisedRuleCalls = enabledRules.map((rule) => {
+          return new Promise((resolve) => { runRule(rule, events, (result) => { resolve(result); }); });
+        });
+
+        Promise.all(promisedRuleCalls).then((results) => {
+          const notEmptyResults = results.filter(r => !isEmpty(r));
+          setTimeout(() => {
+            chrome.storage.local.set({ [String(tabId)]: notEmptyResults });
+          }, 0);
         });
       });
     },

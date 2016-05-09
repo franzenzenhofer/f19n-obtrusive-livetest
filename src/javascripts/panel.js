@@ -5,6 +5,6 @@ import ResultList from './components/ResultList';
 
 chrome.runtime.sendMessage('tabIdPls', (response) => {
   chrome.storage.local.get(String(response.tabId), (results) => {
-    ReactDOM.render(<ResultList tabeId={response.tabId} results={results[String(response.tabId)] || []} />, document.getElementById('app'));
+    ReactDOM.render(<ResultList tabId={response.tabId} results={results[String(response.tabId)] || []} />, document.getElementById('app'));
   });
 });
