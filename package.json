@@ -27,6 +27,7 @@
     "grunt-zip": "^0.17.1",
     "node-bourbon": "^4.2.8",
     "node-neat": "^1.7.2",
+    "react-ace": "^3.4.1",
     "webpack": "^1.13.0",
     "webpack-dev-server": "^1.14.1"
   },
@@ -36,6 +37,7 @@
     "lodash": "^4.11.1",
     "npm-zepto": "^1.1.7",
     "react": "^15.0.2",
+    "react-ace": "^3.4.1",
     "react-addons-update": "^15.0.2",
     "react-dom": "^15.0.1",
     "react-modal": "^1.2.1"
