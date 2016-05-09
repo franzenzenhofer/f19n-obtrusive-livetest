@@ -18,14 +18,20 @@ export default class EventCollection {
   }
 
   documentIdleEvent() {
-    const event = this.lastEventOfType('documentIdle');
-    const document = (new DOMParser()).parseFromString(event.html, 'text/html');
-    return Object.assign(event, { document });
+    let event = this.lastEventOfType('documentIdle');
+    if (event && event.html) {
+      const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      event = Object.assign(event, { document });
+    }
+    return event;
   }
 
   documentEndEvent() {
-    const event = this.lastEventOfType('documentEnd');
-    const document = (new DOMParser()).parseFromString(event.html, 'text/html');
-    return Object.assign(event, { document });
+    let event = this.lastEventOfType('documentEnd');
+    if (event && event.html) {
+      const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      event = Object.assign(event, { document });
+    }
+    return event;
   }
 }
