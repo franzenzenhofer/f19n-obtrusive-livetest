@@ -21,7 +21,7 @@ export const ruleResult = (priority, label, message, type = 'info') => {
 
 export const runRule = (rule, events) => {
   const ruleFunc = eval(`(${rule})`);
-  return ruleFunc(events);
+  return ruleFunc.apply(null, [events]);
 };
 
 export const validateRule = (rule) => {
