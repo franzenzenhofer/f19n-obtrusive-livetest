@@ -1,11 +1,11 @@
 import EventCollection from './lib/EventCollection';
 import sampleEvents from './constants/sampleEvents';
 
-import * as RuleHelpers from './lib/RuleHelpers';
+import * as RuleContext from './lib/RuleContext';
 
 const runRule = (rule, events) => {
   const ruleFunc = eval(`(${rule})`);
-  return ruleFunc.apply(null, [events]);
+  return ruleFunc.apply(RuleContext, [events]);
 };
 
 const validateRule = (rule) => {
