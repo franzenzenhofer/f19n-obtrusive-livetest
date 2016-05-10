@@ -14,9 +14,9 @@ export default class ResultList extends Component {
   }
 
   onStoreChange(data) {
-    const tabId = Object.keys(data)[0];
-    if (tabId && Number(tabId) === this.props.tabId) {
-      this.setState({ results: data[tabId].newValue });
+    const storeKey = Object.keys(data)[0];
+    if (storeKey && storeKey === this.props.storeKey) {
+      this.setState({ results: data[storeKey].newValue });
     }
   }
 

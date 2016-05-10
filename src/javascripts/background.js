@@ -1,9 +1,17 @@
 import EventCollector from './utils/EventCollector';
 import update from 'react-addons-update';
 
-import { isEmpty, fromPairs } from 'lodash';
+import { isEmpty, fromPairs, xor } from 'lodash';
 
+import resultStoreKey from './utils/resultStoreKey';
 import { runRule } from './utils/Sandbox';
+
+const filter = {
+  urls: ['<all_urls>'],
+  types: ['main_frame'],
+};
+
+const collector = {};
 
 const normalizeHeaders = (responseHeaders) => {
   const responseHeaderPairs = responseHeaders.map((responseHeader) => {
@@ -12,12 +20,21 @@ const normalizeHeaders = (responseHeaders) => {
   return fromPairs(responseHeaderPairs);
 };
 
-const filter = {
-  urls: ['<all_urls>'],
-  types: ['main_frame'],
+const cleanup = () => {
+  chrome.tabs.query({ windowId: chrome.windows.WINDOW_ID_CURRENT }, (tabs) => {
+    const openTabIds = tabs.map(t => t.id);
+    chrome.storage.local.get(null, (data) => {
+      const savedTabResultIds = Object
+        .keys(data)
+        .filter(key => key.match(/results-\d+/))
+        .map(key => key.split('-')[1])
+        .map(key => Number(key));
+      const tabIdsToRemove = xor(openTabIds, savedTabResultIds);
+      chrome.storage.local.remove(tabIdsToRemove.map(id => resultStoreKey(id)));
+      tabIdsToRemove.forEach((id) => { delete collector[id]; });
+    });
+  });
 };
-
-const collector = {};
 
 const findOrCreateCollector = (tabId) => {
   collector[tabId] = collector[tabId] || new EventCollector({
@@ -33,7 +50,8 @@ const findOrCreateCollector = (tabId) => {
         Promise.all(promisedRuleCalls).then((results) => {
           const notEmptyResults = results.filter(r => !isEmpty(r));
           setTimeout(() => {
-            chrome.storage.local.set({ [String(tabId)]: notEmptyResults });
+            const storeKey = resultStoreKey(tabId);
+            chrome.storage.local.set({ [storeKey]: notEmptyResults });
           }, 0);
         });
       });
@@ -77,7 +95,7 @@ chrome.webRequest.onCompleted.addListener((data) => {
 }, filter);
 
 chrome.tabs.onRemoved.addListener((tabId) => {
-  collector[tabId] = null;
+  cleanup();
 });
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {

@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom';
 
 import ResultList from './components/ResultList';
 
+import resultStoreKey from './utils/resultStoreKey';
+
 chrome.runtime.sendMessage('tabIdPls', (response) => {
-  chrome.storage.local.get(String(response.tabId), (results) => {
-    ReactDOM.render(<ResultList tabId={response.tabId} results={results[String(response.tabId)] || []} />, document.getElementById('app'));
+  const storeKey = resultStoreKey(response.tabId);
+  chrome.storage.local.get(storeKey, (data) => {
+    const results = data[storeKey];
+    ReactDOM.render(<ResultList storeKey={storeKey} results={results || []} />, document.getElementById('app'));
   });
 });
