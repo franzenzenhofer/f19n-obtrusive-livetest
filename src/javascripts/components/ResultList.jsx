@@ -30,9 +30,9 @@ export default class ResultList extends Component {
     results = sortBy(results, ['priority']).reverse();
 
     return (
-      <div className="fso-panel">
+      <div className="f19n-panel">
         <div className="header">
-          <h2 className="brand">FSO Live Test</h2>
+          <h2 className="brand">f19n Live Test</h2>
           <div className="controls">
             <a className="close">close panel</a>
             <a className="rules" target="_blank" href={chrome.extension.getURL('rules.html')}>rules</a>

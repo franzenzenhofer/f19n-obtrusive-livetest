@@ -95,7 +95,7 @@ export default class Rules extends Component {
     };
 
     return (
-      <div className="fso-rules">
+      <div className="f19n-rules">
         <h1>Rules</h1>
         <AddRule onAddRule={this.addRule} />
         <div className="rules">
