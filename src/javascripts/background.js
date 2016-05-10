@@ -1,10 +1,16 @@
-import normalizeHeaders from './lib/normalizeHeaders';
 import EventCollector from './lib/EventCollector';
 import update from 'react-addons-update';
 
-import { isEmpty } from 'lodash';
+import { isEmpty, fromPairs } from 'lodash';
 
 import { runRule } from './lib/Sandbox';
+
+const normalizeHeaders = (responseHeaders) => {
+  const responseHeaderPairs = responseHeaders.map((responseHeader) => {
+    return [responseHeader.name.toLowerCase(), responseHeader.value];
+  });
+  return fromPairs(responseHeaderPairs);
+};
 
 const filter = {
   urls: ['<all_urls>'],
