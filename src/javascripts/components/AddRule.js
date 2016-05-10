@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 
-import { validateRule } from '../lib/Sandbox';
+import { validateRule } from '../utils/Sandbox';
 
 export default class AddRule extends Component {
   constructor(props) {

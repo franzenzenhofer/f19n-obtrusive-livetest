@@ -1,9 +1,9 @@
-import EventCollector from './lib/EventCollector';
+import EventCollector from './utils/EventCollector';
 import update from 'react-addons-update';
 
 import { isEmpty, fromPairs } from 'lodash';
 
-import { runRule } from './lib/Sandbox';
+import { runRule } from './utils/Sandbox';
 
 const normalizeHeaders = (responseHeaders) => {
   const responseHeaderPairs = responseHeaders.map((responseHeader) => {

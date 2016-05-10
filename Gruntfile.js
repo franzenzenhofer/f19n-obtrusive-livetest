@@ -97,7 +97,7 @@ module.exports = function(grunt) {
           modulesDirectories: [
             'javascripts/containers',
             'javascripts/components',
-            'javascripts/lib',
+            'javascripts/utils',
             'node_modules',
           ],
           extensions: [

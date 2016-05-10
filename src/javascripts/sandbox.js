@@ -1,7 +1,7 @@
-import EventCollection from './lib/EventCollection';
+import EventCollection from './utils/EventCollection';
 import sampleEvents from './constants/sampleEvents';
 
-import * as RuleContext from './lib/RuleContext';
+import * as RuleContext from './utils/RuleContext';
 
 const runRule = (rule, events) => {
   const ruleFunc = eval(`(${rule})`);
