@@ -1,4 +1,4 @@
-import { normalizeHeaders } from './lib/utils';
+import normalizeHeaders from './lib/normalizeHeaders';
 import EventCollector from './lib/EventCollector';
 import update from 'react-addons-update';
 
