@@ -81,7 +81,6 @@ module.exports = function(grunt) {
     webpack: {
       someName: {
         entry: {
-            application: "./src/javascripts/application.js",
              background: "./src/javascripts/background.js",
                   panel: "./src/javascripts/panel.js",
                   rules: "./src/javascripts/rules.js",
