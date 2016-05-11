@@ -5,6 +5,10 @@ export default class EventCollection {
     this.events = events;
   }
 
+  events() {
+    return this.events.slice();
+  }
+
   eventsOfType(type) {
     return filter(this.events, e => e.event === type);
   }
