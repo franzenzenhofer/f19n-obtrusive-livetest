@@ -1,6 +1,6 @@
 ## Custom rules
 
-A custom rule consists of one javascript function receiving an `EventCollection` as first argument and must return a valid rule result (see below).
+A custom rule consists of one javascript function receiving an `EventCollection` as first argument and must return a [valid rule result](#rulecontext).
 
 - [EventCollection](#eventcollection)
 - [RuleContext](#rulecontext) (rule helper methods)
