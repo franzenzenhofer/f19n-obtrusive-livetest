@@ -125,4 +125,8 @@ function(eventCollection) {
 Like `documentEndEvent` except it represents the DOM, location and HTML after `window.onLoad`.
 
 
-## RuleContext (rule helper methods)
+## RuleContext
+
+Eac function inside [RuleContext.js](/src/javascripts/utils/RuleContext.js) is available inside every rule via the `this`. For example: `this.createResult` which is a little helper to create a valid rule result.
+
+Dont forget to run `> grunt --reload-extension` or manually reload the extension when modifying the extension code.
