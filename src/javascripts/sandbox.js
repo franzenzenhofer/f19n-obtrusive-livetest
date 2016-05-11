@@ -21,7 +21,7 @@ const validateRule = (rule) => {
 
   if (ruleFunc) {
     try {
-      const sampleResult = ruleFunc(new EventCollection(sampleEvents));
+      const sampleResult = ruleFunc.apply(RuleContext, [new EventCollection(sampleEvents)]);
       if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type && sampleResult.priority)) {
         result.result = sampleResult;
       } else {

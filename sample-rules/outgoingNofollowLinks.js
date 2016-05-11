@@ -18,5 +18,5 @@ function(eventCollection) {
     return domain(href) != domain(location.href);
   });
 
-  return outgoingLinks.length > 0 ? ruleResult(1, 'LINKS', `${outgoingLinks.length} outgoing links with rel nofollow`, 'info') : null;
+  return outgoingLinks.length > 0 ? this.createResult(1, 'LINKS', `${outgoingLinks.length} outgoing links with rel nofollow`, 'info') : null;
 }
