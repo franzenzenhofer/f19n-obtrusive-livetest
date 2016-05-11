@@ -7,7 +7,7 @@ import 'brace/theme/monokai';
 
 import update from 'react-addons-update';
 
-import { validateRule } from '../utils/Sandbox';
+import { validateRule } from '../../utils/Sandbox';
 
 export default class EditRule extends Component {
   constructor(props) {

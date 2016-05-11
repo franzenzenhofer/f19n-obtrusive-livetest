@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ResultItem from '../components/ResultItem';
+import ResultItem from './ResultItem';
 
 import { sortBy } from 'lodash';
 

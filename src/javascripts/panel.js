@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ResultList from './components/ResultList';
+import ResultList from './components/Panel/ResultList';
 
 import resultStoreKey from './utils/resultStoreKey';
 
