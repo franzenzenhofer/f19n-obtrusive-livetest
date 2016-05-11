@@ -2,6 +2,9 @@
 
 A custom rule consists of one javascript function receiving an `EventCollection` as first argument and must return a valid rule result (see below).
 
+- EventCollection
+- RuleContext (available Helper methods) 
+
 
 ### Some example rules (more [here](/sample-rules))
 
@@ -15,9 +18,8 @@ function(eventCollection) {
   if (!documentEndEvent) { return null; }
 
   var { location } = documentEndEvent;
-  var { createResult } = this;
 
-  return createResult(1, 'GET', location.host);
+  return { priority: 1, label: 'DEBUG', type: 'info', message: `Loaded ${location.href}` };
 }
 ```
 
