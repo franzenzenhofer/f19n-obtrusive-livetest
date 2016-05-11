@@ -14,7 +14,7 @@ npm install
 grunt
 ```
 
-or if you want to automatically reload the extension after every change
+or if you want to automatically reload the extension after every change. Its required if you make changes inside RuleContext.js or other core scripts. **Its not required if you just work on custom rules.**
 
 ```shell
 grunt --reload-extension
