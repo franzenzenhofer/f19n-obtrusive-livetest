@@ -1,7 +1,7 @@
 import EventCollector from './utils/EventCollector';
 import update from 'react-addons-update';
 
-import { isEmpty, fromPairs, xor } from 'lodash';
+import { isEmpty, fromPairs, xor, difference, without } from 'lodash';
 
 import resultStoreKey from './utils/resultStoreKey';
 import { runRule } from './utils/Sandbox';
@@ -30,7 +30,9 @@ const cleanup = () => {
         .map(key => key.split('-')[1])
         .map(key => Number(key));
       const tabIdsToRemove = xor(openTabIds, savedTabResultIds);
+      const hiddenPanels = data['hidden-panels'] || [];
       chrome.storage.local.remove(tabIdsToRemove.map(id => resultStoreKey(id)));
+      chrome.storage.local.set({ 'hidden-panels': difference(hiddenPanels, tabIdsToRemove) });
       tabIdsToRemove.forEach((id) => { delete collector[id]; });
     });
   });
@@ -94,7 +96,7 @@ chrome.webRequest.onCompleted.addListener((data) => {
   findOrCreateCollector(tabId).pushEvent(data, 'onCompleted');
 }, filter);
 
-chrome.tabs.onRemoved.addListener((tabId) => {
+chrome.tabs.onRemoved.addListener(() => {
   cleanup();
 });
 
@@ -112,4 +114,19 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     const tabId = sender.tab.id;
     findOrCreateCollector(tabId).pushEvent(request.data, 'documentIdle');
   }
+});
+
+chrome.browserAction.onClicked.addListener((tab) => {
+  chrome.storage.local.get('hidden-panels', (data) => {
+    const tabId = tab.id;
+    let hiddenPanels = (data['hidden-panels'] || []);
+
+    if (hiddenPanels.indexOf(tabId) === -1) {
+      hiddenPanels = hiddenPanels.concat([tabId]);
+    } else {
+      hiddenPanels = without(hiddenPanels, tabId);
+    }
+
+    chrome.storage.local.set({ 'hidden-panels': hiddenPanels });
+  });
 });

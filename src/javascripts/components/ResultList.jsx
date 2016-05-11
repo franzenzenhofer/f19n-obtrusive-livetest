@@ -11,6 +11,7 @@ export default class ResultList extends Component {
     };
     const onStoreChange = this.onStoreChange.bind(this);
     chrome.storage.onChanged.addListener(onStoreChange);
+    this.closePanelClick = this.closePanelClick.bind(this);
   }
 
   onStoreChange(data) {
@@ -24,6 +25,10 @@ export default class ResultList extends Component {
     return <ResultItem {...resultData} key={`result-${index}`} />;
   }
 
+  closePanelClick() {
+    this.props.onClosePanelRequest();
+  }
+
   render() {
     let results = this.state.results;
     results = results.filter(r => r.type && r.priority && r.message && r.label);
@@ -34,7 +39,7 @@ export default class ResultList extends Component {
         <div className="header">
           <h2 className="brand">f19n Live Test</h2>
           <div className="controls">
-            <a className="close">close panel</a>
+            <a className="close" onClick={this.closePanelClick}>close panel</a>
             <a className="rules" target="_blank" href={chrome.extension.getURL('rules.html')}>rules</a>
           </div>
         </div>
