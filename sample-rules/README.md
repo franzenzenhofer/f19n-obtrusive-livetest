@@ -58,13 +58,13 @@ The `EventCollection` holds all the occurred events during the page load. See [e
 
 An `EventCollection` instance provides the following methods to easely filter for relevant events.
 
-##### events
+##### events()
 
 Returns the full unfiltered list of events.
 
 ```javascript
 function(eventCollection) {
-  var allEvents = eventCollection.events;
+  var allEvents = eventCollection.events();
   return this.createResult(1, 'DEBUG', `Events count: ${allEvents.length}`);
 }
 ```
