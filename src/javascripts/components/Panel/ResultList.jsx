@@ -6,12 +6,17 @@ import { sortBy } from 'lodash';
 export default class ResultList extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       results: props.results,
+      filter: null,
     };
+
     const onStoreChange = this.onStoreChange.bind(this);
     chrome.storage.onChanged.addListener(onStoreChange);
+
     this.closePanelClick = this.closePanelClick.bind(this);
+    this.clearFilter = this.clearFilter.bind(this);
   }
 
   onStoreChange(data) {
@@ -21,8 +26,16 @@ export default class ResultList extends Component {
     }
   }
 
+  setFilter(label) {
+    this.setState({ filter: label });
+  }
+
+  clearFilter() {
+    this.setState({ filter: null });
+  }
+
   resultItems(resultData, index) {
-    return <ResultItem {...resultData} key={`result-${index}`} />;
+    return <ResultItem {...resultData} onLabelClick={() => this.setFilter(resultData.label)} key={`result-${index}`} />;
   }
 
   closePanelClick() {
@@ -31,8 +44,12 @@ export default class ResultList extends Component {
 
   render() {
     let results = this.state.results;
+
     results = results.filter(r => r.type && r.priority && r.message && r.label);
+    results = this.state.filter ? results.filter(r => r.label === this.state.filter) : results;
     results = sortBy(results, ['priority']).reverse();
+
+    const clearFilterLink = this.state.filter ? <a href="#" className="clear-filter" onClick={this.clearFilter}>clear filter</a> : null;
 
     return (
       <div className="f19n-panel">
@@ -40,6 +57,7 @@ export default class ResultList extends Component {
           <h2 className="brand">f19n Live Test</h2>
           <div className="controls">
             <a className="close" onClick={this.closePanelClick}>close panel</a>
+            {clearFilterLink}
             <a className="rules" target="_blank" href={chrome.extension.getURL('rules.html')}>rules</a>
           </div>
         </div>
