@@ -128,7 +128,7 @@ Like `documentEndEvent` except it represents the DOM, location and HTML after `w
 ## RuleContext
 
 Each function inside [RuleContext.js](/src/javascripts/utils/RuleContext.js) is available inside every rule via the `this`.
-(!) Dont forget to run `> grunt --reload-extension` or manually reload the extension when modifying the extension code.
+Dont forget to run `> grunt --reload-extension` or manually reload the extension when modifying the extension code.
 
 ##### createResult(priority [INTEGER], label [STRING], message [STRING], type [STRING](optional, default 'info'))
 
