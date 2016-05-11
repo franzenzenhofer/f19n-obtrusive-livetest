@@ -127,6 +127,19 @@ Like `documentEndEvent` except it represents the DOM, location and HTML after `w
 
 ## RuleContext
 
-Eac function inside [RuleContext.js](/src/javascripts/utils/RuleContext.js) is available inside every rule via the `this`. For example: `this.createResult` which is a little helper to create a valid rule result.
+Each function inside [RuleContext.js](/src/javascripts/utils/RuleContext.js) is available inside every rule via the `this`.
+(!) Dont forget to run `> grunt --reload-extension` or manually reload the extension when modifying the extension code.
 
-Dont forget to run `> grunt --reload-extension` or manually reload the extension when modifying the extension code.
+##### createResult(priority [INTEGER], label [STRING], message [STRING], type [STRING](optional, default 'info'))
+
+Returns a valid rule result (an object with the following keys: priority, label, message and type).
+
+```javascript
+function(eventCollection) {
+  var documentEndEvent = eventCollection.documentEndEvent();
+  var { document, location, html } = documentEndEvent;
+  var host = location.host;
+  var divs = document.querySelectorAll('div').length;
+  return this.createResult(1, 'DEBUG', `${divs} div elements found on ${location.host}`);
+}
+```
