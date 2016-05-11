@@ -41,7 +41,7 @@ function(eventCollection) {
 
 ### EventCollection
 
-The `EventCollection` holds all the occurred events during the page load. See [example data](src/javascripts/constants/sampleEvents.js).
+The `EventCollection` holds all the occurred events during the page load.
 
 #### List of possible events
 
@@ -104,3 +104,21 @@ function(eventCollection) {
   return this.createResult(1, 'DEBUG', `Last statusCode: ${statusCode}`);
 }
 ```
+
+##### documentEndEvent()
+
+Returns a special event containing `document` (a `DOMParser` instance representing the DOM before `window.onLoad`), `location` object, and the pure `html` as string. 
+
+```javascript
+function(eventCollection) {
+  var documentEndEvent = eventCollection.documentEndEvent();
+  var { document, location, html } = documentEndEvent;
+  var host = location.host;
+  var divs = document.querySelectorAll('div').length;
+  return this.createResult(1, 'DEBUG', `${divs} div elements found on ${location.host}`);
+}
+```
+
+##### documentIdleEvent()
+
+Like `documentEndEvent` except it represents the DOM, location and HTML after `window.onLoad`.
