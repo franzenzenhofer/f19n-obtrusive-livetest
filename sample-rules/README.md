@@ -2,8 +2,8 @@
 
 A custom rule consists of one javascript function receiving an `EventCollection` as first argument and must return a valid rule result (see below).
 
-- EventCollection
-- RuleContext (available Helper methods) 
+- [EventCollection](#eventcollection)
+- [RuleContext](#rulecontext) (rule helper methods)
 
 
 ### Some example rules (more [here](/sample-rules))
@@ -33,15 +33,14 @@ function(eventCollection) {
   if (!documentIdleEvent) { return null; }
 
   var { document } = documentIdleEvent;
-  var { createResult } = this;
   
   var countElements = document.querySelectorAll('p').length;
 
-  return createResult(1, 'STATS', `found ${countElements} paragraph elements`);
+  return this.createResult(1, 'STATS', `found ${countElements} paragraph elements`);
 }
 ```
 
-### EventCollection
+## EventCollection
 
 The `EventCollection` holds all the occurred events during the page load.
 
@@ -124,3 +123,6 @@ function(eventCollection) {
 ##### documentIdleEvent()
 
 Like `documentEndEvent` except it represents the DOM, location and HTML after `window.onLoad`.
+
+
+## RuleContext (rule helper methods)
