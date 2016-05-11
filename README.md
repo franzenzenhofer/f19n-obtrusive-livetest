@@ -10,6 +10,8 @@ npm install
 
 ### Run the build process
 
+run the build process once
+
 ```shell
 grunt
 ```
