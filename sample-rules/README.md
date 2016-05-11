@@ -3,7 +3,7 @@
 A custom rule consists of one javascript function receiving an `EventCollection` as first argument and must return a valid rule result (see below).
 
 
-### Example rules
+### Some example rules (more [here](/sample-rules))
 
 Always returns the host of the visited site
 
@@ -58,6 +58,28 @@ The `EventCollection` holds all the occurred events during the page load. See [e
 
 An `EventCollection` instance provides the following methods to easely filter for relevant events.
 
+##### events
+
+Returns the full unfiltered list of events.
+
+```javascript
+function(eventCollection) {
+  var allEvents = eventCollection.events;
+  return this.createResult(1, 'DEBUG', `Events count: ${allEvents.length}`);
+}
+```
+
+##### eventsOfType(type [STRING])
+
+Returns a list (Array) of events for the given type.
+
+```javascript
+function(eventCollection) {
+  var allOnCommittedEvents = eventCollection.eventsOfType('onCommitted');
+  return this.createResult(1, 'DEBUG', `onCommitted count: ${allOnCommittedEvents.length}`);
+}
+```
+
 ##### firstEventOfType(type [STRING])
 
 Returns the first event of the given type.
@@ -66,6 +88,19 @@ Some events can occur multiple times during a page request (for example `onHeade
 ```javascript
 function(eventCollection) {
   var onHeadersReceivedEvent = eventCollection.firstEventOfType('onHeadersReceived');
-  …
+  var statusCode = onHeadersReceivedEvent.statusCode;
+  return this.createResult(1, 'DEBUG', `First statusCode: ${statusCode}`);
+}
+```
+
+##### lastEventOfType(type [STRING])
+
+Like `firstEventOfType` except it returns the last event of the given type.
+
+```javascript
+function(eventCollection) {
+  var onHeadersReceivedEvent = eventCollection.lastEventOfType('onHeadersReceived');
+  var statusCode = onHeadersReceivedEvent.statusCode;
+  return this.createResult(1, 'DEBUG', `Last statusCode: ${statusCode}`);
 }
 ```
