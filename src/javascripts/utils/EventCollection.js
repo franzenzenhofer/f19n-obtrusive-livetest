@@ -38,4 +38,43 @@ export default class EventCollection {
     }
     return event;
   }
+
+  //helper function to get the static HTML Dom
+  getStaticDom() {
+    var e = this.documentEndEvent();
+    return e.document;
+  }
+
+  getIdleDom() {
+    var e = this.documentIdleEvent();
+    return e.document;
+  }
+
+  //function to get the current live DOM
+  getLiveDom() {
+    return null;
+  }
+
+  getLocation(where = 'idle') {
+    if (where === 'static')
+    {
+      var e = this.documentEndEvent();
+      return e.location;
+    }
+    else if (where === 'live')
+    {
+      //return live location
+    }
+    else {
+    //if (where === 'idle') {
+      var e = this.documentIdleEvent();
+      return e.location;
+    }
+  }
+
+  getHttpHeaders() {
+    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    var { responseHeaders } = onHeadersReceivedEvent;
+    return responseHeaders;
+  }
 }

@@ -56,14 +56,19 @@ export default class ResultList extends Component {
         <div className="header">
           <h2 className="brand">f19n Live Test</h2>
           <div className="controls">
-            <a className="close" onClick={this.closePanelClick}>close panel</a>
+            <a className="close" onClick={this.closePanelClick}>x</a>
             {clearFilterLink}
-            <a className="rules" target="_blank" href={chrome.extension.getURL('rules.html')}>rules</a>
+            <a className="rules" target="_blank" href={chrome.extension.getURL('rules.html')}><button>Manage rules</button></a>
           </div>
         </div>
-        <div className="results">
+        <table className="results">
+        <tr>
+          <th>Type</th>
+          <th>Label</th>
+          <th>Message</th>
+        </tr>
           {results.map(this.resultItems.bind(this))}
-        </div>
+        </table>
       </div>
     );
   }

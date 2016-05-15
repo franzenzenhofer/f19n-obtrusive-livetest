@@ -1,0 +1,11 @@
+function(page) {
+  var dom = page.getStaticDom();
+  var amp = dom.querySelector('link[rel=amphtml]');
+
+  if (amp) {
+    var href = amp.getAttribute('href');
+    var text = `Amp: <a href='${href}' target='_top'>${href}</a>`;
+    return this.createResult(1, 'HEAD', text, 'info');
+  }
+  return null;
+}
