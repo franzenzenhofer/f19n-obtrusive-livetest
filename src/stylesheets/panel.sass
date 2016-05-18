@@ -1,39 +1,44 @@
-body, html
-  margin: 0
+@import "base"
+@import "button"
 
-body
-  color: #111
-  background: #efefef
-  font-family: 'Helvetica Neue', Verdana, Arial
-  font-size: 12px
 
 .f19n-panel
+  padding: 8px
 
-  .header
+  .Header
     position: relative
-    padding: 2px 5px
+    margin-bottom: 1em
 
     .brand
-      margin: 0
-      padding: 0
+      float: left
+
+    .controls
+      float: right
+
+    .controls *
+      display: inline-block
+      vertical-align: middle
+
+    .ic
+      width: 20px
+      height: 20px
+
+    a.close
+      cursor: pointer
 
     a.clear-filter, a.rules
       margin: 0 5px 0 0
 
-    a.close
-      position: absolute
-      right: 5px
-      top: 5px
-      cursor: pointer
-
   .results
-    border: 1px solid black
 
     th
-      border: 1px solid black
+      font-size: 12px;
+      font-weight: 600;
+      text-align: left;
+      text-transform: uppercase;
+      padding-right: 8px;
 
     .result
-      border: 1px solid black
       padding: 5px
       word-break: break-all
       font-size: 12px

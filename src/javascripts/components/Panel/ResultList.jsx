@@ -53,22 +53,30 @@ export default class ResultList extends Component {
 
     return (
       <div className="f19n-panel">
-        <div className="header">
+        <div className="Header u-cf">
           <h2 className="brand">f19n Live Test</h2>
           <div className="controls">
-            <a className="close" onClick={this.closePanelClick}>x</a>
+            <a className="rules Button" target="_blank" href={chrome.extension.getURL('rules.html')}>Manage Rules</a>
+            <a className="close" onClick={this.closePanelClick}>
+              <svg className="ic ic-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/>
+              </svg>
+            </a>
+          </div>
+          <div className="clearFilter">
             {clearFilterLink}
-            <a className="rules" target="_blank" href={chrome.extension.getURL('rules.html')}><button>Manage rules</button></a>
           </div>
         </div>
-        <table className="results">
-        <tr>
-          <th>Type</th>
-          <th>Label</th>
-          <th>Message</th>
-        </tr>
-          {results.map(this.resultItems.bind(this))}
-        </table>
+        <div className="Box">
+          <table className="results">
+          <tr>
+            <th>Type</th>
+            <th>Label</th>
+            <th>Message</th>
+          </tr>
+            {results.map(this.resultItems.bind(this))}
+          </table>
+        </div>
       </div>
     );
   }
