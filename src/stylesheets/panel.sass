@@ -3,45 +3,47 @@
 
 
 .f19n-panel
+
+.Header
+  position: relative
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.1), 0 3px 1px -2px rgba(0, 0, 0, 0.15), 0 1px 5px 0 rgba(0, 0, 0, 0.08);
+
+.Header-brand
+  padding: 10px 8px
+
+.Header-brand *
+  display: inline-block
+  vertical-align: middle
+
+.Header-brand h2
+  text-transform: uppercase
+  font-weight: normal
+  padding-left: 4px
+  font-size: 14px
+  line-height: 20px
+  font-weight: 500
+
+.Header-controls
+  background: $backgroundColorLight
   padding: 8px
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 600;
+  letter-spacing: -0.5px;
 
-  .Header
-    position: relative
-    margin-bottom: 1em
+.results
 
-    .brand
-      float: left
+  th
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+    text-transform: uppercase;
+    padding-right: 8px;
 
-    .controls
-      float: right
+  .result
+    padding: 5px
+    word-break: break-all
+    font-size: 12px
 
-    .controls *
-      display: inline-block
-      vertical-align: middle
-
-    .ic
-      width: 20px
-      height: 20px
-
-    a.close
-      cursor: pointer
-
-    a.clear-filter, a.rules
-      margin: 0 5px 0 0
-
-  .results
-
-    th
-      font-size: 12px;
-      font-weight: 600;
-      text-align: left;
-      text-transform: uppercase;
-      padding-right: 8px;
-
-    .result
-      padding: 5px
-      word-break: break-all
-      font-size: 12px
-
-      tr
-        border: 1px solid black
+    tr
+      border: 1px solid black

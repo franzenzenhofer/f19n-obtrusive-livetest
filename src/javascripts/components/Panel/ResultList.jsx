@@ -53,28 +53,33 @@ export default class ResultList extends Component {
 
     return (
       <div className="f19n-panel">
-        <div className="Header u-cf">
-          <h2 className="brand">f19n Live Test</h2>
-          <div className="controls">
-            <a className="rules Button" target="_blank" href={chrome.extension.getURL('rules.html')}>Manage Rules</a>
-            <a className="close" onClick={this.closePanelClick}>
+        <div className="Header">
+          <div className="Header-brand u-cf">
+            <svg className="ic u-floatLeft" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#7EB20D" d="M11.7 6.9L2 4.6l10.2-2.3L22 4.7M11.7 12.1L2 9.8l10.2-2.3L22 9.9"/><path fill="#5A7F09" d="M11.7 11.4L2 9.1V4.6l9.7 2.3"/><path fill="#7EB20D" d="M11.7 17.2L2 15l10.2-2.4L22 15"/><path fill="#5A7F09" d="M11.7 16.5L2 14.2V9.7l9.7 2.3"/><path fill="#99E20E" d="M22 9.2l-10.3 2.2V6.9L22 4.7M22 14.4l-10.3 2.2v-4.5L22 9.9"/><path fill="#5A7F09" d="M11.7 21.7L2 19.5V15l9.7 2.2"/><path fill="#99E20E" d="M22 19.5l-10.3 2.2v-4.5L22 15"/></svg>
+            <h2 className="u-floatLeft">Obtrusive Live Test</h2>
+            <a className="u-floatRight" onClick={this.closePanelClick}>
               <svg className="ic ic-close" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                 <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/><path d="M0 0h24v24H0z" fill="none"/>
               </svg>
             </a>
           </div>
-          <div className="clearFilter">
-            {clearFilterLink}
+          <div className="Header-controls u-cf">
+            <a className="Button u-floatLeft" target="_blank" href={chrome.extension.getURL('rules.html')}>Manage Rules</a>
+            <span><a className="Button u-floatRight" href="#">Clear Filter</a></span>
           </div>
         </div>
         <div className="Box">
-          <table className="results">
-          <tr>
-            <th>Type</th>
-            <th>Label</th>
-            <th>Message</th>
-          </tr>
-            {results.map(this.resultItems.bind(this))}
+          <table className="ResultsTable ResultsTable--striped">
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Label</th>
+                <th>Message</th>
+              </tr>
+            </thead>
+            <tbody>
+              {results.map(this.resultItems.bind(this))}
+            </tbody>
           </table>
         </div>
       </div>

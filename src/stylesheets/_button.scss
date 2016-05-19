@@ -8,17 +8,25 @@
 
 .Button {
   -webkit-appearance: none;
-  background: $primaryColor;
-  color: $backgroundColor;
+  color: $brandColor;
   cursor: pointer;
   display: inline-block;
   line-height: normal;
-  padding: 4px 8px;
   position: relative;
   text-align: center;
   text-decoration: none;
   user-select: none;
   white-space: normal;
+}
+
+.Button--haptic {
+  background: $brandColor;
+  color: $backgroundColor;
+  padding: 4px 8px;
+}
+
+.Button[disabled] {
+
 }
 
 /**
