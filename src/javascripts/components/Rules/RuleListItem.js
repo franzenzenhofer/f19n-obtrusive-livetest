@@ -11,7 +11,9 @@ export default function RulesListItem(props) {
       </td>
       <td className="actions">
         <button onClick={onStatusClick}>{status === 'enabled' ? 'disable' : 'enable'}</button>
-        <button onClick={onEditClick}>edit</button>
+        <button onClick={onEditClick}>Edit</button>
+        <button>Duplicate</button>
+        <button>Download</button>
         <button onClick={onDeleteClick}>delete</button>
       </td>
     </tr>
