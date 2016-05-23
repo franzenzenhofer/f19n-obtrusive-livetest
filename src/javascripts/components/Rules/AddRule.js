@@ -13,8 +13,28 @@ export default class AddRule extends Component {
   }
 
   addEmptyRule() {
-    this.props.onAddRule({ name: 'Empty rule', body: 'function(collection){\n  return null;\n}', result: null }, true);
-  }
+    var rulebody = "\
+function(page) {\n\
+var dom = page.getStaticDom();\n\
+var location = page.getLocation();\n\
+var headers = page.getHttpHeaders();\n\
+\n\
+//check if we got some data to work with\n\
+if (!dom) { return null; }\n\
+\n\
+if (/* some requirment*/) {\n\
+\n\
+  //some category of stuff your are testing i.e.: 'SPEED', 'HEAD', 'BODY', 'HTTP', ...\n\
+  var lable = 'DOM';\n\
+  var msg = 'a message, can inlcude HTML';\n\
+  var type = 'info'; //should be 'info', 'warning', 'error'\n\
+\n\
+  return this.createResult(1, lable, msg, type');\n\
+}\n\
+return null;\n\
+}";
+  this.props.onAddRule({ name: 'New rule', body: rulebody, result: null }, true);
+}
 
   handleAddRule() {
     const reader = new FileReader();
