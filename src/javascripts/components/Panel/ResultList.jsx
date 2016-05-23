@@ -65,7 +65,7 @@ export default class ResultList extends Component {
           </div>
           <div className="Header-controls u-cf">
             <a className="Button u-floatLeft" target="_blank" href={chrome.extension.getURL('rules.html')}>Manage Rules</a>
-            <span><a className="Button u-floatRight" href="#">Clear Filter</a></span>
+            <span className="u-floatRight">{clearFilterLink}</span>
           </div>
         </div>
         <table className="ResultsTable ResultsTable--striped">
