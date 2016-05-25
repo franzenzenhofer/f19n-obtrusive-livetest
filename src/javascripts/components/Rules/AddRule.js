@@ -13,8 +13,7 @@ export default class AddRule extends Component {
   }
 
   addEmptyRule() {
-    var rulebody = "\
-function(page) {\n\
+    var rulebody = "function(page) {\n\
 var dom = page.getStaticDom();\n\
 var location = page.getLocation();\n\
 var headers = page.getHttpHeaders();\n\

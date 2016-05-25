@@ -20,7 +20,7 @@ $tableDark: #F5F5F5;
 
 
 
-body, 
+body,
 html,
 h1,
 h2 {
@@ -56,7 +56,7 @@ body {
 .ResultsTable td,
 .ResultsTable th {
   margin: 0;
-  overflow: visible; 
+  overflow: visible;
   font-weight: 400;
 }
 
@@ -82,6 +82,14 @@ body {
 
 .ResultsTable tr {
   background-color: $tableLight;
+}
+
+.ResultsTable .message {
+  word-break: break-all;
+}
+
+.ResultsTable .label {
+  word-break: keep-all;
 }
 
 .filter {
