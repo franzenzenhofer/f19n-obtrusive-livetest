@@ -13,11 +13,23 @@ $backgroundColorLight: #F3F3F3;
 
 $greyAccent: #CCCCCC;
 $greyAccentLighter: #E1E1E1;
+$greyAccentDarker: #A3A3A3;
 
-// table
+// table stripes
 $tableLight: #FFFFFF;
 $tableDark: #F5F5F5;
 
+
+// message colors
+$errorColor: #EB3A42;
+$errorColorBackground: #FFF0F0;
+$errorColorBorder: #FED7D7;
+
+$warningColor: #F2BB00;
+$warningColorBackground: #FFFBE6;
+$warningColorBorder: #FFF6C6;
+
+$infoColor: #2A53CD;
 
 
 body,
@@ -33,91 +45,16 @@ body {
   color: $primaryColor;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
   font-size: 10.5px;
+  border-right: 1px solid $greyAccentDarker;
 }
 
-
-
-
-// TABLE
-.ResultsTable {
-  border-collapse: collapse;
-  border-spacing: 0;
-  empty-cells: show;
-  font-size: 10.5px;
-  width: 100%;
-}
-
-.ResultsTable thead {
-  text-align: left;
-  vertical-align: bottom;
-  border-bottom: 1px solid $greyAccent;
-}
-
-.ResultsTable td,
-.ResultsTable th {
-  margin: 0;
-  overflow: visible;
-  font-weight: 400;
-}
-
-.ResultsTable td {
-  border-left: 1px solid $greyAccentLighter;
-  padding: 6px 4px;
-}
-
-.ResultsTable th {
-  border-left: 1px solid $greyAccent;
-  padding: 8px 4px;
-  font-weight: 400px;
-}
-
-.ResultsTable td {
-  word-break: break-word;
-}
-
-.ResultsTable td:first-child,
-.ResultsTable th:first-child {
-    border-left-width: 0;
-}
-
-.ResultsTable tr {
-  background-color: $tableLight;
-}
-
-.ResultsTable .message {
-  word-break: break-all;
-}
-
-.ResultsTable .label {
-  word-break: keep-all;
-}
-
-.filter {
-  color: $primaryColor;
-}
-
-.ResultsTable--striped tr:nth-child(2n-1) td {
-    background-color: $tableDark;
-}
-
-// FILTER
-
-// .filter:after {
-//   content: " ";
-//   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="#888888" d="M14 22V11l8-9H2l8 9v7"/></svg>') no-repeat;
-//   display: inline-block;
-//   width: 10px;
-//   height: 10px;
-//   vertical-align: middle;
-// }
-
-// ICONS
+// Icons
 .ic {
   width: 14px;
   height: 14px;
 }
 
-// UTILITIES
+// Utility Classes
 .u-none {
   display: none !important;
 }
