@@ -84,13 +84,6 @@ export default class EventCollection {
     return statusCode;
   }
 
-  /*getLocation()  {
-    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
-    console.log(onHeadersReceivedEvent);
-    var { responseHeaders: { location } } = onHeadersReceivedEvent;
-    return location;
-  }*/
-
   getURL() {
     var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
     var { url } = onHeadersReceivedEvent;
