@@ -2,10 +2,13 @@
 @import "button"
 
 
+a, a:visited
+  color: $primaryColor
+
 .Header
   position: relative
   font-size: 12px
-  letter-spacing: -0.5px;
+  letter-spacing: -0.5px
 
 .Header-brand
   padding: 4px
@@ -27,6 +30,9 @@
   font-size: 12px
   border-bottom: 1px solid $greyAccent
 
+.Header-controls a:hover
+  text-decoration: underline
+
 // Results Table
 .ResultsTable
   border-collapse: collapse
@@ -36,51 +42,64 @@
   width: 100%
   border-bottom: 1px solid $greyAccent
 
-.ResultsTable thead 
+.ResultsTable thead
   text-align: left
   vertical-align: bottom
   border-bottom: 1px solid $greyAccent
 
-.ResultsTable tr 
+.ResultsTable tr
   background-color: $tableLight
 
-.ResultsTable--striped tr:nth-child(2n-1) td 
+.ResultsTable tr
+  a,a:visited
+    color: $ruleLinkColor
+
+.ResultsTable--striped tr:nth-child(2n-1) td
   background-color: $tableDark
 
-.ResultsTable td 
+.ResultsTable td
   border-left: 1px solid $greyAccentLighter
   padding: 6px 4px
 
-.ResultsTable th 
+.ResultsTable th
   border-left: 1px solid $greyAccent
   padding: 8px 4px
   font-weight: 400px
 
 .ResultsTable td,
-.ResultsTable th 
+.ResultsTable th
   margin: 0
   overflow: visible
   font-weight: 400
 
 .ResultsTable td:first-child,
-.ResultsTable th:first-child 
+.ResultsTable th:first-child
     border-left-width: 0
 
-.ResultsTable .message 
+.ResultsTable .message
   word-break: break-all
 
-.ResultsTable .label 
+.ResultsTable .label
   word-break: keep-all
 
-.filter 
+.filter
   color: $primaryColor
 
-tr.error 
+.type
+  color: transparent
+  font-size: 0
+
+
+tr.error
   background: $errorColorBackground !important
   border-top: 1px solid $errorColorBorder !important
   border-bottom: 1px solid $errorColorBorder !important
 
-.error .type:before 
+tr.error
+    a,a:visited
+      color: $errorColorLink
+
+.error .type:before
   content: " "
   background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#ffffff"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat $errorColor
   display: inline-block
@@ -90,13 +109,13 @@ tr.error
   border-radius: 5px
   margin-right: 2px
 
-tr.warning td 
+tr.warning td
   background: $warningColorBackground !important
   border-top: 1px solid $warningColorBorder !important
   border-bottom: 1px solid $warningColorBorder !important
 
-tr.warning .type 
-  min-width: 56px
+//tr.warning .type
+//  min-width: 56px
 
 .warning .type:before
   content: " "

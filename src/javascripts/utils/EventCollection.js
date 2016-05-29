@@ -77,4 +77,23 @@ export default class EventCollection {
     var { responseHeaders } = onHeadersReceivedEvent;
     return responseHeaders;
   }
+
+  getStatusCode() {
+    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    var { statusCode } = onHeadersReceivedEvent;
+    return statusCode;
+  }
+
+  getLocation()  {
+    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    console.log(onHeadersReceivedEvent);
+    var { responseHeaders: { location } } = onHeadersReceivedEvent;
+    return location;
+  }
+
+  getURL() {
+    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    var { url } = onHeadersReceivedEvent;
+    return url;
+  }
 }

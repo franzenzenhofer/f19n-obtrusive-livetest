@@ -35,7 +35,7 @@ export default class ResultList extends Component {
   }
 
   resultItems(resultData, index) {
-    return <ResultItem {...resultData} onLabelClick={() => this.setFilter(resultData.label)} key={`result-${index}`} />;
+    return <ResultItem {...resultData} onLabelClick={() => this.setFilter(resultData.label) } onTypeClick={() => this.setFilter(resultData.type) } key={`result-${index}`} />;
   }
 
   closePanelClick() {
@@ -49,7 +49,7 @@ export default class ResultList extends Component {
     results = this.state.filter ? results.filter(r => r.label === this.state.filter) : results;
     results = sortBy(results, ['priority']).reverse();
 
-    const clearFilterLink = this.state.filter ? <a href="#" className="clear-filter" onClick={this.clearFilter}>clear filter</a> : null;
+    const clearFilterLink = this.state.filter ? <a href="javascript://" className="clear-filter" onClick={this.clearFilter}>Clear filter</a> : null;
 
     return (
       <div className="f19n-panel">
@@ -64,18 +64,11 @@ export default class ResultList extends Component {
             </a>
           </div>
           <div className="Header-controls u-cf">
-            <a className="Button u-floatLeft" target="_blank" href={chrome.extension.getURL('rules.html')}>Manage Rules</a>
+            <a className="Button u-floatLeft" target="_blank" href={chrome.extension.getURL('rules.html')}>Manage rules</a>
             <span className="u-floatRight">{clearFilterLink}</span>
           </div>
         </div>
         <table className="ResultsTable ResultsTable--striped">
-          <thead>
-            <tr>
-              <th>Type</th>
-              <th>Label</th>
-              <th>Message</th>
-            </tr>
-          </thead>
           <tbody>
             {results.map(this.resultItems.bind(this))}
           </tbody>
@@ -84,3 +77,15 @@ export default class ResultList extends Component {
     );
   }
 }
+
+/*
+
+<!--<thead>
+  <tr>
+    <th>Type</th>
+    <th>Label</th>
+    <th>Message</th>
+  </tr>
+</thead>-->
+
+*/
