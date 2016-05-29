@@ -96,4 +96,8 @@ export default class EventCollection {
     var { url } = onHeadersReceivedEvent;
     return url;
   }
+
+  //TODO
+  //getProtokoll
+  
 }
