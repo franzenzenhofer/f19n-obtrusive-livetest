@@ -6,3 +6,10 @@ export const createResult = (priority, label, message, type = 'info') => {
     type,
   };
 };
+
+
+
+
+export const htmlEntitiesEncode = (str) => {
+  return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+};
