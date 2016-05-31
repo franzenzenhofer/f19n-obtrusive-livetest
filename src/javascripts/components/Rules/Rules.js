@@ -96,9 +96,11 @@ export default class Rules extends Component {
 
     return (
       <div className="f19n-rules">
-        <h1>Rules</h1>
+        <header className="Section">
+          <h1>Rules</h1>
+        </header>
         <AddRule onAddRule={this.addRule} />
-        <div className="rules">
+        <div className="Section rules">
           <h2>All rules</h2>
           <RulesList rules={this.state.rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
         </div>

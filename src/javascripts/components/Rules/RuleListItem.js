@@ -10,11 +10,11 @@ export default function RulesListItem(props) {
         <a onClick={onEditClick}>{name} <span>#{id}</span></a>
       </td>
       <td className="actions">
-        <button onClick={onStatusClick}>{status === 'enabled' ? 'disable' : 'enable'}</button>
-        <button onClick={onEditClick}>Edit</button>
-        <button>Duplicate</button>
-        <button>Download</button>
-        <button onClick={onDeleteClick}>delete</button>
+        <button className="Button Button--haptic" onClick={onStatusClick}>{status === 'enabled' ? 'disable' : 'enable'}</button>
+        <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>
+        <button className="Button Button--haptic">Duplicate</button>
+        <button className="Button Button--haptic">Download</button>
+        <button className="Button Button--haptic" onClick={onDeleteClick}>delete</button>
       </td>
     </tr>
   );
