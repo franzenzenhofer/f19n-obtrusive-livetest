@@ -3,38 +3,57 @@
 @import "rules-temp"
 
 .f19n-rules
-  margin: 0 auto
+
+.Wrapper
+  margin-left: 16px
   max-width: 800px
 
-  .rules
-    table.rules-list
-      width: 100%
+.Header
+  background: $backgroundColorDark
 
-      td
-        padding: 5px 0
+.Header-subHeader
+  background: $backgroundColorLight
 
-        &.name
-          cursor: pointer
-          span
-            color: #ccc
 
-        &.actions
-          width: 200px
-          text-align: right
+// Results Table
+.RuleTable
+  border-collapse: collapse
+  border-spacing: 0
+  empty-cells: show
+  font-size: 12px
+  margin-top: 16px
+  width: 100%
 
-          button
-            margin: 0 5px
+.RuleTable tr
+  background-color: $tableLight
+  border-top: 1px solid $greyAccent;
 
-      tr
-        border-bottom: 1px #ccc solid
+.RuleTable--striped tr:nth-child(2n-1) td
+  background-color: $tableDark
 
-        &.disabled
-          td.name
-            text-decoration: line-through
+.RuleTable td
+  padding: 1em 0.5em
+  overflow: visible
 
-  .add-rule, .edit-rule
-    .error
-      background: #c9302c
-      border-radius: 5px
-      padding: 10px
-      color: white
+.RuleTable-ruleName
+  cursor: pointer
+
+.RuleTable-ruleName span
+  color: $greyAccentDarker
+  display: block
+
+.RuleTable-ruleActions
+  width: 200px
+  text-align: right
+
+.state-disabled .RuleTable-ruleName
+  text-decoration: line-through
+
+
+
+.add-rule, .edit-rule
+  .error
+    background: #c9302c
+    border-radius: 5px
+    padding: 10px
+    color: white

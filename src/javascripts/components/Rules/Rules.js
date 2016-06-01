@@ -96,13 +96,15 @@ export default class Rules extends Component {
 
     return (
       <div className="f19n-rules">
-        <header className="Section">
-          <h1>Rules</h1>
+        <header className="Header Section">
+          <h1 className="Wrapper">Rules</h1>
         </header>
         <AddRule onAddRule={this.addRule} />
-        <div className="Section rules">
-          <h2>All rules</h2>
-          <RulesList rules={this.state.rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+        <div className="Wrapper">
+          <div className="Section rules">
+            <h2>All rules</h2>
+            <RulesList rules={this.state.rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+          </div>
         </div>
         <Modal style={modalStyles} isOpen={this.state.editIndex !== null} onRequestClose={() => this.setState({ editIndex: null })}>
           <EditRule rule={this.state.rules[this.state.editIndex]} onSave={(data) => this.handleOnSave(this.state.editIndex, data)} />

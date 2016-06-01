@@ -59,12 +59,14 @@ return null;\n\
 
   render() {
     return (
-      <div className="Section add-rule">
-        <h2>Add rule</h2>
-        <input type="file" ref="file" />
-        <input className="Button Button--haptic" type="submit" value="Add rule" onClick={this.handleAddRule} />
-        {this.state.error ? <p className="error"><b>{this.state.error.name}</b>: {this.state.error.message}</p> : null}
-        <p><button className="Button Button--haptic" onClick={this.addEmptyRule}>New rule template</button></p>
+      <div className="Header-subHeader Section add-rule">
+        <div className="Wrapper">
+          <h2>Add rule</h2>
+          <input className="Button" type="file" ref="file" />
+          <input className="Button Button--haptic" type="submit" value="Add rule" onClick={this.handleAddRule} />
+          {this.state.error ? <p className="error"><b>{this.state.error.name}</b>: {this.state.error.message}</p> : null}
+          <p><button className="Button Button--haptic" onClick={this.addEmptyRule}>New rule template</button></p>
+        </div>
       </div>
     );
   }
