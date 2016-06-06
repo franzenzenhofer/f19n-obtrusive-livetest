@@ -8,13 +8,15 @@ export default function RulesListItem(props) {
     <tr className={classNames('rule', { disabled: status === 'disabled' })}>
       <td className="RuleTable-ruleName">
         <a onClick={onEditClick}><h3>{name}</h3><span>#{id}</span></a>
+        <div>
+          <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>
+          <button className="Button Button--haptic">Duplicate</button>
+          <button className="Button Button--haptic">Download</button>
+        </div>
       </td>
       <td className="RuleTable-ruleActions">
         <button className="Button Button--haptic" onClick={onStatusClick}>{status === 'enabled' ? 'disable' : 'enable'}</button>
-        <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>
-        <button className="Button Button--haptic">Duplicate</button>
-        <button className="Button Button--haptic">Download</button>
-        <button className="Button Button--haptic" onClick={onDeleteClick}>delete</button>
+        <button className="Button Button--haptic" onClick={onDeleteClick}>Delete</button>
       </td>
     </tr>
   );

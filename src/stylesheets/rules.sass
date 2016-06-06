@@ -21,8 +21,9 @@
   border-spacing: 0
   empty-cells: show
   font-size: 12px
-  margin-top: 16px
+  margin-top: 1em
   width: 100%
+  border: 1px solid $greyAccent
 
 .RuleTable tr
   background-color: $tableLight
@@ -32,21 +33,29 @@
   background-color: $tableDark
 
 .RuleTable td
-  padding: 1em 0.5em
+  padding: 1em 1em
   overflow: visible
 
 .RuleTable-ruleName
   cursor: pointer
+
+.RuleTable-ruleName div
+  margin-top: 1em
+
+.RuleTable button + button
+  margin-left: 2px !important
 
 .RuleTable-ruleName span
   color: $greyAccentDarker
   display: block
 
 .RuleTable-ruleActions
-  width: 200px
+  width: 240px
   text-align: right
+  vertical-align: top
+  text-transform: capitalize
 
-.state-disabled .RuleTable-ruleName
+.disabled .RuleTable-ruleName
   text-decoration: line-through
 
 
