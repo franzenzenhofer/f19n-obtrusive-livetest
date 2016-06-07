@@ -1,5 +1,6 @@
 $backgroundColor: #eee;
 $primaryColor: #333333;
+$brandColor: #859900;
 
 // greys
 $backgroundColor: #FFFFFF;
@@ -57,6 +58,12 @@ body {
 .ic {
   width: 14px;
   height: 14px;
+}
+
+.ic--rules {
+  width: 24px;
+  height: 24px;
+  margin-right: 0.5em;
 }
 
 // Utility Classes

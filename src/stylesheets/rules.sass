@@ -11,9 +11,17 @@
 .Header
   background: $backgroundColorDark
 
+.Header .Wrapper * 
+  display: inline-block
+  vertical-align: middle
+
 .Header-subHeader
   background: $backgroundColorLight
 
+.Header-brandLink a,
+.Header-brandLink a:hover
+  color: $brandColor
+  line-height: 24px
 
 // Results Table
 .RuleTable
@@ -53,7 +61,6 @@
   width: 240px
   text-align: right
   vertical-align: top
-  text-transform: capitalize
 
 .disabled .RuleTable-ruleName
   text-decoration: line-through
