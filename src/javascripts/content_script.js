@@ -1,5 +1,3 @@
-import $ from 'npm-zepto';
-
 const panelUrl = chrome.extension.getURL('panel.html');
 const $panelWrapper = $(`<div class="f19n-panel-wrapper"><iframe src='${panelUrl}'></iframe></div>`);
 let hidden = false;
