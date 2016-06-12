@@ -16,18 +16,20 @@ function(page) {
         var alternates_array = Array.prototype.slice.call(alternates);
         var codestring = ''
         var linkstring = ''
+        var purecodestring = ''
         alternates_array.forEach(
           function(value)
           {
             //console.log(value);
             //console.log(value.outerHTML);
-            codestring = codestring + that.htmlEntitiesEncode(value.outerHTML) + '\n';
+            purecodestring = purecodestring + value.outerHTML + "\n";
+            codestring = codestring + that.htmlEntitiesEncode(value.outerHTML) + "\n";
             linkstring = linkstring + '<a href="'+value.href+'" title="'+value.href+'" target="_top">'+value.hreflang+'</a> ';
             //console.log(that);
           }
         )
         var rellist='<br><textarea readonly>'+codestring+'</textarea>';
-      return this.createResult(1, lable, alternates.length+' link-rel-alternate found.'+rellist+'<br>'+linkstring, type);
+      return this.createResult(1, lable, alternates.length+' link-rel-alternate found.'+rellist+' '+this.dataUrlTextLink(purecodestring , 'View partial code.')+'<br>'+linkstring, type);
     }
     else {
       return this.createResult(1, lable, 'No link-rel-alternate-hreflang found.', type);
