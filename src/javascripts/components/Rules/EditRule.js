@@ -13,7 +13,7 @@ export default class EditRule extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rule: props.rule,
+      rule: props.rule.toJS(),
       error: null,
     };
     this.onBodyChange = this.onBodyChange.bind(this);

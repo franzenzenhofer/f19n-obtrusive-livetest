@@ -3,15 +3,15 @@ import RulesList from './RulesList';
 import AddRule from './AddRule';
 import EditRule from './EditRule';
 
-import Modal from 'react-modal';
+import { fromJS } from 'immutable';
 
-import update from 'react-addons-update';
+import Modal from 'react-modal';
 
 export default class Rules extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      rules: props.rules,
+      rules: fromJS(props.rules),
       editIndex: null,
     };
 
@@ -25,17 +25,13 @@ export default class Rules extends Component {
 
   onStoreChange(data) {
     if (data && data.rules && data.rules.newValue) {
-      this.setState({ rules: data.rules.newValue });
+      this.setState({ rules: fromJS(data.rules.newValue) });
     }
   }
 
   updateRule(index, data) {
-    chrome.storage.local.set(
-      update(
-        { rules: this.state.rules },
-        { rules: { [index]: { $merge: data } } }
-      )
-    );
+    const rules = this.state.rules.mergeIn([index], data).toJS();
+    chrome.storage.local.set({ rules });
   }
 
   handleOnSave(index, data) {
@@ -48,38 +44,29 @@ export default class Rules extends Component {
       id: `rule-${Math.round(Math.random() * 1000000)}`,
       status: 'enabled',
     };
-    chrome.storage.local.set(
-      update(
-        { rules: this.state.rules },
-        { rules: { $push: [Object.assign(data, additionalData)] } }
-      )
-    );
+    chrome.storage.local.set({
+      rules: this.state.rules.push(Object.assign(data, additionalData)).toJS(),
+    });
     if (open) {
       this.setState({ editIndex: this.state.rules.length });
     }
   }
 
   toggleRuleStatus(index) {
-    const status = { status: this.state.rules[index].status === 'enabled' ? 'disabled' : 'enabled' };
-    chrome.storage.local.set(
-      update(
-        { rules: this.state.rules },
-        { rules: { [index]: { $merge: status } } }
-      )
-    );
+    const status = this.state.rules.getIn([index, 'status']) === 'enabled' ? 'disabled' : 'enabled';
+    chrome.storage.local.set({
+      rules: this.state.rules.setIn([index, 'status'], status).toJS(),
+    });
   }
 
   removeRule(index) {
-    chrome.storage.local.set(
-      update(
-        { rules: this.state.rules },
-        { rules: { $splice: [[index, 1]] } }
-      )
-    );
+    chrome.storage.local.set({
+      rules: this.state.rules.splice(index, 1).toJS(),
+    });
   }
 
   editRule(index) {
-    this.setState({ editIndex: index });
+    this.setState({ rules: this.state.rules, editIndex: index });
   }
 
   render() {
@@ -94,6 +81,9 @@ export default class Rules extends Component {
       },
     };
 
+    const ruleToEdit = this.state.rules.get(this.state.editIndex);
+    const rules = this.state.rules.toJS();
+
     return (
       <div className="f19n-rules">
         <header className="Header Section">
@@ -107,11 +97,11 @@ export default class Rules extends Component {
         <div className="Wrapper">
           <div className="Section rules">
             <h2>All rules</h2>
-            <RulesList rules={this.state.rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+            <RulesList rules={rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
         </div>
-        <Modal style={modalStyles} isOpen={this.state.editIndex !== null} onRequestClose={() => this.setState({ editIndex: null })}>
-          <EditRule rule={this.state.rules[this.state.editIndex]} onSave={(data) => this.handleOnSave(this.state.editIndex, data)} />
+        <Modal style={modalStyles} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editIndex: null })}>
+          <EditRule rule={ruleToEdit} onSave={(data) => this.handleOnSave(this.state.editIndex, data)} />
         </Modal>
       </div>
     );

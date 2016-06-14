@@ -35,6 +35,7 @@
     "babel-preset-react": "^6.5.0",
     "brace": "^0.8.0",
     "classnames": "^2.2.4",
+    "immutable": "^3.8.1",
     "lodash": "^4.11.1",
     "react": "^15.0.2",
     "react-ace": "^3.4.1",

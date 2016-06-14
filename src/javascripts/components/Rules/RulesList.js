@@ -6,7 +6,7 @@ export default function RulesList(props) {
   return (
     <table className="RuleTable RuleTable--striped rules-list">
       <tbody>
-        {rules.reverse().map((rule, index) => <RuleListItem {...rule} onEditClick={() => onEditClick(index)} onDeleteClick={() => onDeleteClick(index)} onStatusClick={() => onStatusClick(index)} key={`rule_${index}`} />)}
+        {rules.map((rule, index) => <RuleListItem {...rule} onEditClick={() => onEditClick(index)} onDeleteClick={() => onDeleteClick(index)} onStatusClick={() => onStatusClick(index)} key={`rule_${index}`} />)}
       </tbody>
     </table>
   );
