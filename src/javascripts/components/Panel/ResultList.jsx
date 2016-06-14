@@ -46,7 +46,7 @@ export default class ResultList extends Component {
     let results = this.state.results;
 
     results = results.filter(r => r.type && r.priority && r.message && r.label);
-    results = this.state.filter ? results.filter(r => r.label === this.state.filter) : results;
+    results = this.state.filter ? results.filter(r => r.label === this.state.filter || r.type === this.state.filter) : results;
     results = sortBy(results, ['priority']).reverse();
 
     const clearFilterLink = this.state.filter ? <a href="javascript://" className="clear-filter" onClick={this.clearFilter}>Clear filter</a> : null;
