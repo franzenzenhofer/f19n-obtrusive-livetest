@@ -20,6 +20,13 @@ const normalizeHeaders = (responseHeaders) => {
   return fromPairs(responseHeaderPairs);
 };
 
+const hashFromNameValuePairArray = (array) => {
+  const flatArray = array.map((entry) => {
+    return [entry.name, entry.value];
+  });
+  return fromPairs(flatArray);
+};
+
 const cleanup = () => {
   chrome.tabs.query({ windowId: chrome.windows.WINDOW_ID_CURRENT }, (tabs) => {
     const openTabIds = tabs.map(t => t.id);
@@ -88,7 +95,14 @@ chrome.webRequest.onBeforeRequest.addListener((data) => {
 
 chrome.webRequest.onHeadersReceived.addListener((data) => {
   const { tabId, responseHeaders } = data;
-  findOrCreateCollector(tabId).pushEvent(update(data, { responseHeaders: { $set: normalizeHeaders(responseHeaders) } }), 'onHeadersReceived');
+  const eventData = update(
+    data,
+    {
+      responseHeaders: { $set: normalizeHeaders(responseHeaders) },
+      rawResponseHeaders: { $set: hashFromNameValuePairArray(responseHeaders) },
+    }
+  );
+  findOrCreateCollector(tabId).pushEvent(eventData, 'onHeadersReceived');
 }, filter, ['responseHeaders']);
 
 chrome.webRequest.onCompleted.addListener((data) => {
