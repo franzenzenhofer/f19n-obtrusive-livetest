@@ -100,8 +100,8 @@ export default class Rules extends Component {
             <RulesList rules={rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
         </div>
-        <Modal style={modalStyles} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editIndex: null })}>
-          <EditRule rule={ruleToEdit} onSave={(data) => this.handleOnSave(this.state.editIndex, data)} />
+        <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editIndex: null })}>
+          <EditRule rule={ruleToEdit} onCancel={() => this.setState({ editIndex: null })} onSave={(data) => this.handleOnSave(this.state.editIndex, data)} />
         </Modal>
       </div>
     );

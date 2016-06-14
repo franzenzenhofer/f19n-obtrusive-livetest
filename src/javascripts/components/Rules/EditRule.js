@@ -75,6 +75,7 @@ export default class EditRule extends Component {
           />
         </label>
         <button onClick={this.handleOnSave} disabled={!canSave}>Save</button>
+        <a onClick={this.props.onCancel}>cancel</a>
       </div>
     );
   }
