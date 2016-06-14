@@ -39,18 +39,18 @@ export default class EventCollection {
     return event;
   }
 
-  //helper function to get the static HTML Dom
+  // helper function to get the static HTML Dom
   getStaticDom() {
-    var e = this.documentEndEvent();
-    return e.document;
+    const e = this.documentEndEvent();
+    return e && e.document;
   }
 
   getIdleDom() {
-    var e = this.documentIdleEvent();
-    return e.document;
+    const e = this.documentIdleEvent();
+    return e && e.document;
   }
 
-  //function to get the current live DOM
+  // function to get the current live DOM
   getLiveDom() {
     return null;
   }
