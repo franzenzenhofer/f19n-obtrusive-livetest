@@ -13,7 +13,7 @@ export default class AddRule extends Component {
   }
 
   addEmptyRule() {
-    var rulebody = "function(page) {\n\
+    const rulebody = "function(page) {\n\
 var dom = page.getStaticDom();\n\
 var location = page.getLocation();\n\
 var headers = page.getHttpHeaders();\n\
@@ -32,8 +32,8 @@ if (/* some requirment*/) {\n\
 }\n\
 return null;\n\
 }";
-  this.props.onAddRule({ name: 'New rule', body: rulebody, result: null }, true);
-}
+    this.props.onAddRule({ name: 'New rule', body: rulebody, result: null }, true);
+  }
 
   handleAddRule() {
     const reader = new FileReader();
@@ -48,6 +48,7 @@ return null;\n\
         if (valid) {
           this.props.onAddRule({ name, body, result });
           this.refs.file.value = '';
+          this.setState({ error: null });
         } else {
           this.setState({ error });
         }
@@ -62,8 +63,7 @@ return null;\n\
       <div className="Header-subHeader Section add-rule">
         <div className="Wrapper">
           <h2>Add rule</h2>
-          <input className="Button" type="file" ref="file" />
-          <input className="Button Button--haptic" type="submit" value="Add rule" onClick={this.handleAddRule} />
+          <input className="Button" type="file" ref="file" onChange={this.handleAddRule} />
           {this.state.error ? <p className="error"><b>{this.state.error.name}</b>: {this.state.error.message}</p> : null}
           <p><button className="Button Button--haptic" onClick={this.addEmptyRule}>New rule template</button></p>
         </div>
