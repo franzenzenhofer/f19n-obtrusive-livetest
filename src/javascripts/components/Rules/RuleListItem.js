@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default function RulesListItem(props) {
-  const { name, id, status, onEditClick, onDeleteClick, onStatusClick } = props;
+  const { name, id, status, onEditClick, onDeleteClick, onStatusClick, onDuplicateClick } = props;
 
   return (
     <tr className={classNames('rule', { disabled: status === 'disabled' })}>
@@ -10,7 +10,7 @@ export default function RulesListItem(props) {
         <a onClick={onEditClick}><h3>{name}</h3><span>#{id}</span></a>
         <div>
           <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>
-          <button className="Button Button--haptic">Duplicate</button>
+          <button className="Button Button--haptic" onClick={onDuplicateClick}>Duplicate</button>
           <button className="Button Button--haptic">Download</button>
         </div>
       </td>

@@ -15,15 +15,10 @@ export default class Rules extends Component {
       editIndex: null,
     };
 
-    chrome.storage.onChanged.addListener(this.onStoreChange.bind(this));
-
-    this.addRule = this.addRule.bind(this);
-    this.removeRule = this.removeRule.bind(this);
-    this.toggleRuleStatus = this.toggleRuleStatus.bind(this);
-    this.editRule = this.editRule.bind(this);
+    chrome.storage.onChanged.addListener(this.onStoreChange);
   }
 
-  onStoreChange(data) {
+  onStoreChange = (data) => {
     if (data && data.rules && data.rules.newValue) {
       this.setState({ rules: fromJS(data.rules.newValue) });
     }
@@ -39,7 +34,7 @@ export default class Rules extends Component {
     this.setState({ editIndex: null });
   }
 
-  addRule(data, open = false) {
+  addRule = (data, open = false) => {
     const additionalData = {
       id: `rule-${Math.round(Math.random() * 1000000)}`,
       status: 'enabled',
@@ -52,21 +47,26 @@ export default class Rules extends Component {
     }
   }
 
-  toggleRuleStatus(index) {
+  toggleRuleStatus = (index) => {
     const status = this.state.rules.getIn([index, 'status']) === 'enabled' ? 'disabled' : 'enabled';
     chrome.storage.local.set({
       rules: this.state.rules.setIn([index, 'status'], status).toJS(),
     });
   }
 
-  removeRule(index) {
+  removeRule = (index) => {
     chrome.storage.local.set({
       rules: this.state.rules.splice(index, 1).toJS(),
     });
   }
 
-  editRule(index) {
+  editRule = (index) => {
     this.setState({ rules: this.state.rules, editIndex: index });
+  }
+
+  duplicateRule = (index) => {
+    const rule = this.state.rules.get(index).toJS();
+    this.addRule(rule);
   }
 
   render() {
@@ -97,7 +97,7 @@ export default class Rules extends Component {
         <div className="Wrapper">
           <div className="Section rules">
             <h2>All rules</h2>
-            <RulesList rules={rules} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+            <RulesList rules={rules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
         </div>
         <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editIndex: null })}>
