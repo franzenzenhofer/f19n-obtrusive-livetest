@@ -28,7 +28,7 @@ if (/* some requirment*/) {\n\
   var msg = 'a message, can inlcude HTML';\n\
   var type = 'info'; //should be 'info', 'warning', 'error'\n\
 \n\
-  return this.createResult(1, lable, msg, type');\n\
+  return this.createResult(lable, msg, type');\n\
 }\n\
 return null;\n\
 }";

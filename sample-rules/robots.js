@@ -32,9 +32,9 @@ function(page) {
     );
 
     if (metaFound) {
-        return this.createResult(1, 'HEAD', 'Robots: ' + (index ? 'index' : 'noindex'), index ? 'info' : 'warning');
+        return this.createResult('HEAD', 'Robots: ' + (index ? 'index' : 'noindex'), index ? 'info' : 'warning');
     } else {
-        return this.createResult(1, 'HEAD', 'Robots: No Robots meta tag found.', 'info');
+        return this.createResult('HEAD', 'Robots: No Robots meta tag found.', 'info');
     }
 
 }

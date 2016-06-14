@@ -10,5 +10,5 @@
     href = amp.getAttribute('href');
     text = "amp: ${href}"
   console.log(amp)
-  return @createResult(1, 'HEAD', text, 'info')
-  #return text ? this.createResult(1, 'HEAD', text, type) : null;
+  return @createResult('HEAD', text, 'info')
+  #return text ? this.createResult('HEAD', text, type) : null;

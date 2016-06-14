@@ -22,19 +22,19 @@ function(page) {
         {
           var text = `${location.href} → <a href="https://support.google.com/webmasters/answer/139066?hl=en">Canonical</a> → <a href='${href}' target='_top'>${href}</a>`;
         }
-        return this.createResult(1, 'HEAD', text, 'warning');
+        return this.createResult('HEAD', text, 'warning');
       }
       else {
         var text = `<a href="https://support.google.com/webmasters/answer/139066?hl=en">Canonical</a>: <a href='${href}' target='_top'>${href}</a>`;
-        return this.createResult(1, 'HEAD', text, 'info');
+        return this.createResult('HEAD', text, 'info');
       }
     }
     else {
-      return this.createResult(1, 'HEAD', '<a href="https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html" target="_top">Multiple canonical found within the static HTML.</a>', 'error');
+      return this.createResult('HEAD', '<a href="https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html" target="_top">Multiple canonical found within the static HTML.</a>', 'error');
     }
   }
   else {
-    return this.createResult(1, 'HEAD', '<a href="https://support.google.com/webmasters/answer/139066?hl=en" target="_top">No canonical found within the static HTML.</a>', 'error');
+    return this.createResult('HEAD', '<a href="https://support.google.com/webmasters/answer/139066?hl=en" target="_top">No canonical found within the static HTML.</a>', 'error');
   }
   return null;
 }

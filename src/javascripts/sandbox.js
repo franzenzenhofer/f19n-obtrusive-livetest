@@ -22,7 +22,7 @@ const validateRule = (rule) => {
   if (ruleFunc) {
     try {
       const sampleResult = ruleFunc.apply(RuleContext, [new EventCollection(sampleEvents)]);
-      if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type && sampleResult.priority)) {
+      if (sampleResult === null || (sampleResult.label && sampleResult.message && sampleResult.type)) {
         result.result = sampleResult;
       } else {
         result.valid = false;

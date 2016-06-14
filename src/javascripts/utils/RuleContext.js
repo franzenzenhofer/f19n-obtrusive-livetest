@@ -1,10 +1,15 @@
-export const createResult = (priority, label, message, type = 'info') => {
-  return {
-    priority,
-    label,
-    message,
-    type,
-  };
+import { isNumber } from 'lodash';
+
+export const createResult = (_priority, label, message, type = 'info') => {
+  let result = { label: _priority, message: label, type: message };
+
+  // TODO remove priority argument + warning
+  if (isNumber(_priority)) {
+    console.log('Deprecation warning: `priority` has been removed');
+    result = { label, message, type };
+  }
+
+  return result;
 };
 
 

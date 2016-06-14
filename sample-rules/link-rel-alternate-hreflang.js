@@ -29,12 +29,12 @@ function(page) {
           }
         )
         var rellist='<br><textarea readonly>'+codestring+'</textarea>';
-      return this.createResult(1, lable, alternates.length+' link-rel-alternate found.'+rellist+' '+this.dataUrlTextLink(purecodestring , 'View partial code.')+'<br>'+linkstring, type);
+      return this.createResult(lable, alternates.length+' link-rel-alternate found.'+rellist+' '+this.dataUrlTextLink(purecodestring , 'View partial code.')+'<br>'+linkstring, type);
     }
     else {
-      return this.createResult(1, lable, 'No link-rel-alternate-hreflang found.', type);
+      return this.createResult(lable, 'No link-rel-alternate-hreflang found.', type);
     }
 
-  //return this.createResult(1, lable, 'Title: '+titletags[0].innerText, 'info');
+  //return this.createResult(lable, 'Title: '+titletags[0].innerText, 'info');
   return null;
 }

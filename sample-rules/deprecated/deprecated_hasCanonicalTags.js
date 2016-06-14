@@ -22,5 +22,5 @@ function(eventCollection) {
     }
   }
 
-  return text ? this.createResult(1, 'HEAD', text, type) : null;
+  return text ? this.createResult('HEAD', text, type) : null;
 }

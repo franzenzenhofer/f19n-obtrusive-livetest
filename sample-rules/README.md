@@ -19,7 +19,7 @@ function(eventCollection) {
 
   var { location } = documentEndEvent;
 
-  return { priority: 1, label: 'DEBUG', type: 'info', message: `Loaded ${location.href}` };
+  return { label: 'DEBUG', type: 'info', message: `Loaded ${location.href}` };
 }
 ```
 
@@ -33,10 +33,10 @@ function(eventCollection) {
   if (!documentIdleEvent) { return null; }
 
   var { document } = documentIdleEvent;
-  
+
   var countElements = document.querySelectorAll('p').length;
 
-  return this.createResult(1, 'STATS', `found ${countElements} paragraph elements`);
+  return this.createResult('STATS', `found ${countElements} paragraph elements`);
 }
 ```
 
@@ -66,7 +66,7 @@ Returns the full unfiltered list of events.
 ```javascript
 function(eventCollection) {
   var allEvents = eventCollection.events();
-  return this.createResult(1, 'DEBUG', `Events count: ${allEvents.length}`);
+  return this.createResult('DEBUG', `Events count: ${allEvents.length}`);
 }
 ```
 
@@ -77,7 +77,7 @@ Returns a list (Array) of events for the given type.
 ```javascript
 function(eventCollection) {
   var allOnCommittedEvents = eventCollection.eventsOfType('onCommitted');
-  return this.createResult(1, 'DEBUG', `onCommitted count: ${allOnCommittedEvents.length}`);
+  return this.createResult('DEBUG', `onCommitted count: ${allOnCommittedEvents.length}`);
 }
 ```
 
@@ -90,7 +90,7 @@ Some events can occur multiple times during a page request (for example `onHeade
 function(eventCollection) {
   var onHeadersReceivedEvent = eventCollection.firstEventOfType('onHeadersReceived');
   var statusCode = onHeadersReceivedEvent.statusCode;
-  return this.createResult(1, 'DEBUG', `First statusCode: ${statusCode}`);
+  return this.createResult('DEBUG', `First statusCode: ${statusCode}`);
 }
 ```
 
@@ -102,13 +102,13 @@ Like `firstEventOfType` except it returns the last event of the given type.
 function(eventCollection) {
   var onHeadersReceivedEvent = eventCollection.lastEventOfType('onHeadersReceived');
   var statusCode = onHeadersReceivedEvent.statusCode;
-  return this.createResult(1, 'DEBUG', `Last statusCode: ${statusCode}`);
+  return this.createResult('DEBUG', `Last statusCode: ${statusCode}`);
 }
 ```
 
 ##### documentEndEvent()
 
-Returns a special event containing `document` (a `DOMParser` instance representing the DOM before `window.onLoad`), `location` object, and the pure `html` as string. 
+Returns a special event containing `document` (a `DOMParser` instance representing the DOM before `window.onLoad`), `location` object, and the pure `html` as string.
 
 ```javascript
 function(eventCollection) {
@@ -116,7 +116,7 @@ function(eventCollection) {
   var { document, location, html } = documentEndEvent;
   var host = location.host;
   var divs = document.querySelectorAll('div').length;
-  return this.createResult(1, 'DEBUG', `${divs} div elements found on ${location.host}`);
+  return this.createResult('DEBUG', `${divs} div elements found on ${location.host}`);
 }
 ```
 
@@ -130,9 +130,9 @@ Like `documentEndEvent` except it represents the DOM, location and HTML after `w
 Each function inside [RuleContext.js](/src/javascripts/utils/RuleContext.js) is available inside every rule via the `this`.
 Dont forget to run `> grunt --reload-extension` or manually reload the extension when modifying the extension code.
 
-##### createResult(priority [INTEGER], label [STRING], message [STRING], type [STRING](optional, default 'info'))
+##### createResult(label [STRING], message [STRING], type [STRING](optional, default 'info'))
 
-Returns a valid rule result (an object with the following keys: priority, label, message and type).
+Returns a valid rule result (an object with the following keys: label, message and type).
 
 ```javascript
 function(eventCollection) {
@@ -140,6 +140,6 @@ function(eventCollection) {
   var { document, location, html } = documentEndEvent;
   var host = location.host;
   var divs = document.querySelectorAll('div').length;
-  return this.createResult(1, 'DEBUG', `${divs} div elements found on ${location.host}`);
+  return this.createResult('DEBUG', `${divs} div elements found on ${location.host}`);
 }
 ```

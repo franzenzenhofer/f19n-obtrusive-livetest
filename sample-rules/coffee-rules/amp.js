@@ -12,5 +12,5 @@ function(eventCollection) {
     text = "amp: ${href}";
   }
   console.log(amp);
-  return this.createResult(1, 'HEAD', text, 'info');
+  return this.createResult('HEAD', text, 'info');
 }
