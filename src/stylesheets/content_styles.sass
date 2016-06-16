@@ -1,3 +1,5 @@
+@import "base"
+
 $panelWidth: 300px
 
 html.show-f19n-panel
@@ -12,7 +14,13 @@ html.show-f19n-panel
   bottom: 0px
   width: $panelWidth
   z-index: 99999
-  background-color: #efefef
+  background-color: white
+  border-right: 1px $greyAccentDarker solid
+
+  h4
+    text-align: center
+    margin: 20px 0
+    font-size: 20px
 
   iframe
     position: relative

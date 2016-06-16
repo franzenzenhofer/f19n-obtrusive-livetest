@@ -1,7 +1,12 @@
 const panelUrl = chrome.extension.getURL('panel.html');
-const $panelWrapper = $(`<div class="f19n-panel-wrapper"><iframe src='${panelUrl}'></iframe></div>`);
+const $panelWrapper = $(`<div class="f19n-panel-wrapper"><h4>Loading f19n Livetest ...</h4><iframe src='${panelUrl}'></iframe></div>`);
+const $iframe = $panelWrapper.find('iframe');
 let hidden = false;
 let tabId = null;
+
+$iframe.on('load', () => {
+  $panelWrapper.find('h4').remove();
+});
 
 const check = (sites, url) => {
   const entry = sites.reverse().find((l) => {
