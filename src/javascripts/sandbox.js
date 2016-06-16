@@ -3,9 +3,15 @@ import sampleEvents from './constants/sampleEvents';
 
 import * as RuleContext from './utils/RuleContext';
 
-const runRule = (rule, events) => {
+const runRule = (name, rule, events) => {
+  let ruleResult = null;
   const ruleFunc = eval(`(${rule})`);
-  return ruleFunc.apply(RuleContext, [events]);
+  try {
+    ruleResult = ruleFunc.apply(RuleContext, [events]);
+  } catch (e) {
+    ruleResult = { label: 'ERROR', message: `<b>${e.name}</b>: ${e.message} @<b>${name}</b>`, type: 'warning' };
+  }
+  return ruleResult;
 };
 
 const validateRule = (rule) => {
@@ -38,14 +44,14 @@ const validateRule = (rule) => {
 };
 
 window.addEventListener('message', (event) => {
-  const { command, body, args, runId } = event.data;
+  const { command, body, args, runId, name } = event.data;
   if (command === 'validateRule') {
     let result = validateRule(body);
     result = Object.assign(result || {}, { runId });
     event.source.postMessage(result, event.origin);
   }
   if (command === 'runRule') {
-    let result = runRule(body, new EventCollection(args));
+    let result = runRule(name, body, new EventCollection(args));
     result = Object.assign(result || {}, { runId });
     event.source.postMessage(result, event.origin);
   }
