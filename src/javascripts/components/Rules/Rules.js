@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import RulesList from './RulesList';
 import AddRule from './AddRule';
 import EditRule from './EditRule';
+import EnabledSites from './EnabledSites';
 
 import { fromJS } from 'immutable';
 
@@ -12,6 +13,7 @@ export default class Rules extends Component {
     super(props);
     this.state = {
       rules: fromJS(props.rules),
+      sites: props.sites,
       editIndex: null,
     };
 
@@ -21,6 +23,9 @@ export default class Rules extends Component {
   onStoreChange = (data) => {
     if (data && data.rules && data.rules.newValue) {
       this.setState({ rules: fromJS(data.rules.newValue) });
+    }
+    if (data && data.sites && data.sites.newValue) {
+      this.setState({ sites: fromJS(data.sites.newValue) });
     }
   }
 
@@ -69,6 +74,10 @@ export default class Rules extends Component {
     this.addRule(rule);
   }
 
+  updateSites = (sites) => {
+    chrome.storage.local.set({ sites });
+  }
+
   render() {
     const modalStyles = {
       content: {
@@ -94,6 +103,7 @@ export default class Rules extends Component {
           </div>
         </header>
         <AddRule onAddRule={this.addRule} />
+        <EnabledSites sites={this.state.sites} onChange={this.updateSites} />
         <div className="Wrapper">
           <div className="Section rules">
             <h2>All rules</h2>

@@ -3,6 +3,14 @@ const $panelWrapper = $(`<div class="f19n-panel-wrapper"><iframe src='${panelUrl
 let hidden = false;
 let tabId = null;
 
+const check = (sites, url) => {
+  const entry = sites.reverse().find((l) => {
+    const regexp = `\^${l}\$`.replace(/\*/g, '[^ ]*').replace('!', '');
+    return url.match(new RegExp(regexp));
+  });
+  return entry ? (entry.match(/^!.+/) !== null ? false : true) : false;
+};
+
 const fixAbsolutePositionedElements = () => {
   // TODO: Not the perfect solution in terms of performance. Maybe use TreeWalker.
   const wrapperWidth = $panelWrapper.width();
@@ -37,11 +45,14 @@ const initialize = () => {
   }
 };
 
-chrome.storage.local.get('hidden-panels', (data) => {
+chrome.storage.local.get((data) => {
   chrome.runtime.sendMessage('tabIdPls', (response) => {
     const hiddenPanels = data['hidden-panels'] || [];
+    const enabledSites = data.sites || '*://*';
+    const enabledSite = check(enabledSites.split('\n'), document.location.href);
     tabId = response.tabId;
     hidden = hiddenPanels.indexOf(tabId) !== -1;
+    hidden = hidden || !enabledSite;
     initialize(hidden);
   });
 });
