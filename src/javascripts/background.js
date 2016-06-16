@@ -7,7 +7,7 @@ import resultStoreKey from './utils/resultStoreKey';
 import { runRule } from './utils/Sandbox';
 
 const filter = {
-  urls: ['<all_urls>'],
+  urls: ['http://*/*', 'https://*/*'],
   types: ['main_frame'],
 };
 
