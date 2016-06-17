@@ -61,7 +61,7 @@ export default class Rules extends Component {
   }
 
   duplicateRule = (index) => {
-    rulesStore.duplicate(index);
+    rulesStore.duplicate(index, { defaultRule: false });
   }
 
   updateSites = (sites) => {

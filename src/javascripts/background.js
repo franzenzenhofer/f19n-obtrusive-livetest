@@ -6,12 +6,18 @@ import { isEmpty, fromPairs, xor, difference, without } from 'lodash';
 import resultStoreKey from './utils/resultStoreKey';
 import { runRule } from './utils/Sandbox';
 
+import syncDefaultRules from './utils/syncDefaultRules';
+
 const filter = {
   urls: ['http://*/*', 'https://*/*'],
   types: ['main_frame'],
 };
 
 const collector = {};
+
+chrome.runtime.onInstalled.addListener(() => {
+  syncDefaultRules();
+});
 
 const normalizeHeaders = (responseHeaders) => {
   const responseHeaderPairs = responseHeaders.map((responseHeader) => {
