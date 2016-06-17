@@ -4,6 +4,8 @@ import AddRule from './AddRule';
 import EditRule from './EditRule';
 import EnabledSites from './EnabledSites';
 
+import rulesStore from './../../store/rules';
+
 import { fromJS } from 'immutable';
 
 import Modal from 'react-modal';
@@ -30,8 +32,7 @@ export default class Rules extends Component {
   }
 
   updateRule(index, data) {
-    const rules = this.state.rules.mergeIn([index], data).toJS();
-    chrome.storage.local.set({ rules });
+    rulesStore.update(index, data);
   }
 
   handleOnSave(index, data) {
@@ -40,29 +41,19 @@ export default class Rules extends Component {
   }
 
   addRule = (data, open = false) => {
-    const additionalData = {
-      id: `rule-${Math.round(Math.random() * 1000000)}`,
-      status: 'enabled',
-    };
-    chrome.storage.local.set({
-      rules: this.state.rules.push(Object.assign(data, additionalData)).toJS(),
-    });
+    rulesStore.add(data);
     if (open) {
-      this.setState({ editIndex: this.state.rules.length });
+      this.setState({ editIndex: this.state.rules.count() - 1 });
     }
   }
 
   toggleRuleStatus = (index) => {
     const status = this.state.rules.getIn([index, 'status']) === 'enabled' ? 'disabled' : 'enabled';
-    chrome.storage.local.set({
-      rules: this.state.rules.setIn([index, 'status'], status).toJS(),
-    });
+    rulesStore.update(index, { status });
   }
 
   removeRule = (index) => {
-    chrome.storage.local.set({
-      rules: this.state.rules.splice(index, 1).toJS(),
-    });
+    rulesStore.remove(index);
   }
 
   editRule = (index) => {
@@ -70,8 +61,7 @@ export default class Rules extends Component {
   }
 
   duplicateRule = (index) => {
-    const rule = this.state.rules.get(index).toJS();
-    this.addRule(rule);
+    rulesStore.duplicate(index);
   }
 
   updateSites = (sites) => {
