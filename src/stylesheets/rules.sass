@@ -23,7 +23,6 @@
   color: $brandColor
   line-height: 24px
 
-// Results Table
 .RuleTable
   border-collapse: collapse
   border-spacing: 0
@@ -35,7 +34,7 @@
 
 .RuleTable tr
   background-color: $tableLight
-  border-top: 1px solid $greyAccent;
+  border-top: 1px solid $greyAccent
 
 .RuleTable--striped tr:nth-child(2n-1) td
   background-color: $tableDark
@@ -65,11 +64,29 @@
 .disabled .RuleTable-ruleName
   text-decoration: line-through
 
-
-
 .add-rule, .edit-rule
   .error
     background: #c9302c
     border-radius: 5px
     padding: 10px
     color: white
+
+.ReactModal__Overlay
+  align-items: center
+  justify-content: center
+  display: flex
+
+.ReactModal__Content
+  position: initial !important
+  top: auto !important
+  left: auto !important
+  right: auto !important
+  bottom: auto !important
+  margin-right: 0 !important
+  transform: initial !important
+  width: 80%
+  height: 550px
+
+.ace_editor
+  width: 100% !important
+  height: 420px !important
