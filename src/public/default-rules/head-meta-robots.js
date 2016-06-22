@@ -8,8 +8,8 @@ function(page) {
         index = true;
 
     // check meta
-    var metaValidArray = Array.prototype.slice.call(metaValid);
-    metaValidArray.forEach(
+    //var metaValidArray = metaValid;//Array.prototype.slice.call(metaValid);
+    metaValid.forEach(
         function(value) {
             metaRobots = dom.querySelectorAll('meta[name=' + value + ']');
 
@@ -38,3 +38,9 @@ function(page) {
     }
 
 }
+
+/*
+possible improvements TODO
+show partial code link
+tell if it is robot or googlebot or other bot info
+*/

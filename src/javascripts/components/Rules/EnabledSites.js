@@ -7,6 +7,7 @@ export default class EnabledSites extends Component {
         <div className="Wrapper">
           <h2>Enabled sites</h2>
           <textarea style={{ height: 50, width: '100%' }} defaultValue={this.props.sites} onChange={(e) => this.props.onChange(e.target.value)} />
+          <button onclick={(e) => this.props.onChange(e.target.value)}>Apply</button>
         </div>
       </div>
     );
