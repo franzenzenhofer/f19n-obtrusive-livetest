@@ -5,7 +5,7 @@ function(page) {
   //check if we got some data to work with
   if (!dom) { return null; }
   console.log('made it');
-  var titletags = dom.getElementsByTagName('title');
+  var titletags = dom.querySelectorAll('head > title');
   var lable = 'HEAD';
   console.log(titletags);
 

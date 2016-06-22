@@ -63,9 +63,9 @@ return null;\n\
       <div className="Header-subHeader Section add-rule">
         <div className="Wrapper">
           <h2>Add rule</h2>
-          <input className="Button" type="file" ref="file" onChange={this.handleAddRule} />
+          <input className="Button Upload" type="file" ref="file" onChange={this.handleAddRule} />
           {this.state.error ? <p className="error"><b>{this.state.error.name}</b>: {this.state.error.message}</p> : null}
-          <p><button className="Button Button--haptic" onClick={this.addEmptyRule}>New rule template</button></p>
+          <p> or <button className="Button Button--haptic" onClick={this.addEmptyRule}>Create new rule</button></p>
         </div>
       </div>
     );
