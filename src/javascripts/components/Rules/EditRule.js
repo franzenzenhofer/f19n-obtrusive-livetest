@@ -66,6 +66,7 @@ export default class EditRule extends Component {
             highlightActiveLine={false}
             showGutter={false}
             maxLines={16}
+            showPrintMargin={false}
             useSoftTabs
             tabSize={2}
             theme="monokai"
