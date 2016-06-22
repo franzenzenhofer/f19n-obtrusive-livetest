@@ -65,7 +65,6 @@ export default class EditRule extends Component {
             value={body}
             highlightActiveLine={false}
             showGutter={false}
-            maxLines={16}
             showPrintMargin={false}
             useSoftTabs
             tabSize={2}
