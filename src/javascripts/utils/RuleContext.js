@@ -19,7 +19,7 @@ export const htmlEntitiesEncode = (str) => {
 
 export const dataUrlTextLink = (str, anchor) => {
   str = String(str).replace(/"/g, '\"');
-  return '<a href="data:text;base64, '+btoa(str)+'" target="_blank">'+anchor+'</a>';
+  return '<a href="data:text;base64, '+btoa(str)+'" target="_blank" title="'+htmlEntitiesEncode(str)+'">'+anchor+'</a>';
 }
 
 export const isIterable = function (stuff) {
@@ -69,7 +69,7 @@ export const allNodesToString = (...stuffs) =>
 
 export const partialCodeLink = (...nodes) => {
 	var str = allNodesToString(...nodes);
-  return dataUrlTextLink(str, 'PSC');
+  return dataUrlTextLink(str, '<span class="show-partial-source">&lt;/&gt;</span>');
 }
 
 

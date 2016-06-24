@@ -29,7 +29,7 @@ function(page) {
           }
         )
         //var rellist='<br><textarea readonly>'+codestring+'</textarea>';
-      return this.createResult(lable, alternates.length+' link-rel-alternate found.'+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type);
+      return this.createResult(lable, alternates.length+' link-rel-alternate found. '+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type);
     }
     else {
       return this.createResult(lable, 'No link-rel-alternate-hreflang found.', type);
