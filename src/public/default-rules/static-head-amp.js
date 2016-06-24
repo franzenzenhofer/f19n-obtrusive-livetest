@@ -4,7 +4,7 @@ function(page) {
 
   if (amp) {
     var href = amp.getAttribute('href');
-    var text = `Amp: <a href='${href}' target='_top'>${href}</a> `;//+this.dataUrlCodeLink(amp, 'VPC');
+    var text = `Amp: <a href='${href}' target='_top'>${href}</a> `;
     return this.createResult('HEAD', text, 'info');
   }
   return null;
