@@ -1,8 +1,8 @@
 ## Custom rules
 
-A custom rule consists of one javascript function receiving an `EventCollection` as first argument and must return a [valid rule result](#rulecontext).
+A custom rule consists of one javascript function receiving an `Page` object as first argument and must return a [valid rule result](#rulecontext).
 
-- [EventCollection](#eventcollection)
+- [Page Object](#page)
 - [RuleContext](#rulecontext) (rule helper methods)
 
 
@@ -11,8 +11,8 @@ A custom rule consists of one javascript function receiving an `EventCollection`
 Always returns the host of the visited site
 
 ```javascript
-function(eventCollection) {
-  var documentEndEvent = eventCollection.documentEndEvent();
+function(page) {
+  var documentEndEvent = page.documentEndEvent();
 
   // Return if no documentEndEvent (and so location) found
   if (!documentEndEvent) { return null; }
@@ -26,8 +26,8 @@ function(eventCollection) {
 Counts the occurrence of paragraph elements after document idle
 
 ```javascript
-function(eventCollection) {
-  var documentIdleEvent = eventCollection.documentIdleEvent();
+function(page) {
+  var documentIdleEvent = page.documentIdleEvent();
 
   // Return if no documentIdleEvent (and so location) found
   if (!documentIdleEvent) { return null; }
@@ -40,9 +40,9 @@ function(eventCollection) {
 }
 ```
 
-## EventCollection
+## page
 
-The `EventCollection` holds all the occurred events during the page load.
+The `page`-object is basically a collection of events. This event-collection holds all the occurred events during the page load.
 
 #### List of possible events
 
@@ -57,15 +57,15 @@ The `EventCollection` holds all the occurred events during the page load.
 
 #### Methods
 
-An `EventCollection` instance provides the following methods to easely filter for relevant events.
+An `page` instance provides the following methods to easely filter for relevant events.
 
 ##### events()
 
 Returns the full unfiltered list of events.
 
 ```javascript
-function(eventCollection) {
-  var allEvents = eventCollection.events();
+function(page) {
+  var allEvents = page.events();
   return this.createResult('DEBUG', `Events count: ${allEvents.length}`);
 }
 ```
@@ -75,8 +75,8 @@ function(eventCollection) {
 Returns a list (Array) of events for the given type.
 
 ```javascript
-function(eventCollection) {
-  var allOnCommittedEvents = eventCollection.eventsOfType('onCommitted');
+function(page) {
+  var allOnCommittedEvents = page.eventsOfType('onCommitted');
   return this.createResult('DEBUG', `onCommitted count: ${allOnCommittedEvents.length}`);
 }
 ```
@@ -87,8 +87,8 @@ Returns the first event of the given type.
 Some events can occur multiple times during a page request (for example `onHeadersReceived`, `onBeforeRequest`, `onCommitted`, …).
 
 ```javascript
-function(eventCollection) {
-  var onHeadersReceivedEvent = eventCollection.firstEventOfType('onHeadersReceived');
+function(page) {
+  var onHeadersReceivedEvent = page.firstEventOfType('onHeadersReceived');
   var statusCode = onHeadersReceivedEvent.statusCode;
   return this.createResult('DEBUG', `First statusCode: ${statusCode}`);
 }
@@ -99,8 +99,8 @@ function(eventCollection) {
 Like `firstEventOfType` except it returns the last event of the given type.
 
 ```javascript
-function(eventCollection) {
-  var onHeadersReceivedEvent = eventCollection.lastEventOfType('onHeadersReceived');
+function(page) {
+  var onHeadersReceivedEvent = page.lastEventOfType('onHeadersReceived');
   var statusCode = onHeadersReceivedEvent.statusCode;
   return this.createResult('DEBUG', `Last statusCode: ${statusCode}`);
 }
@@ -111,8 +111,8 @@ function(eventCollection) {
 Returns a special event containing `document` (a `DOMParser` instance representing the DOM before `window.onLoad`), `location` object, and the pure `html` as string.
 
 ```javascript
-function(eventCollection) {
-  var documentEndEvent = eventCollection.documentEndEvent();
+function(page) {
+  var documentEndEvent = page.documentEndEvent();
   var { document, location, html } = documentEndEvent;
   var host = location.host;
   var divs = document.querySelectorAll('div').length;
@@ -135,8 +135,8 @@ Dont forget to run `> grunt --reload-extension` or manually reload the extension
 Returns a valid rule result (an object with the following keys: label, message and type).
 
 ```javascript
-function(eventCollection) {
-  var documentEndEvent = eventCollection.documentEndEvent();
+function(page) {
+  var documentEndEvent = page.documentEndEvent();
   var { document, location, html } = documentEndEvent;
   var host = location.host;
   var divs = document.querySelectorAll('div').length;
