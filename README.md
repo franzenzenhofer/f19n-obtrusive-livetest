@@ -1,4 +1,7 @@
-# f19n Livetest Chrome Extension
+# f19n Obtrusive Livetest Chrome Extension
+
+by http://www.fullstackoptimization.com/
+developed in cooperation with https://die-antwort.eu/
 
 ## Development
 
