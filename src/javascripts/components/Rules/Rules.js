@@ -43,7 +43,8 @@ export default class Rules extends Component {
   addRule = (data, open = false) => {
     rulesStore.add(data);
     if (open) {
-      this.setState({ editIndex: this.state.rules.count() - 1 });
+      //this.setState({ editIndex: this.state.rules.count() - 1 }); //strangly this open the wrong rule
+      this.setState({ editIndex: this.state.rules.count()}); // this ones open the correct rule
     }
   }
 
