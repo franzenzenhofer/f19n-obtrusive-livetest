@@ -21,17 +21,17 @@ var headers = page.getHttpHeaders();\n\
 //check if we got some data to work with\n\
 if (!dom) { return null; }\n\
 \n\
-if (/* some requirment*/) {\n\
+//if (some requirement) \n\
+if (true) {\n\
 \n\
   //some category of stuff your are testing i.e.: 'SPEED', 'HEAD', 'BODY', 'HTTP', ...\n\
   var lable = 'DOM';\n\
-  var msg = 'a message, can inlcude HTML';\n\
+  var msg = 'a message, can inlcude <b>HTML</b>';\n\
   var type = 'info'; //should be 'info', 'warning', 'error'\n\
 \n\
-  return this.createResult(lable, msg, type');\n\
+  return this.createResult(lable, msg, type);\n\
 }\n\
-return null;\n\
-}";
+return null;\n\}";
     this.props.onAddRule({ name: 'New rule', body: rulebody, result: null }, true);
   }
 

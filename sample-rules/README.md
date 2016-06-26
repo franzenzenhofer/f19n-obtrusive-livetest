@@ -143,3 +143,11 @@ function(eventCollection) {
   return this.createResult('DEBUG', `${divs} div elements found on ${location.host}`);
 }
 ```
+
+##License
+
+ * All rules within the /sample-rules/ directory are MIT licensed.
+ * All rules within the /public/default-rules/ director are MIT licensed.
+ * See details within the directory.
+
+All other code within this repository - if not defined otherwise - is currently available under a *Contribution License*
