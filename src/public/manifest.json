@@ -28,15 +28,21 @@
   "content_scripts": [{
     "run_at": "document_start",
     "matches": ["http://*/*", "https://*/*"],
+    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif"],
+    "all_frames": false,
     "js": ["js/zepto.min.js", "js/content_script.js"],
     "css": ["css/content_styles.css"]
   },{
     "run_at": "document_end",
     "matches": ["http://*/*", "https://*/*"],
+    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif"],
+    "all_frames": false,
     "js": ["js/document_end.js"]
   }, {
     "run_at": "document_idle",
     "matches": ["http://*/*", "https://*/*"],
+    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif"],
+    "all_frames": false,
     "js": ["js/document_idle.js"]
   }],
   "permissions": [
