@@ -4,10 +4,14 @@ import classNames from 'classnames';
 export default function RulesListItem(props) {
   const { name, id, status, onEditClick, onDeleteClick, onStatusClick, onDuplicateClick, index } = props;
 
+  function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
   return (
     <tr className={classNames('rule', { disabled: status === 'disabled' })}>
       <td className="RuleTable-ruleName">
-        <a onClick={onEditClick}><h3>{name}</h3><span>#{id} / Index: {index}</span></a>
+        <a onClick={onEditClick}><h3>{name}</h3><span>#{capitalizeFirstLetter(id)} / Index: {index}</span></a>
         <div>
           <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>
           <button className="Button Button--haptic" onClick={onDuplicateClick}>Duplicate</button>
