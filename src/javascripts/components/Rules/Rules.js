@@ -72,6 +72,8 @@ export default class Rules extends Component {
     const modalStyles = {
       content: {
         top: '50%',
+        width: '90%',
+        height: '90%',
         left: '50%',
         right: 'auto',
         bottom: 'auto',

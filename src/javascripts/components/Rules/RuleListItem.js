@@ -2,12 +2,12 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default function RulesListItem(props) {
-  const { name, id, status, onEditClick, onDeleteClick, onStatusClick, onDuplicateClick } = props;
+  const { name, id, status, onEditClick, onDeleteClick, onStatusClick, onDuplicateClick, index } = props;
 
   return (
     <tr className={classNames('rule', { disabled: status === 'disabled' })}>
       <td className="RuleTable-ruleName">
-        <a onClick={onEditClick}><h3>{name}</h3><span>#{id}</span></a>
+        <a onClick={onEditClick}><h3>{index}:{name}</h3><span>#{id}</span></a>
         <div>
           <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>
           <button className="Button Button--haptic" onClick={onDuplicateClick}>Duplicate</button>

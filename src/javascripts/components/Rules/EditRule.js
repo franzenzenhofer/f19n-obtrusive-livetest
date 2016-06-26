@@ -61,9 +61,11 @@ export default class EditRule extends Component {
         <label>
           Script
           <AceEditor
+            width="100%"
+            showLineNumber={true}
             mode="javascript"
             value={body}
-            highlightActiveLine={false}
+            highlightActiveLine={true}
             showGutter={false}
             showPrintMargin={false}
             useSoftTabs
@@ -75,7 +77,8 @@ export default class EditRule extends Component {
           />
         </label>
         <button onClick={this.handleOnSave} disabled={!canSave}>Save</button>
-        <a onClick={this.props.onCancel}>cancel</a>
+        <span> </span>
+        <u><a onClick={this.props.onCancel}>Cancel without saving</a></u>
       </div>
     );
   }
