@@ -16,7 +16,7 @@ export default class Rules extends Component {
     this.state = {
       rules: fromJS(props.rules),
       sites: props.sites,
-      editIndex: null,
+      editRule: null,
     };
 
     chrome.storage.onChanged.addListener(this.onStoreChange);
@@ -31,38 +31,37 @@ export default class Rules extends Component {
     }
   }
 
-  updateRule(index, data) {
-    rulesStore.update(index, data);
+  updateRule(id, data) {
+    rulesStore.update(id, data);
   }
 
-  handleOnSave(index, data) {
-    this.updateRule(index, data);
-    this.setState({ editIndex: null });
+  handleOnSave(id, data) {
+    this.updateRule(id, data);
+    this.setState({ editRule: null });
   }
 
   addRule = (data, open = false) => {
     rulesStore.add(data);
     if (open) {
-      //this.setState({ editIndex: this.state.rules.count() - 1 }); //strangly this open the wrong rule
-      this.setState({ editIndex: this.state.rules.count()}); // this ones open the correct rule
+      this.setState({ editRule: data.id });
     }
   }
 
-  toggleRuleStatus = (index) => {
-    const status = this.state.rules.getIn([index, 'status']) === 'enabled' ? 'disabled' : 'enabled';
-    rulesStore.update(index, { status });
+  toggleRuleStatus = (id) => {
+    const status = this.state.rules.getIn([rulesStore.findIndex(this.state.rules.toJS(), id), 'status']) === 'enabled' ? 'disabled' : 'enabled';
+    rulesStore.update(id, { status });
   }
 
-  removeRule = (index) => {
-    rulesStore.remove(index);
+  removeRule = (id) => {
+    rulesStore.remove(id);
   }
 
-  editRule = (index) => {
-    this.setState({ rules: this.state.rules, editIndex: index });
+  editRule = (id) => {
+    this.setState({ rules: this.state.rules, editRule: id });
   }
 
-  duplicateRule = (index) => {
-    rulesStore.duplicate(index, { defaultRule: false });
+  duplicateRule = (id) => {
+    rulesStore.duplicate(id, { defaultRule: false });
   }
 
   updateSites = (sites) => {
@@ -83,8 +82,8 @@ export default class Rules extends Component {
       },
     };
 
-    const ruleToEdit = this.state.rules.get(this.state.editIndex);
     const rules = this.state.rules.toJS();
+    const ruleToEdit = this.state.rules.get(rulesStore.findIndex(rules, this.state.editRule));
 
     return (
       <div className="f19n-rules">
@@ -103,8 +102,8 @@ export default class Rules extends Component {
             <RulesList rules={rules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
         </div>
-        <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editIndex: null })}>
-          <EditRule rule={ruleToEdit} onCancel={() => this.setState({ editIndex: null })} onSave={(data) => this.handleOnSave(this.state.editIndex, data)} />
+        <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editRule: null })}>
+          <EditRule rule={ruleToEdit} onCancel={() => this.setState({ editRule: null })} onSave={(data) => this.handleOnSave(this.state.editRule, data)} />
         </Modal>
       </div>
     );

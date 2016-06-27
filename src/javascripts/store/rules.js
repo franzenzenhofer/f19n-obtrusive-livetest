@@ -7,6 +7,21 @@ const getRuleId = () => {
   return `rule-${Math.round(Math.random() * 1000000)}`;
 };
 
+const findIndex = (rules, which) => {
+  let index = null;
+  switch (typeof(which)) {
+    case 'string':
+      index = rules.findIndex(r => r.id === which);
+      break;
+    case 'number':
+      index = which;
+      break;
+    default:
+      return null;
+  }
+  return index;
+};
+
 const set = (data, callback = null) => {
   const dataJS = typeof(data.toJS) === 'function' ? data.toJS() : data;
   storage.set({ [storagePath]: dataJS }, callback);
@@ -20,15 +35,17 @@ const all = (callback, asImmutable = false) => {
   });
 };
 
-const remove = (index, callback) => {
+const remove = (which, callback) => {
   all((rules) => {
+    const index = findIndex(rules, which);
     set(rules.splice(index, 1), callback);
   }, true);
 };
 
-const update = (index, data, callback = null) => {
+const update = (which, data, callback = null) => {
   all((rules) => {
-    set(rules.mergeIn([index], data), callback);
+    const index = findIndex(rules, which);
+    return set(rules.mergeIn([index], data), callback);
   }, true);
 };
 
@@ -42,8 +59,9 @@ const add = (data, callback = null) => {
   }, true);
 };
 
-const duplicate = (index, additionalData = {}, callback = null) => {
+const duplicate = (which, additionalData = {}, callback = null) => {
   all((rules) => {
+    const index = findIndex(rules, which);
     const rule = rules.get(index).toJS();
     const duplidatedRule = Object.assign(rule, { id: getRuleId() }, additionalData);
     set(rules.push(duplidatedRule), callback);
@@ -56,4 +74,5 @@ export default {
   update,
   add,
   duplicate,
+  findIndex,
 };
