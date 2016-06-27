@@ -53,7 +53,7 @@ const initialize = () => {
 chrome.storage.local.get((data) => {
   chrome.runtime.sendMessage('tabIdPls', (response) => {
     const hiddenPanels = data['hidden-panels'] || [];
-    const enabledSites = data.sites || "*://*\n!*://*google\\.*"; 
+    const enabledSites = data.sites;
     const enabledSite = check(enabledSites.split('\n'), document.location.href);
     tabId = response.tabId;
     hidden = hiddenPanels.indexOf(tabId) !== -1;

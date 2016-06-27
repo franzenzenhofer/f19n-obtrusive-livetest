@@ -15,8 +15,17 @@ const filter = {
 
 const collector = {};
 
+const setDefaultScope = (callback = null) => {
+  chrome.storage.local.get((data) => {
+    if (!data.sites) {
+      chrome.storage.local.set({ sites: '*://*\n!*://*google\\.*' }, callback);
+    }
+  });
+};
+
 chrome.runtime.onInstalled.addListener(() => {
   syncDefaultRules();
+  setDefaultScope();
 });
 
 const normalizeHeaders = (responseHeaders) => {
