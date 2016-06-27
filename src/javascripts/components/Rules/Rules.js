@@ -85,6 +85,9 @@ export default class Rules extends Component {
     const rules = this.state.rules.toJS();
     const ruleToEdit = this.state.rules.get(rulesStore.findIndex(rules, this.state.editRule));
 
+    const defaultRules = rules.filter(r => r.defaultRule);
+    const customRules = rules.filter(r => !r.defaultRule);
+
     return (
       <div className="f19n-rules">
         <header className="Header Section">
@@ -98,8 +101,12 @@ export default class Rules extends Component {
         <EnabledSites sites={this.state.sites} onChange={this.updateSites} />
         <div className="Wrapper">
           <div className="Section rules">
-            <h2>All rules</h2>
-            <RulesList rules={rules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+            <h2>Custom rules</h2>
+            <RulesList rules={customRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+          </div>
+          <div className="Section rules">
+            <h2>Default rules</h2>
+            <RulesList rules={defaultRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
         </div>
         <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editRule: null })}>
