@@ -19,8 +19,9 @@ export default (path = 'default-rules') => {
   chrome.runtime.getPackageDirectoryEntry((root) => {
     root.getDirectory(path, { create: false }, (dir) => {
       const reader = dir.createReader();
-      reader.readEntries((results) => {
-        results.forEach((fileEntry) => {
+      reader.readEntries((files) => {
+        const jsFilesOnly = files.filter(r => r.name.match(/\.js$/));
+        jsFilesOnly.forEach((fileEntry) => {
           fileEntry.file((file) => {
             const fileReader = new FileReader();
             fileReader.onloadend = (e) => {
@@ -29,7 +30,7 @@ export default (path = 'default-rules') => {
 
               rulesList.push({ name, body });
 
-              if (rulesList.length >= results.length) {
+              if (rulesList.length >= jsFilesOnly.length) {
                 updateOrImportRules(rulesList);
               }
             };
