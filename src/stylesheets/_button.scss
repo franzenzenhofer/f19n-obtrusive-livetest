@@ -48,6 +48,10 @@
   text-shadow: none;
 }
 
+.Button--haptic:active {
+  box-shadow: 0 0 0 0 rgba(0,0,0,.15) inset,0 0 2px rgba(0,0,0,.2) inset
+}
+
 .Button--inline {
   font-size: 8px;
   padding: 0 3px;
