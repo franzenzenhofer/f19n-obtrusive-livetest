@@ -60,6 +60,11 @@ export default class Rules extends Component {
     this.setState({ rules: this.state.rules, editRule: id });
   }
 
+  viewRule = (id) => {
+    console.log('view');
+    this.setState({ rules: this.state.rules, editRule: id });
+  }
+
   duplicateRule = (id) => {
     rulesStore.duplicate(id, { defaultRule: false });
   }
@@ -106,7 +111,7 @@ export default class Rules extends Component {
           </div>
           <div className="Section rules">
             <h2>Default rules</h2>
-            <RulesList rules={defaultRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+            <RulesList rules={defaultRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onViewClick={this.viewRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
         </div>
         <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editRule: null })}>

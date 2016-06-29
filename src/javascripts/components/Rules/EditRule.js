@@ -15,6 +15,7 @@ export default class EditRule extends Component {
     this.state = {
       rule: props.rule.toJS(),
       error: null,
+      editable: true,
     };
     this.onBodyChange = this.onBodyChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);

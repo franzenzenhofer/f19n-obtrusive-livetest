@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default function RulesListItem(props) {
-  const { name, id, status, onEditClick, onDeleteClick, onStatusClick, onDuplicateClick, index, defaultRule } = props;
+  const { name, id, status, onEditClick, onViewClick, onDeleteClick, onStatusClick, onDuplicateClick, index, defaultRule } = props;
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
@@ -14,6 +14,7 @@ export default function RulesListItem(props) {
         <a onClick={!defaultRule && onEditClick}><h3>{name}</h3><span>#{capitalizeFirstLetter(id)} / Index: {index}</span></a>
         <div>
           {!defaultRule && <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>}
+          {defaultRule && <button className="Button Button--haptic" onClick={onEditClick}>View</button>}
           <button className="Button Button--haptic" onClick={onDuplicateClick}>Duplicate</button>
           {!defaultRule && <button className="Button Button--haptic">Download</button>}
         </div>

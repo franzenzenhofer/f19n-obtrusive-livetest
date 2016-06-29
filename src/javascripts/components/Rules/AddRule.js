@@ -21,10 +21,10 @@ var headers = page.getHttpHeaders();\n\
 //if (some requirement) \n\
 if (true) {\n\
 \n\
-  //some category of stuff your are testing i.e.: 'SPEED', 'HEAD', 'BODY', 'HTTP', ...\n\
+  //some category of stuff your are testing i.e.: 'DOM', 'HEAD', 'BODY', 'HTTP', 'SPEED', ...\n\
   var lable = 'BODY';\n\
   var msg = 'a message, can inlcude <b>HTML</b>';\n\
-  you can create a link showing only the partial code of a nodeList\n\
+  //you can create a link showing only the partial code of a nodeList\n\
   //msg = msg+' '+this.partialCodeLink(dom);\n\
   var type = 'info'; //should be 'info', 'warning', 'error'\n\
 \n\
