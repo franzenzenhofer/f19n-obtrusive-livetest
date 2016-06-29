@@ -52,6 +52,8 @@ export const nodeToString = (stuff) =>
   };
 };
 
+//show only beginning tag tag = elem.innerHTML ? elem.outerHTML.slice(0,elem.outerHTML.indexOf(elem.innerHTML)) : elem.outerHTML;
+
 //console.log(nodeToString(document.querySelectorAll('h1')));
 //console.log(nodeToString('test'));
 

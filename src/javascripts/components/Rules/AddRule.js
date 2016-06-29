@@ -18,15 +18,14 @@ var dom = page.getStaticDom();\n\
 var location = page.getLocation();\n\
 var headers = page.getHttpHeaders();\n\
 \n\
-//check if we got some data to work with\n\
-if (!dom) { return null; }\n\
-\n\
 //if (some requirement) \n\
 if (true) {\n\
 \n\
   //some category of stuff your are testing i.e.: 'SPEED', 'HEAD', 'BODY', 'HTTP', ...\n\
-  var lable = 'DOM';\n\
+  var lable = 'BODY';\n\
   var msg = 'a message, can inlcude <b>HTML</b>';\n\
+  you can create a link showing only the partial code of a nodeList\n\
+  //msg = msg+' '+this.partialCodeLink(dom);\n\
   var type = 'info'; //should be 'info', 'warning', 'error'\n\
 \n\
   return this.createResult(lable, msg, type);\n\
