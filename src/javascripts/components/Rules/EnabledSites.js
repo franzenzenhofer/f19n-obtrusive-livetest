@@ -7,7 +7,9 @@ export default class EnabledSites extends Component {
         <div className="Wrapper">
           <h2>Enabled sites</h2>
           <textarea style={{ height: 50, width: '100%' }} defaultValue={this.props.sites} onChange={(e) => this.props.onChange(e.target.value)} />
-          <button className="Button Button--haptic" onclick={(e) => this.props.onChange(e.target.value)}>Apply</button>
+          <p>
+            <button className="Button Button--haptic" onclick={(e) => this.props.onChange(e.target.value)}>Apply</button>
+          </p>
         </div>
       </div>
     );

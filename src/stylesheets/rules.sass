@@ -1,6 +1,5 @@
 @import "base"
 @import "button"
-@import "rules-temp"
 
 .f19n-rules
 
@@ -22,6 +21,13 @@
 .Header-brandLink a:hover
   color: $brandColor
   line-height: 24px
+
+.Section
+  padding: 1em 0
+  border-bottom: 1px solid $greyAccent
+
+.Section h2
+  margin-bottom: 6px
 
 .RuleTable
   border-collapse: collapse
@@ -70,6 +76,22 @@
     border-radius: 5px
     padding: 10px
     color: white
+
+.edit-rule .error
+  background: #c9302c
+  border-radius: 5px
+  padding: 10px
+  color: white
+
+.edit-rule input
+  margin: 10px 0
+  padding: 5px
+  width: 100%
+
+.edit-rule .ace_editor
+  margin: 10px 0
+    
+
 
 //.ReactModal__Overlay
   align-items: center

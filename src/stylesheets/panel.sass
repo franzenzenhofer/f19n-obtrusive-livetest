@@ -99,12 +99,12 @@ tr.error
 
 .error .type:before
   content: " "
-  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#ffffff"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat $errorColor
+  //background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" fill="#ffffff"/><path d="M0 0h24v24H0z" fill="none"/></svg>') no-repeat $errorColor
+  background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><circle fill="#FF1D25" cx="12" cy="12" r="10"/><path fill="none" stroke="#FFF" stroke-width="2" stroke-miterlimit="10" d="M7.3 7.2l9.2 9.2M16.5 7.4l-9.2 9.2"/></svg>') no-repeat
   display: inline-block
   width: 11px
   height: 12px
   vertical-align: middle
-  border-radius: 5px
   margin-right: 2px
 
 tr.warning td

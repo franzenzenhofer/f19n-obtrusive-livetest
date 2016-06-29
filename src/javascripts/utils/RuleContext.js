@@ -69,7 +69,7 @@ export const allNodesToString = (...stuffs) =>
 
 export const partialCodeLink = (...nodes) => {
 	var str = allNodesToString(...nodes);
-  return dataUrlTextLink(str, '<span class="show-partial-source">&lt;/&gt;</span>');
+  return dataUrlTextLink(str, '<span class="show-partial-source Button Button--haptic Button--inline">&lt;/&gt;</span>');
 }
 
 
