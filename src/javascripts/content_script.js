@@ -32,22 +32,22 @@ const unfixAbsolutePositionedElements = () => {
 
 const showPanel = () => {
   if (!$('.f19n-panel-wrapper').length) {
-    $('html').addClass('show-f19n-panel');
+    //$('html').addClass('show-f19n-panel');
     $('body').append($panelWrapper);
-    fixAbsolutePositionedElements();
+    //fixAbsolutePositionedElements();
   }
 };
 
 const hidePanel = () => {
-  $('html').removeClass('show-f19n-panel');
+  //$('html').removeClass('show-f19n-panel');
   $panelWrapper.remove();
-  unfixAbsolutePositionedElements();
+  //unfixAbsolutePositionedElements();
 };
 
 const initialize = () => {
-  if (!hidden) {
-    $('html').addClass('show-f19n-panel');
-  }
+  //if (!hidden) {
+  //  $('html').addClass('show-f19n-panel');
+  //}
 };
 
 chrome.storage.local.get((data) => {
@@ -73,6 +73,11 @@ chrome.storage.onChanged.addListener((data) => {
     }
   }
 });
+
+window.setTimeout(()=>
+  {
+    console.log($iframe.get(0).contentWindow);
+  },1000)
 
 $(() => {
   if (!hidden) {
