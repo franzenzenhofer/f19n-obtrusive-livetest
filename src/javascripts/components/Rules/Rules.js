@@ -42,9 +42,7 @@ export default class Rules extends Component {
   }
 
   addRule = (data, open = false) => {
-    rulesStore.add(data);
     if (open) {
-      this.setState({ editRule: data.id });
     }
   }
 

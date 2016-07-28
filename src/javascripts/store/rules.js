@@ -51,13 +51,15 @@ const update = (which, data, callback = null) => {
 };
 
 const add = (data, callback = null) => {
+  const newRuleId = getRuleId();
   all((rules) => {
     const additionalData = {
-      id: getRuleId(),
+      id: newRuleId,
       status: 'enabled',
     };
     set(rules.push(Object.assign(additionalData, data)), callback);
   }, true);
+  return newRuleId;
 };
 
 const duplicate = (which, additionalData = {}, callback = null) => {
