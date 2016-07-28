@@ -8,7 +8,7 @@ export default function Panel(props) {
   const {url} = props;
   return (
     <footer>
-      <a href={`view-source:${url}`}>view-source</a>
+      <a href={`view-source:${url}`} target="_top">view-source</a>
     </footer>
   );
 }

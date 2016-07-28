@@ -5,8 +5,6 @@ import { sortBy } from 'lodash';
 
 export default class ResultList extends Component {
   constructor(props) {
-    console.log("in resultList");
-    //console.log(props);
     super(props);
 
     this.state = {
@@ -47,6 +45,7 @@ export default class ResultList extends Component {
   render() {
     let results = this.state.results;
 
+    //gets rid of results without required fields
     results = results.filter(r => r.type && r.message && r.label);
     results = this.state.filter ? results.filter(r => r.label === this.state.filter || r.type === this.state.filter) : results;
 
