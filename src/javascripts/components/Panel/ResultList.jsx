@@ -5,6 +5,8 @@ import { sortBy } from 'lodash';
 
 export default class ResultList extends Component {
   constructor(props) {
+    console.log("in resultList");
+    //console.log(props);
     super(props);
 
     this.state = {

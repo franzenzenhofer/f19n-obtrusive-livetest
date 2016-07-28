@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import ResultList from './components/Panel/ResultList';
+import Panel from './components/Panel/Panel';
+
 
 import resultStoreKey from './utils/resultStoreKey';
 
@@ -15,10 +16,10 @@ const handleClosePanelRequest = () => {
 };
 
 chrome.runtime.sendMessage('tabIdPls', (response) => {
-  tabId = response.tabId;
+  const {tabId, url} = response;
   const storeKey = resultStoreKey(tabId);
   chrome.storage.local.get(storeKey, (data) => {
     const results = data[storeKey] || [];
-    ReactDOM.render(<ResultList onClosePanelRequest={handleClosePanelRequest} storeKey={storeKey} results={results} />, document.getElementById('app'));
+    ReactDOM.render(<Panel onClosePanelRequest={handleClosePanelRequest} storeKey={storeKey} results={results} url={url} />, document.getElementById('app'));
   });
 });

@@ -131,7 +131,7 @@ chrome.tabs.onRemoved.addListener(() => {
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
   if (request === 'tabIdPls') {
-    callback({ tabId: sender.tab.id });
+    callback({ tabId: sender.tab.id, url:sender.tab.url });
   }
 
   if (request.event === 'document_end') {
