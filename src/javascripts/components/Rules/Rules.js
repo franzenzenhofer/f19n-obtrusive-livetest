@@ -78,14 +78,11 @@ export default class Rules extends Component {
   render() {
     const modalStyles = {
       content: {
-        top: '50%',
-        width: '90%',
-        height: '90%',
-        left: '50%',
-        right: 'auto',
-        bottom: 'auto',
-        marginRight: '-50%',
-        transform: 'translate(-50%, -50%)',
+        positon: 'absolute',
+        top: 10,
+        left: 10,
+        right: 10,
+        bottom: 10
       },
     };
 

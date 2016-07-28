@@ -64,6 +64,7 @@ export default class EditRule extends Component {
           Script
           <AceEditor
             width="100%"
+            height="calc(100% - 140px)"
             showLineNumber={true}
             mode="javascript"
             value={body}
