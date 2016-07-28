@@ -14,8 +14,7 @@ export default class EditRule extends Component {
     super(props);
     this.state = {
       rule: props.rule.toJS(),
-      error: null,
-      editable: true,
+      error: null
     };
     this.onBodyChange = this.onBodyChange.bind(this);
     this.onNameChange = this.onNameChange.bind(this);
@@ -50,15 +49,17 @@ export default class EditRule extends Component {
 
   render() {
     const { name, id, body } = this.state.rule;
-    const canSave = true;
+    const { readOnly } = this.props;
     return (
       <div className="edit-rule">
         <h2>{name}</h2>
+
+
         {this.state.error ? <p className="error"><b>{this.state.error.name}</b>: {this.state.error.message}</p> : null}
-        <label>
+        {!readOnly && <label>
           Name
           <input type="text" value={name} onChange={this.onNameChange} />
-        </label>
+        </label>}
         <label>
           Script
           <AceEditor
@@ -77,7 +78,7 @@ export default class EditRule extends Component {
             editorProps={{ $blockScrolling: true }}
           />
         </label>
-        <button onClick={this.handleOnSave} disabled={!canSave}>Save</button>
+        <button onClick={this.handleOnSave} disabled={readOnly}>Save</button>
         <span> </span>
         <u><a onClick={this.props.onCancel}>Cancel without saving</a></u>
       </div>

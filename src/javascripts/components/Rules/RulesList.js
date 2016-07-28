@@ -2,7 +2,7 @@ import React from 'react';
 import RuleListItem from './RuleListItem';
 
 export default function RulesList(props) {
-  const { rules, onDeleteClick, onEditClick, onStatusClick, onDuplicateClick } = props;
+  const { rules, onDeleteClick, onEditClick, onStatusClick, onDuplicateClick, onViewClick } = props;
   rules.reverse();
   return (
     <table className="RuleTable RuleTable--striped rules-list">

@@ -14,7 +14,7 @@ export default function RulesListItem(props) {
         <a onClick={!defaultRule && onEditClick}><h3>{name}</h3><span>#{capitalizeFirstLetter(id)} / Index: {index}</span></a>
         <div>
           {!defaultRule && <button className="Button Button--haptic" onClick={onEditClick}>Edit</button>}
-          {defaultRule && <button className="Button Button--haptic" onClick={onEditClick}>View</button>}
+          {defaultRule && <button className="Button Button--haptic" onClick={onViewClick}>View</button>}
           <button className="Button Button--haptic" onClick={onDuplicateClick}>Duplicate</button>
           {!defaultRule && <button className="Button Button--haptic">Download</button>}
         </div>

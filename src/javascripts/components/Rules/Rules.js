@@ -17,6 +17,7 @@ export default class Rules extends Component {
       rules: fromJS(props.rules),
       sites: props.sites,
       editRule: null,
+      editAllowed: true
     };
 
     chrome.storage.onChanged.addListener(this.onStoreChange);
@@ -57,12 +58,12 @@ export default class Rules extends Component {
   }
 
   editRule = (id) => {
-    this.setState({ rules: this.state.rules, editRule: id });
+    this.setState({ rules: this.state.rules, editRule: id, editAllowed: true });
   }
 
   viewRule = (id) => {
     console.log('view');
-    this.setState({ rules: this.state.rules, editRule: id });
+    this.setState({ editRule: id, editAllowed: false });
   }
 
   duplicateRule = (id) => {
@@ -89,6 +90,7 @@ export default class Rules extends Component {
 
     const rules = this.state.rules.toJS();
     const ruleToEdit = this.state.rules.get(rulesStore.findIndex(rules, this.state.editRule));
+    const editAllowed = this.state.editAllowed;
 
     const defaultRules = rules.filter(r => r.defaultRule);
     const customRules = rules.filter(r => !r.defaultRule);
@@ -115,7 +117,7 @@ export default class Rules extends Component {
           </div>
         </div>
         <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editRule: null })}>
-          <EditRule rule={ruleToEdit} onCancel={() => this.setState({ editRule: null })} onSave={(data) => this.handleOnSave(this.state.editRule, data)} />
+          <EditRule rule={ruleToEdit} onCancel={() => this.setState({ editRule: null })} onSave={(data) => this.handleOnSave(this.state.editRule, data)} readOnly={!editAllowed} />
         </Modal>
       </div>
     );
