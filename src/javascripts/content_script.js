@@ -1,12 +1,13 @@
+/* global $ */
+import Draggable from 'Draggable';
+
 const panelUrl = chrome.extension.getURL('panel.html');
 const $panelWrapper = $(`<div class="f19n-panel-wrapper"><h4>Loading f19n Livetest ...</h4><iframe src='${panelUrl}'></iframe></div>`);
 const $iframe = $panelWrapper.find('iframe');
-let hidden = false;
-let tabId = null;
 
-$iframe.on('load', () => {
-  $panelWrapper.find('h4').remove();
-});
+// $iframe.on('load', () => {
+//   $panelWrapper.find('h4').remove();
+// });
 
 const check = (sites, url) => {
   const entry = sites.reverse().find((l) => {
@@ -16,71 +17,75 @@ const check = (sites, url) => {
   return entry ? (entry.match(/^!.+/) !== null ? false : true) : false;
 };
 
-const fixAbsolutePositionedElements = () => {
-  // TODO: Not the perfect solution in terms of performance. Maybe use TreeWalker.
-  const wrapperWidth = $panelWrapper.width();
-  $('*').each((index, element) => {
-    if (!$(element).hasClass('f19n-panel-wrapper') && $(element).css('position') === 'fixed' && $(element).css('left') === '0px') {
-      $(element).data('f19n-fixed-element', true).css({ left: wrapperWidth });
-    }
+const panelShouldBeVisible = (data, tabId) => {
+  const hiddenPanels = data['hidden-panels'] || [];
+  const enabledSites = data.sites;
+  const enabledSite = check(enabledSites.split('\n'), document.location.href);
+  let hidden = hiddenPanels.indexOf(tabId) !== -1;
+  hidden = hidden || !enabledSite;
+  return !hidden;
+};
+
+const getTabId = (callback) => {
+  chrome.runtime.sendMessage('tabIdPls', (response) => {
+    callback(response.tabId);
   });
 };
 
-const unfixAbsolutePositionedElements = () => {
-  $('[data-f19n-fixed-element]').css({ left: 0 });
+const getPanelPosition = (data, tabId) => {
+  return data[`panel-position-${tabId}`] || [10, 10];
 };
 
 const showPanel = () => {
   if (!$('.f19n-panel-wrapper').length) {
-    //$('html').addClass('show-f19n-panel');
     $('body').append($panelWrapper);
-    //fixAbsolutePositionedElements();
   }
 };
 
 const hidePanel = () => {
-  //$('html').removeClass('show-f19n-panel');
   $panelWrapper.remove();
-  //unfixAbsolutePositionedElements();
 };
 
-const initialize = () => {
-  //if (!hidden) {
-  //  $('html').addClass('show-f19n-panel');
-  //}
+const initializePanel = ({ position, tabId }) => {
+  const setLimit = (draggablePanel) => {
+    const limit = { x: [10, window.innerWidth - 10 - $panelWrapper.width()], y: [10, window.innerHeight - 10 - $panelWrapper.height()] };
+    draggablePanel.setOption('limit', limit);
+  };
+
+  const draggablePanel = new Draggable($panelWrapper.get(0), {
+    setPosition: false,
+    onDragEnd: (element, x, y) => {
+      chrome.storage.local.set({ [`panel-position-${tabId}`]: [x, y] });
+    },
+  });
+
+  draggablePanel.set(position[0], position[1]);
+  setLimit(draggablePanel);
+
+  $(window).on('resize', () => {
+    setLimit(draggablePanel);
+  });
 };
 
 chrome.storage.local.get((data) => {
-  chrome.runtime.sendMessage('tabIdPls', (response) => {
-    const hiddenPanels = data['hidden-panels'] || [];
-    const enabledSites = data.sites;
-    const enabledSite = check(enabledSites.split('\n'), document.location.href);
-    tabId = response.tabId;
-    hidden = hiddenPanels.indexOf(tabId) !== -1;
-    hidden = hidden || !enabledSite;
-    initialize(hidden);
+  getTabId((tabId) => {
+    const visible = panelShouldBeVisible(data, tabId);
+    const position = getPanelPosition(data, tabId);
+    initializePanel({ position, tabId });
+    if (visible) { showPanel(); }
   });
 });
 
 chrome.storage.onChanged.addListener((data) => {
-  if (Object.keys(data)[0] === 'hidden-panels') {
-    const hiddenPanels = data['hidden-panels'].newValue || [];
-    hidden = hiddenPanels.indexOf(tabId) !== -1;
-    if (hidden) {
-      hidePanel();
-    } else {
-      showPanel();
+  getTabId((tabId) => {
+    if (Object.keys(data)[0] === 'hidden-panels') {
+      const hiddenPanels = data['hidden-panels'].newValue || [];
+      const hidden = hiddenPanels.indexOf(tabId) !== -1;
+      if (hidden) {
+        hidePanel();
+      } else {
+        showPanel();
+      }
     }
-  }
-});
-
-window.setTimeout(()=>
-  {
-    console.log($iframe.get(0).contentWindow);
-  },1000)
-
-$(() => {
-  if (!hidden) {
-    showPanel();
-  }
+  });
 });

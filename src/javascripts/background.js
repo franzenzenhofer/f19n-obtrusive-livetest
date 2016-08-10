@@ -18,7 +18,7 @@ const collector = {};
 const setDefaultScope = (callback = null) => {
   chrome.storage.local.get((data) => {
     if (!data.sites) {
-      chrome.storage.local.set({ sites: '*://*\n!*://*google\\.*' }, callback);
+      chrome.storage.local.set({ sites: '*://*\n!*://*google\\.*', panelPosition: [10, 10] }, callback);
     }
   });
 };
