@@ -24,9 +24,14 @@ $iframe.on('load', () => {
   $(window).trigger('resize');
 });
 
-const handleClosePanelRequest = () => {
+const getTab = (callback) => {
   chrome.runtime.sendMessage('tabIdPls', (response) => {
-    const { tabId } = response;
+    callback(response);
+  });
+};
+
+const handleClosePanelRequest = () => {
+  getTab(({ tabId }) => {
     chrome.storage.local.get('hidden-panels', (data) => {
       const hiddenPanels = (data['hidden-panels'] || []).concat([tabId]);
       chrome.storage.local.set({ 'hidden-panels': hiddenPanels });
@@ -51,14 +56,8 @@ const panelShouldBeVisible = (data, tabId) => {
   return !hidden;
 };
 
-const getTabId = (callback) => {
-  chrome.runtime.sendMessage('tabIdPls', (response) => {
-    callback(response.tabId);
-  });
-};
-
-const getPanelPosition = (data, tabId) => {
-  return data[`panel-position-${tabId}`] || [10, 10];
+const getPanelPosition = (data, host) => {
+  return data[`panel-position-${host}`] || [10, 10];
 };
 
 const showPanel = () => {
@@ -80,7 +79,7 @@ const getLimitBoundings = () => {
   };
 };
 
-const initializePanel = ({ position, tabId }) => {
+const initializePanel = ({ position, host }) => {
   const setLimit = (draggablePanel) => {
     const limit = getLimitBoundings();
     draggablePanel.setOption('limit', limit);
@@ -94,19 +93,19 @@ const initializePanel = ({ position, tabId }) => {
 
     if (limit.x[1] <= panelOffset.left) {
       draggablePanel.set(limit.x[1], y);
-      chrome.storage.local.set({ [`panel-position-${tabId}`]: [limit.x[1], y] });
+      chrome.storage.local.set({ [`panel-position-${host}`]: [limit.x[1], y] });
     }
 
     if (limit.y[1] <= panelOffset.top - $(window).scrollTop()) {
       draggablePanel.set(x, limit.y[1]);
-      chrome.storage.local.set({ [`panel-position-${tabId}`]: [x, limit.y[1]] });
+      chrome.storage.local.set({ [`panel-position-${host}`]: [x, limit.y[1]] });
     }
   };
 
   const draggablePanel = new Draggable($panelWrapper.get(0), {
     setPosition: false,
     onDragEnd: (element, x, y) => {
-      chrome.storage.local.set({ [`panel-position-${tabId}`]: [x, y] });
+      chrome.storage.local.set({ [`panel-position-${host}`]: [x, y] });
     },
   });
 
@@ -127,16 +126,17 @@ const initializePanel = ({ position, tabId }) => {
 };
 
 chrome.storage.local.get((data) => {
-  getTabId((tabId) => {
+  getTab(({ url, tabId }) => {
+    const host = (new URL(url)).host;
     const visible = panelShouldBeVisible(data, tabId);
-    const position = getPanelPosition(data, tabId);
-    initializePanel({ position, tabId });
+    const position = getPanelPosition(data, host);
+    initializePanel({ position, host });
     if (visible) { showPanel(); }
   });
 });
 
 chrome.storage.onChanged.addListener((data) => {
-  getTabId((tabId) => {
+  getTab(({ tabId }) => {
     if (Object.keys(data)[0] === 'hidden-panels') {
       const hiddenPanels = data['hidden-panels'].newValue || [];
       const hidden = hiddenPanels.indexOf(tabId) !== -1;
