@@ -108,8 +108,6 @@ const initializePanel = ({ position, host }) => {
     const panelOffset = $(getAppRootElement()).offset();
     const limit = getLimitBoundings();
 
-    console.log(panelOffset);
-
     const { x, y } = draggablePanel.get();
 
     if (limit.x[1] <= panelOffset.left) {
