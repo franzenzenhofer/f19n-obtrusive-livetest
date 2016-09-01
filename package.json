@@ -43,6 +43,7 @@
     "react-ace": "^3.4.1",
     "react-addons-update": "^15.0.2",
     "react-dom": "^15.0.1",
+    "react-frame-component": "^0.6.5",
     "react-modal": "^1.2.1"
   }
 }
