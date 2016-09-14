@@ -6,12 +6,13 @@ function(page) {
         metaRobots,
         metaFound = false,
         index = true;
+    var robot = '';
 
     // check meta
     //var metaValidArray = metaValid;//Array.prototype.slice.call(metaValid);
     metaValid.forEach(
-        function(value) {
-            metaRobots = dom.querySelectorAll('meta[name=' + value + ']');
+        function(robotvalue) {
+            metaRobots = dom.querySelectorAll('meta[name=' + robotvalue + ']');
 
             if (metaRobots.length > 0) {
                 metaFound = true;
@@ -20,8 +21,9 @@ function(page) {
                 metaRobotsArray.forEach(
                     function(value) {
                         var content = value.getAttribute('content');
+                        robot = robotvalue;
                         if (content.indexOf('noindex') >= 0 || content.indexOf('none') >= 0) {
-                            index = false;
+                            index = false;      
                         } else if (content.indexOf('index') >= 0 || content.indexOf('all') >= 0) {
                             index = true;
                         }
@@ -32,7 +34,7 @@ function(page) {
     );
 
     if (metaFound) {
-        return this.createResult('HEAD', 'Robots: ' + (index ? 'index' : 'noindex'), index ? 'info' : 'warning');
+        return this.createResult('HEAD', robot+': ' + (index ? 'index' : 'noindex'), index ? 'info' : 'warning');
     } else {
         return this.createResult('HEAD', 'Robots: No Robots meta tag found.', 'info');
     }
