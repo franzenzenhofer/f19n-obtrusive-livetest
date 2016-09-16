@@ -78,6 +78,12 @@ export default class EventCollection {
     return responseHeaders;
   }
 
+  getRawHttpHeaders() {
+    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    var { rawResponseHeaders } = onHeadersReceivedEvent;
+    return rawResponseHeaders;
+  }
+
   getStatusCode() {
     var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
     var { statusCode } = onHeadersReceivedEvent;
