@@ -108,17 +108,26 @@ const initializePanel = ({ position, host }) => {
     const panelOffset = $(getAppRootElement()).offset();
     const limit = getLimitBoundings();
 
-    const { x, y } = draggablePanel.get();
+    var { x, y } = draggablePanel.get();
 
     if (limit.x[1] <= panelOffset.left) {
-      draggablePanel.set(limit.x[1], y);
-      chrome.storage.local.set({ [`panel-position-${host}`]: [limit.x[1], y] });
+      x = limit.x[1];
+      //draggablePanel.set(limit.x[1], y);
+      //chrome.storage.local.set({ [`panel-position-${host}`]: [limit.x[1], y] });
     }
 
     if (limit.y[1] <= panelOffset.top - $(window).scrollTop()) {
-      draggablePanel.set(x, limit.y[1]);
-      chrome.storage.local.set({ [`panel-position-${host}`]: [x, limit.y[1]] });
+      y = limit.y[1];
+      //draggablePanel.set(x, limit.y[1]);
+      //chrome.storage.local.set({ [`panel-position-${host}`]: [x, limit.y[1]] });
     }
+
+    if(y < limit.y[0]) { y = limit.y[0]; }
+    if(x < limit.x[0]) { x = limit.x[0]; }
+
+    draggablePanel.set(x, y);
+    chrome.storage.local.set({ [`panel-position-${host}`]: [x, y] });
+    console.log(draggablePanel.get());
   };
 
   const draggablePanel = new Draggable(getAppRootElement(), {
@@ -139,6 +148,7 @@ const initializePanel = ({ position, host }) => {
   });
 
   $(window).on('resize', () => {
+    console.log('resize');
     setLimit(draggablePanel);
     snapPanel(draggablePanel);
   });
