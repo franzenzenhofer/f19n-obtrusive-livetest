@@ -23,7 +23,7 @@ function(page) {
                         var content = value.getAttribute('content');
                         robot = robotvalue;
                         if (content.indexOf('noindex') >= 0 || content.indexOf('none') >= 0) {
-                            index = false;      
+                            index = false;
                         } else if (content.indexOf('index') >= 0 || content.indexOf('all') >= 0) {
                             index = true;
                         }
