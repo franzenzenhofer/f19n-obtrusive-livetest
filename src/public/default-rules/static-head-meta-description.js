@@ -1,8 +1,7 @@
 function(page) {
 	var dom = page.getStaticDom();
-
 	//if (some requirement)
-	var meta_ds = dom.querySelectorAll('meta[name="Description"],meta[name="description"]');
+	var meta_ds = dom.querySelectorAll('meta[name="description"]');
 	if (meta_ds.length > 0) {
 
 	  if(meta_ds > 1)

@@ -1,48 +1,28 @@
-// this test looks for all relevant meta robots definitions
-
 function(page) {
-    var dom = page.getStaticDom(),
-        metaValid = ['robots', 'googlebot'], // General rules first!
-        metaRobots,
-        metaFound = false,
-        index = true;
-    var robot = '';
+  var dom = page.getStaticDom();
+  var elements = dom.querySelectorAll('head>meta[name=robots]');
+  var type = 'info';
+  var msg ='';
 
-    // check meta
-    //var metaValidArray = metaValid;//Array.prototype.slice.call(metaValid);
-    metaValid.forEach(
-        function(robotvalue) {
-            metaRobots = dom.querySelectorAll('meta[name=' + robotvalue + ']');
+  if (elements.length===1) {
+    var content = elements[0].getAttribute('content');
+    var instructions = content.split(',');
+    instructions.forEach(function(v,i,robot_instructions){
+        robot_instructions[i]=v.trim().toLowerCase();
+    });
+    if (instructions.indexOf('noindex')!=-1){type = 'warning';}
+    //if (instructions.indexOf('index')!=-1){}
+    if (instructions.indexOf('nofollow')!=-1){type = 'warning';}
+    //if (instructions.indexOf('follow')!=-1){msg = msg + ' follow';}
 
-            if (metaRobots.length > 0) {
-                metaFound = true;
+    msg = 'Meta Robots: <a href="https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag#valid-indexing--serving-directives">'+content+'</a>'+this.partialCodeLink(elements);
 
-                var metaRobotsArray = Array.prototype.slice.call(metaRobots);
-                metaRobotsArray.forEach(
-                    function(value) {
-                        var content = value.getAttribute('content');
-                        robot = robotvalue;
-                        if (content.indexOf('noindex') >= 0 || content.indexOf('none') >= 0) {
-                            index = false;
-                        } else if (content.indexOf('index') >= 0 || content.indexOf('all') >= 0) {
-                            index = true;
-                        }
-                    }
-                );
-            }
-        }
-    );
+    return this.createResult('HEAD', msg, 'info');
+  }
 
-    if (metaFound) {
-        return this.createResult('HEAD', robot+': ' + (index ? 'index' : 'noindex'), index ? 'info' : 'warning');
-    } else {
-        return this.createResult('HEAD', 'Robots: No Robots meta tag found.', 'info');
-    }
+  if (elements.length > 1) {
+    return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>Multiple robots meta tags.</a>"+this.partialCodeLink(elements), 'warning');
+  }
 
+  return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>No robots meta tag.</a>", 'warning');
 }
-
-/*
-possible improvements TODO
-show partial code link
-tell if it is robot or googlebot or other bot info
-*/
