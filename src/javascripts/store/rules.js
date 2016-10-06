@@ -71,6 +71,14 @@ const duplicate = (which, additionalData = {}, callback = null) => {
   }, true);
 };
 
+const getJs = (which, callback = null) => {
+  all((rules) => {
+    const index = findIndex(rules, which);
+    const rule = rules.get(index);
+    callback(rule.toJS());
+  }, true);
+};
+
 export default {
   all,
   remove,
@@ -78,4 +86,5 @@ export default {
   add,
   duplicate,
   findIndex,
+  getJs,
 };

@@ -1,6 +1,7 @@
 function(eventCollection) {
   // Get the last documentIdleEvent from the event collection
   var documentIdleEvent = eventCollection.documentIdleEvent();
+  const what = "idle";
 
   // Return if no documentIdleEvent (and so location & document) found
   if (!documentIdleEvent) { return null; }
@@ -18,5 +19,5 @@ function(eventCollection) {
     return domain(href) != domain(location.href);
   });
 
-  return outgoingLinks.length > 0 ? this.createResult('LINKS', `${outgoingLinks.length} outgoing links with rel nofollow`, 'info') : null;
+  return outgoingLinks.length > 0 ? this.createResult('LINKS', `${outgoingLinks.length} outgoing links with rel nofollow`, 'info', what) : null;
 }

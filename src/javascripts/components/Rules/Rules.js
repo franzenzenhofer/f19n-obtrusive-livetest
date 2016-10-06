@@ -4,6 +4,8 @@ import AddRule from './AddRule';
 import EditRule from './EditRule';
 import EnabledSites from './EnabledSites';
 
+import FileSaver from 'file-saver';
+
 import rulesStore from './../../store/rules';
 
 import { fromJS } from 'immutable';
@@ -58,12 +60,20 @@ export default class Rules extends Component {
     rulesStore.remove(id);
   }
 
+  downloadRule = (id) => {
+    //console.log(rulesStore);
+    const js = rulesStore.getJs(id, (v) => {
+        var blob = new Blob([v.body], {type: "text/plain;charset=utf-8"});
+        FileSaver.saveAs(blob, v.name);
+      });
+    //alert(js);
+  }
+
   editRule = (id) => {
     this.setState({ rules: this.state.rules, editRule: id, editAllowed: true });
   }
 
   viewRule = (id) => {
-    console.log('view');
     this.setState({ editRule: id, editAllowed: false });
   }
 
@@ -107,7 +117,7 @@ export default class Rules extends Component {
         <div className="Wrapper">
           <div className="Section rules">
             <h2>Custom rules</h2>
-            <RulesList rules={customRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+            <RulesList rules={customRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} onDownloadClick={this.downloadRule} />
           </div>
           <div className="Section rules">
             <h2>Default rules</h2>

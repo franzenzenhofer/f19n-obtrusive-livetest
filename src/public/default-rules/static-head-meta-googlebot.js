@@ -3,6 +3,7 @@ function(page) {
   var elements = dom.querySelectorAll('head>meta[name=googlebot]');
   var type = 'info';
   var msg ='';
+  const what = 'static';
 
   if (elements.length===1) {
     var content = elements[0].getAttribute('content');
@@ -17,11 +18,11 @@ function(page) {
 
     msg = 'Meta Googlebot: <a href="https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag#valid-indexing--serving-directives">'+content+'</a>'+this.partialCodeLink(elements);
 
-    return this.createResult('HEAD', msg, 'info');
+    return this.createResult('HEAD', msg, 'info', what);
   }
 
   if (elements.length > 1) {
-    return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>Multiple googlebot meta tags.</a>"+this.partialCodeLink(elements), 'warning');
+    return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>Multiple googlebot meta tags.</a>"+this.partialCodeLink(elements), 'warning', what);
   }
 
   return null;
