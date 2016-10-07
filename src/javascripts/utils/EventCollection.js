@@ -52,7 +52,7 @@ export default class EventCollection {
   }
 
   fetchEvent() {
-    let event = this.lastEventOfType('Fetch');
+    let event = this.lastEventOfType('fetch');
     if (event && event.html) {
 
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
@@ -69,9 +69,22 @@ export default class EventCollection {
     return e && e.document;
   }
 
+  getDocumentEndDom () {
+    return getStaticDom();
+  }
+
   getFetchedStaticDom() {
     const e = this.fetchEvent();
     return e && e.document;
+  }
+
+  getDomContentLoadedDom() {
+    const e = this.domContentLoadedEvent();
+    return e && e.document;
+  }
+
+  getFetchedDom() {
+    return getFetchedStaticDom();
   }
 
   getIdleDom() {

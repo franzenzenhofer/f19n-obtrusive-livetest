@@ -9,7 +9,7 @@ const runRule = (name, rule, events) => {
   try {
     ruleResult = ruleFunc.apply(RuleContext, [events]);
   } catch (e) {
-    ruleResult = { label: 'ERROR', message: `<b>${e.name}</b>: ${e.message} @<b>${name}</b>`, type: 'warning' };
+    ruleResult = { label: 'Pending', message: `<b>${e.name}</b>: ${e.message} @<b>${name}</b>`, type: 'pending' };
   }
   return ruleResult;
 };

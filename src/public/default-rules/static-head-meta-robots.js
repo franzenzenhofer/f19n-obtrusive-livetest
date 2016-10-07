@@ -25,5 +25,5 @@ function(page) {
     return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>Multiple robots meta tags.</a>"+this.partialCodeLink(elements), 'warning', what);
   }
 
-  return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>No robots meta tag.</a>", 'warning', what);
+  return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>No robots meta tag.</a>", 'info', what);
 }

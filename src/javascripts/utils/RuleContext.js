@@ -22,8 +22,9 @@ export const htmlEntitiesEncode = (str) => {
 export const utf8TextLink = (str, anchor) =>
 {
   //str = String(str).replace(/"/g, '\\"');
+  str = str.trim();
   str = encodeURIComponent(str);
-  return '<a href="data:text/plain;charset=utf-8, '+str+'" target="_blank" title="'+htmlEntitiesEncode(str)+'">'+anchor+'</a>';
+  return '<a href="data:text/plain;charset=utf-8,'+str+'" target="_blank" title="'+htmlEntitiesEncode(str)+'">'+anchor+'</a>';
 }
 
 export const dataUrlTextLink = (str, anchor) => {

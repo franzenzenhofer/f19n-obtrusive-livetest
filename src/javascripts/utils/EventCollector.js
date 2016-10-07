@@ -4,7 +4,8 @@ export default class EventCollector {
   constructor(options = {}) {
     this.events = options.events || [];
     this.timeout = options.timeout || 5000;
-    this.lastEvent = options.lastEvent || 'documentIdle';
+    this.firstEvent = options.firstEvent || 'onBeforeNavigate';
+    this.lastEvent = options.lastEvent || 'documentIdle'; //'fetch';
     this.onFinished = options.onFinished || null;
     this.timeoutHandle = null;
   }
@@ -15,7 +16,10 @@ export default class EventCollector {
 
   pushEvent(data, event) {
     console.log(event);
+    if (event === this.firstEvent){ this.reset();}
+
     this.events.push(update(data, { $merge: { event } }));
+
     if (this.onFinished) {
       if (event === this.lastEvent) {
         this.finished();
@@ -28,7 +32,7 @@ export default class EventCollector {
 
   finished() {
     this.onFinished(this.events.slice());
-    this.reset();
+    //this.reset();
   }
 
   startTimeout() {
