@@ -45,7 +45,6 @@ const remove = (which, callback) => {
 const update = (which, data, callback = null) => {
   all((rules) => {
     const index = findIndex(rules, which);
-    console.log(index, which, data);
     return set(rules.mergeIn([index], data), callback);
   }, true);
 };

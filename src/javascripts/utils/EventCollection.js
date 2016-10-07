@@ -24,6 +24,7 @@ export default class EventCollection {
   documentIdleEvent() {
     let event = this.lastEventOfType('documentIdle');
     if (event && event.html) {
+
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
       event = Object.assign(event, { document });
     }
@@ -33,6 +34,27 @@ export default class EventCollection {
   documentEndEvent() {
     let event = this.lastEventOfType('documentEnd');
     if (event && event.html) {
+
+      const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      event = Object.assign(event, { document });
+    }
+    return event;
+  }
+
+  domContentLoadedEvent() {
+    let event = this.lastEventOfType('DOMContentLoaded');
+    if (event && event.html) {
+
+      const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      event = Object.assign(event, { document });
+    }
+    return event;
+  }
+
+  fetchEvent() {
+    let event = this.lastEventOfType('Fetch');
+    if (event && event.html) {
+
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
       event = Object.assign(event, { document });
     }
@@ -42,6 +64,13 @@ export default class EventCollection {
   // helper function to get the static HTML Dom
   getStaticDom() {
     const e = this.documentEndEvent();
+    //const e = this.domContentLoadedEvent();
+    //const e = this.fetchEvent(); //sadly the fetch event is not relieable enough
+    return e && e.document;
+  }
+
+  getFetchedStaticDom() {
+    const e = this.fetchEvent();
     return e && e.document;
   }
 

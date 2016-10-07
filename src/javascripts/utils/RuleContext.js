@@ -54,7 +54,6 @@ export const isString = function (stuff) {
 
 export const nodeToString = (stuff) =>
 {
-  console.log(stuff);
   Element.prototype.isNodeList = function() {return false;}
   Element.prototype.isElement = function() {return true;}
   NodeList.prototype.isNodeList = HTMLCollection.prototype.isNodeList = function(){return true;}
@@ -69,7 +68,6 @@ export const nodeToString = (stuff) =>
     }
     stuff = Array.prototype.slice.call(stuff);
     /*console.log('what is it');
-    console.log(stuff.toString());
     if((stuff.isNodeList && stuff.isNodeList()) ||
     {*/
       stuff.forEach(function(v){

@@ -127,7 +127,6 @@ const initializePanel = ({ position, host }) => {
 
     draggablePanel.set(x, y);
     chrome.storage.local.set({ [`panel-position-${host}`]: [x, y] });
-    console.log(draggablePanel.get());
   };
 
   const draggablePanel = new Draggable(getAppRootElement(), {
@@ -148,7 +147,6 @@ const initializePanel = ({ position, host }) => {
   });
 
   $(window).on('resize', () => {
-    console.log('resize');
     setLimit(draggablePanel);
     snapPanel(draggablePanel);
   });

@@ -1,7 +1,6 @@
 function(page) {
   var sc = page.getStatusCode();
   var rawHttpHeader = page.getRawHttpHeaders();
-  console.log(rawHttpHeader);
   var url = page.getURL();
   if (sc) {
     var type = 'info';

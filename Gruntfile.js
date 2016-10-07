@@ -88,6 +88,7 @@ module.exports = function(grunt) {
          content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",
           document_idle: "./src/javascripts/document_idle.js",
+          document_start: "./src/javascripts/document_start.js",
         },
         output: {
           path: "<%= grunt.config.get('buildDir') %>/js",

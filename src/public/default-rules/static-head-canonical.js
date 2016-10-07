@@ -7,7 +7,6 @@ function(page) {
   const what = 'static';
   var c = dom.querySelectorAll('link[rel=canonical]');
   var location = page.getLocation();
-  console.log(c)
   if (c.length > 0) {
     if (c.length === 1)
     {

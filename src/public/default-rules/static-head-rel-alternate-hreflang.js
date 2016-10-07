@@ -10,8 +10,6 @@ function(page) {
     var canonical = dom.querySelectorAll('link[rel=canonical]')[0];
     var type = 'info';
     var lable = "HEAD";
-    console.log(alternates);
-    console.log(alternates.length);
     var linkstring = '';
     if (alternates.length > 0)
     {

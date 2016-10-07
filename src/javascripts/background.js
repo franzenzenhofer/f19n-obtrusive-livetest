@@ -134,6 +134,16 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     callback({ tabId: sender.tab.id, url:sender.tab.url });
   }
 
+  if (request.event === 'Fetch') {
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(request.data, 'Fetch');
+  }
+
+  if (request.event === 'DOMContentLoaded') {
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(request.data, 'DOMContentLoaded');
+  }
+
   if (request.event === 'document_end') {
     const tabId = sender.tab.id;
     findOrCreateCollector(tabId).pushEvent(request.data, 'documentEnd');

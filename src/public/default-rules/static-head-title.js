@@ -5,10 +5,8 @@ function(page) {
 
   //check if we got some data to work with
   if (!dom) { return null; }
-  console.log('made it');
   var titletags = dom.querySelectorAll('head > title');
   var lable = 'HEAD';
-  console.log(titletags);
 
   if (titletags.length > 0) {
     if(titletags.length === 1)

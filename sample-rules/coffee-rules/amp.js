@@ -11,6 +11,5 @@ function(eventCollection) {
     href = amp.getAttribute('href');
     text = "amp: ${href}";
   }
-  console.log(amp);
   return this.createResult('HEAD', text, 'info');
 }
