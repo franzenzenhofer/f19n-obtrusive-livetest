@@ -18,7 +18,7 @@ const collector = {};
 const setDefaultScope = (callback = null) => {
   chrome.storage.local.get((data) => {
     if (!data.sites) {
-      chrome.storage.local.set({ sites: '*://*\n!*://*google\\.*\n!*://validator.ampproject.org*', panelPosition: [10, 10] }, callback);
+      chrome.storage.local.set({ sites: '*://*\n!*://*google\\.*\n!*://validator.ampproject.org*\n!*://*webpagetest.org*\n', panelPosition: [10, 10] }, callback);
     }
   });
 };
