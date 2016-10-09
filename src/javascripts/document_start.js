@@ -20,3 +20,67 @@ fetch(document.location.href)
       });
     }
   )
+
+var robotstxtUrl = document.location.origin+"/robots.txt"
+var fake_robots_txt_location_object = {
+  "hash":"",
+  "host":document.location.host,
+  "hostname":document.location.hostname,
+  "href": robotstxtUrl,
+  "origin": document.location.origin,
+  "pathname": "/robots.txt",
+  "port":document.location.port,
+  "protocol":document.location.protocol,
+  "search":""
+}
+
+fetch(robotstxtUrl)
+  .then(
+    function(response) {
+      console.log('in the robots.txt');
+      console.log(response);
+      var content_type = response && response.headers && response.headers.get("content-type") && response.headers.get("content-type").trim().toLowerCase();
+      if(response.status !== 200) {
+        chrome.runtime.sendMessage({ event: 'robotstxt', data: { status: response.status, statusText: response.statusText, ok: false, txt:"", location: fake_robots_txt_location_object, contentType: content_type }});
+        return null;
+      }
+      if(content_type.indexOf('text/plain')===-1)
+      {
+        chrome.runtime.sendMessage({ event: 'robotstxt', data: { status: response.status, statusText: response.statusText, ok: false, txt:"", location: fake_robots_txt_location_object, contentType: content_type }});
+        return null;
+      }
+      response.text().then(function(data) {
+        console.log(data);
+        chrome.runtime.sendMessage({ event: 'robotstxt', data: { status: response.status, statusText: response.statusText, ok: true, txt: data, location: fake_robots_txt_location_object, contentType: content_type } });
+      });
+    }
+  )
+
+  var soft404Url = document.location.href.substr(0, document.location.href.lastIndexOf('/')+1)+'hudriwudri'+Math.floor(Math.random()*10000000);
+  var fake_soft_404_location_object = {
+    "hash":"",
+    "host":document.location.host,
+    "hostname":document.location.hostname,
+    "href": soft404Url,
+    "origin": document.location.origin,
+    "pathname": soft404Url.replace(document.location.origin, ''),
+    "port":document.location.port,
+    "protocol":document.location.protocol,
+    "search":""
+  }
+
+  fetch(soft404Url)
+    .then(
+      function(response) {
+        console.log('in the soft404');
+        console.log(response);
+        console.log(response.headers.get("content-type"));
+        var content_type = response && response.headers && response.headers.get("content-type") && response.headers.get("content-type").trim().toLowerCase();
+        if(response.status !== 404) {
+          chrome.runtime.sendMessage({ event: 'soft404test', data: { status: response.status, statusText: response.statusText, ok: false, location: fake_soft_404_location_object, contentType: content_type }});
+          return null;
+        }
+        console.log('its an 404');
+        chrome.runtime.sendMessage({ event: 'soft404test', data: { status: response.status, statusText: response.statusText, ok: true, location: fake_soft_404_location_object, contentType: content_type }});
+      }
+    )

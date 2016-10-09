@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "f19n.com Obstrusive Live Test Framework",
+  "name": "Obstrusive Live Test",
   "description": "Description goes here ...",
   "version": "0.0.1",
   "browser_action": {
-    "default_title": "f19n.com Obstrusive Live Test"
+    "default_title": "Obstrusive Live Test by fullstackoptimization.com"
   },
   "icons": {
     "16": "images/icon.png",
@@ -28,19 +28,19 @@
   "content_scripts": [{
     "run_at": "document_start",
     "matches": ["http://*/*", "https://*/*"],
-    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif"],
+    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif", "http://*/*txt", "https://*/*txt"],
     "all_frames": false,
     "js": ["js/zepto.min.js", "js/document_start.js"]
   },{
     "run_at": "document_end",
     "matches": ["http://*/*", "https://*/*"],
-    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif"],
+    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif", "http://*/*txt", "https://*/*txt"],
     "all_frames": false,
     "js": ["js/document_end.js"]
   }, {
     "run_at": "document_idle",
     "matches": ["http://*/*", "https://*/*"],
-    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif"],
+    "exclude_matches": ["https://*/*.js", "https://*/*.css", "https://*/*.png", "https://*/*.jpg", "https://*/*.jpeg", "https://*/*gif", "http://*/*.js", "http://*/*.css", "http://*/*.png", "http://*/*.jpg", "http://*/*.jpeg", "http://*/*gif", "http://*/*txt", "https://*/*txt"],
     "all_frames": false,
     "js": ["js/document_idle.js", "js/content_script.js"]
   }],

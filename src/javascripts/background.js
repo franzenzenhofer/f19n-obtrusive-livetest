@@ -139,6 +139,16 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     findOrCreateCollector(tabId).pushEvent(request.data, 'fetch');
   }
 
+  if (request.event === 'robotstxt') {
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(request.data, 'robotstxt');
+  }
+
+  if (request.event === 'soft404test') {
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(request.data, 'soft404test');
+  }
+
   if (request.event === 'DOMContentLoaded') {
     const tabId = sender.tab.id;
     findOrCreateCollector(tabId).pushEvent(request.data, 'DOMContentLoaded');

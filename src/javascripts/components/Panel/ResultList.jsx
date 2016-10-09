@@ -51,10 +51,11 @@ export default class ResultList extends Component {
     console.log('error results');
     console.log(error_results);
     var warning_results = results.filter(r => r.type === "warning");
+    var pending_results = results.filter(r => r.type === "pending");
     console.log(warning_results);
-    var info_results = results.filter(r => (r.type !== "error" && r.type !== "warning"));
+    var info_results = results.filter(r => (r.type !== "error" && r.type !== "warning" && r.type !== "pending"));
     console.log(info_results);
-    results = error_results.concat(warning_results, info_results);
+    results = error_results.concat(warning_results, info_results, pending_results);
 
     const clearFilterLink = this.state.filter ? <a href="javascript://" className="clear-filter" onClick={this.clearFilter}>Clear filter</a> : null;
 
