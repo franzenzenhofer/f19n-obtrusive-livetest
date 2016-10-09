@@ -31,7 +31,8 @@ function(page) {
       return this.createResult(lable, alternates.length+' link-rel-alternate found. '+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type, what);
     }
     else {
-      return this.createResult(lable, 'No link-rel-alternate-hreflang found.', type, what);
+      //return this.createResult(lable, 'No link-rel-alternate-hreflang found.', type, what);
+      return null;
     }
 
   //return this.createResult(lable, 'Title: '+titletags[0].innerText, 'info');

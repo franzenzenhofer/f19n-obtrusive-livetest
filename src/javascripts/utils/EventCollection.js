@@ -133,30 +133,55 @@ export default class EventCollection {
     }
   }
 
-  getHttpHeaders() {
-    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+  getHttpHeaders(what) {
+    if(what==="last")
+    {
+      var onHeadersReceivedEvent = this.lastEventOfType('onHeadersReceived');
+    }
+    else {
+      var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    }
     var { responseHeaders } = onHeadersReceivedEvent;
     return responseHeaders;
   }
 
-  getRawHttpHeaders() {
-    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+  getRawHttpHeaders(what) {
+    if(what==="last")
+    {
+      var onHeadersReceivedEvent = this.lastEventOfType('onHeadersReceived');
+    }
+    else {
+      var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    }
     var { rawResponseHeaders } = onHeadersReceivedEvent;
     return rawResponseHeaders;
   }
 
-  getStatusCode() {
-    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+  getStatusCode(what) {
+    if(what==="last")
+    {
+      var onHeadersReceivedEvent = this.lastEventOfType('onHeadersReceived');
+    }
+    else {
+      var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    }
     var { statusCode } = onHeadersReceivedEvent;
     return statusCode;
   }
 
-  getURL() {
-    var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
-    var { url } = onHeadersReceivedEvent;
+  getURL(what) {
+    if(what==="last")
+    {
+      var onHeadersReceivedEvent = this.lastEventOfType('onHeadersReceived');
+    }
+    else {
+      var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
+    }
+      var { url } = onHeadersReceivedEvent;
     return url;
   }
 
+  getUrl(what) { return getURL(what); }
   //TODO
   //getProtokoll
 }

@@ -2,7 +2,10 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default function ResultItem(props) {
-  const { label, message, type, what} = props;
+  var { label, message, type, what} = props;
+  label = label+"";
+  message = message+"";
+  console.log(props);
   var whatstring = ''
   if(what)
   {
