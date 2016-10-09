@@ -5,8 +5,8 @@ import * as RuleContext from './utils/RuleContext';
 
 const runRule = (name, rule, events) => {
   let ruleResult = null;
-  const ruleFunc = eval(`(${rule})`);
   try {
+    const ruleFunc = eval(`(${rule})`);
     ruleResult = ruleFunc.apply(RuleContext, [events]);
   } catch (e) {
     ruleResult = { label: 'Pending', message: `<b>${e.name}</b>: ${e.message} @<b>${name}</b>`, type: 'pending' };

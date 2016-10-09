@@ -1,4 +1,5 @@
 import { isNumber } from 'lodash';
+import myRobotsParser from 'robots-parser';
 
 export const createResult = (label, message, type = 'info', what = null) => {
   let result = { label: label, message: message, type: type, what: what };
@@ -12,6 +13,8 @@ export const createResult = (label, message, type = 'info', what = null) => {
   return result;
 };
 
+//https://www.npmjs.com/package/robots-parser
+export const robotsParser = myRobotsParser;
 
 export const htmlEntitiesEncode = (str) => {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');

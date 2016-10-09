@@ -56,7 +56,7 @@ fetch(robotstxtUrl)
     }
   )
 
-  var soft404Url = document.location.href.substr(0, document.location.href.lastIndexOf('/')+1)+'hudriwudri'+Math.floor(Math.random()*10000000);
+  var soft404Url = document.location.href.substr(0, document.location.href.replace(document.location.search, '').lastIndexOf('/')+1)+'hudriwudri'+Math.floor(Math.random()*10000000);
   var fake_soft_404_location_object = {
     "hash":"",
     "host":document.location.host,
