@@ -34,7 +34,7 @@ function(page) {
     }
   }
   else {
-    return this.createResult('HEAD', '<a href="https://support.google.com/webmasters/answer/139066?hl=en" target="_top">No canonical found within the static HTML.</a>', 'error', what);
+    return this.createResult('HEAD', '<a href="https://support.google.com/webmasters/answer/139066?hl=en" target="_top">No canonical found within the static HTML.</a>', 'warning', what);
   }
   return null;
 }

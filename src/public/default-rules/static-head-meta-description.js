@@ -11,7 +11,7 @@ function(page) {
 	  }
 
 	  //some category of stuff your are testing i.e.: 'DOM', 'HEAD', 'BODY', 'HTTP', 'SPEED', ...
-	  var lable = 'BODY';
+	  var lable = 'HEAD';
 	  var msg = 'Meta description: '+meta_ds[0]['content'];
     msg = msg+this.partialCodeLink(meta_ds);
 	  //you can create a link showing only the partial code of a nodeList
