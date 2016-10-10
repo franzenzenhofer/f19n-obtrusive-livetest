@@ -28,9 +28,12 @@ const $appRoot = $('<style>#f19n-panel-root:before { content: " "; cursor: move;
   width: '350px',
   zIndex: 99999,
   backgroundColor: 'white',
-  boxShadow: '0px 0px 8px rgba(0,0,0,0.2)',
-  maxHeight: '300px',
+  borderColor: 'lightgray',
+  border: '1px solid',
+  maxHeight: '300px'
 });
+//  boxShadow: '0px 0px 8px rgba(0,0,0,1)',
+
 
 const check = (sites, url) => {
   const entry = sites.reverse().find((l) => {

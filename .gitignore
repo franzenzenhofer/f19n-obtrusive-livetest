@@ -23,3 +23,5 @@ npm-debug.log
 /dist
 /build
 /.idea
+
+.DS_Store
