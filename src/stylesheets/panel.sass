@@ -11,9 +11,17 @@ a, a:visited
   letter-spacing: -0.5px
 
 .Header-brand
-  padding: 4px
+  padding-top: 4px
+  padding-bottom: 4px
+  padding-left: 4px
   background: $backgroundColorDark
   border-bottom: 1px solid $greyAccent
+  position: fixed
+  left: 0px
+  top: 0px
+  width: 100%
+  z-index: +1
+
 
 .Header-brand *
   display: inline-block
@@ -24,9 +32,13 @@ a, a:visited
   font-weight: 400
   font-size: 12px
 
+
 .Header-controls
   background: $backgroundColorLight
-  padding: 4px
+  padding-top: 27px
+  padding-left: 4px
+  padding-right: 4px
+  padding-bottom: 4px
   font-size: 12px
   border-bottom: 1px solid $greyAccent
 
