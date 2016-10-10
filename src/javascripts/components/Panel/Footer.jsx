@@ -8,7 +8,7 @@ export default function Panel(props) {
   const {url} = props;
   return (
     <footer>
-      <a href={`${url}`} target="_top" title="Reload"><button>↻</button></a>
+      <a href={`${url}`} target="_top" title="Reload"><button class="Button Button--haptic Button--inline">↻</button></a>
       <a href={`https://developers.google.com/speed/pagespeed/insights/?hl=en&url=${url}`} target="_blank" title="Page Speed Insights"><button>Psi</button></a>
       <a href={`https://www.webpagetest.org?url=${url}`} target="_blank" title="WebPageTest.org"><button>Wpt</button></a>
       <a href={`https://www.google.com/webmasters/tools/mobile-friendly/?hl=en&url=${url}`} target="_blank" title="Mobile Friendly Test"><button>Mf</button></a>
