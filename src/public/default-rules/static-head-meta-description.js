@@ -7,7 +7,7 @@ function(page) {
 
 	  if(meta_ds > 1)
 	  {
-      return this.createResult('BODY', 'Multiple meta description found.', 'error', what);
+      return this.createResult('HEAD', 'Multiple meta description found.'+this.partialCodeLink(meta_ds), 'error', what);
 	  }
 
 	  //some category of stuff your are testing i.e.: 'DOM', 'HEAD', 'BODY', 'HTTP', 'SPEED', ...
