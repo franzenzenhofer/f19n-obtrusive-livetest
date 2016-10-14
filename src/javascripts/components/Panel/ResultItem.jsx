@@ -5,7 +5,6 @@ export default function ResultItem(props) {
   var { label, message, type, what} = props;
   label = label+"";
   message = message+"";
-  console.log(props);
   var whatstring = ''
   if(what)
   {

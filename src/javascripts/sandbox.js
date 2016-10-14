@@ -3,16 +3,6 @@ import sampleEvents from './constants/sampleEvents';
 
 import * as RuleContext from './utils/RuleContext';
 
-/*console.log('in sandbox');
-const asyncReturn = (ruleResult) => {
-  console.log('async return');
-  console.log(ruleResult);
-  //let result = runRule(name, body, new EventCollection(args));
-  //result = Object.assign(result || {}, { runId
-}
-
-RuleContext.asyncReturn = asyncReturn;*/
-
 const runRule = (name, rule, events, callback) => {
   let ruleResult = null;
   try {
@@ -54,16 +44,10 @@ const validateRule = (rule, callback) => {
 };
 
 window.addEventListener('message', (event) => {
-  console.log('what message');
-  console.log(event);
+
   const { command, body, args, name } = event.data;
   var { runId } = event.data;
   var callback = function (result) {
-    console.log('in callback');
-    console.log(result);
-    console.log(runId);
-    console.log(event.origin);
-    //runId = runId;
     result = Object.assign(result || {}, { runId });
     event.source.postMessage(result, event.origin);
   }

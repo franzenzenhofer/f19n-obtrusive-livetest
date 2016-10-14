@@ -6,10 +6,7 @@ function(page){
   var idle_dom = page.getIdleDom();
   var medias = idle_dom.querySelectorAll("link[rel=alternate][media][href]");
   var meta_viewports = idle_dom.querySelectorAll('meta[name=viewport]');
-  console.log('common mobile check');
-  console.log(isvary);
-  console.log(medias && medias.length>0);
-  console.log(meta_viewports && meta_viewports.length > 0);
+
 
   if(!(isvary || (medias && medias.length>0) || (meta_viewports && meta_viewports.length > 0)))
   {
