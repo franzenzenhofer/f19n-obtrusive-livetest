@@ -26,7 +26,8 @@ var nodeToString = (stuff) =>
   };
 };
 
-
+//console.log(nodeToString(document.querySelectorAll('h1')));
+//console.log(nodeToString('test'));
 
 var allNodesToString = (...stuffs) =>
 {

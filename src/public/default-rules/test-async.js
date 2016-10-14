@@ -6,5 +6,5 @@ function(page, callback)
   //this.asyncReturn('test async');
   callback(this.createResult('async', "async return!!!!", "test"));
   return 'async';
-  return this.createResult('sync', "sync return", "info");
+  return this.createResult('sync', "sync return", "test");
 }

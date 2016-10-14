@@ -37,7 +37,9 @@ var fake_robots_txt_location_object = {
 fetch(robotstxtUrl)
   .then(
     function(response) {
-      var content_type = response && response.headers && response.headers.get("content-type") &&  response.headers.get("content-type").trim().toLowerCase();
+      console.log('in the robots.txt');
+      console.log(response);
+      var content_type = response && response.headers && response.headers.get("content-type") && response.headers.get("content-type").trim().toLowerCase();
       if(response.status !== 200) {
         chrome.runtime.sendMessage({ event: 'robotstxt', data: { status: response.status, statusText: response.statusText, ok: false, txt:"", location: fake_robots_txt_location_object, contentType: content_type }});
         return null;
@@ -48,6 +50,7 @@ fetch(robotstxtUrl)
         return null;
       }
       response.text().then(function(data) {
+        console.log(data);
         chrome.runtime.sendMessage({ event: 'robotstxt', data: { status: response.status, statusText: response.statusText, ok: true, txt: data, location: fake_robots_txt_location_object, contentType: content_type } });
       });
     }
@@ -69,11 +72,15 @@ fetch(robotstxtUrl)
   fetch(soft404Url)
     .then(
       function(response) {
+        console.log('in the soft404');
+        console.log(response);
+        console.log(response.headers.get("content-type"));
         var content_type = response && response.headers && response.headers.get("content-type") && response.headers.get("content-type").trim().toLowerCase();
         if(response.status !== 404) {
           chrome.runtime.sendMessage({ event: 'soft404test', data: { status: response.status, statusText: response.statusText, ok: false, location: fake_soft_404_location_object, contentType: content_type }});
           return null;
         }
+        console.log('its an 404');
         chrome.runtime.sendMessage({ event: 'soft404test', data: { status: response.status, statusText: response.statusText, ok: true, location: fake_soft_404_location_object, contentType: content_type }});
       }
     )

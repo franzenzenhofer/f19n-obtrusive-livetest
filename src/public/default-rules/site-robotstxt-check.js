@@ -1,5 +1,7 @@
 function(page) {
   var robotstxt = page.getRobotsTxtStatus();
+  console.log('in ROBOTS TXT');
+  console.log(robotstxt);
   if (robotstxt.ok === false)
   {
     if (robotstxt.status === 404) {

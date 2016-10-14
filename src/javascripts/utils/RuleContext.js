@@ -3,6 +3,13 @@ import myRobotsParser from 'robots-parser';
 
 export const createResult = (label, message, type = 'info', what = null) => {
   let result = { label: label, message: message, type: type, what: what };
+
+  // TODO remove priority argument + warning
+  //if (isNumber(_priority)) {
+  //  console.log('Deprecation warning: `priority` has been removed');
+  //  result = { label, message, type };
+  //}
+
   return result;
 };
 
@@ -64,17 +71,24 @@ export const nodeToString = (stuff) =>
       return stuff.join("\n");
     }
     stuff = Array.prototype.slice.call(stuff);
-
+    /*console.log('what is it');
+    if((stuff.isNodeList && stuff.isNodeList()) ||
+    {*/
       stuff.forEach(function(v){
     	   if(v.outerHTML){ temp_string = temp_string + v.outerHTML+"\n";}
          else {temp_string = temp_string + v + "\n";}
        });
-
+    /*}
+    else {
+      return "Iterable but not a NodeString";
+    }*/
     return temp_string;
   };
   if(stuff !== null && typeof stuff === 'object')
   {
-
+    //console.log('stuff');
+    //console.log(stuff);
+    //console.log(Object.keys(stuff));
     var stuff_keys = Object.keys(stuff);
     stuff_keys.forEach(function(k)
     {
@@ -87,10 +101,12 @@ export const nodeToString = (stuff) =>
 
 //show only beginning tag tag = elem.innerHTML ? elem.outerHTML.slice(0,elem.outerHTML.indexOf(elem.innerHTML)) : elem.outerHTML;
 
-
+//console.log(nodeToString(document.querySelectorAll('h1')));
+//console.log(nodeToString('test'));
 
 export const allNodesToString = (...stuffs) =>
 {
+	//console.log(stuffs);
   stuffs = Array.prototype.slice.call(stuffs);
 	if(!stuffs){return false;}
 	var s = '';

@@ -1,5 +1,6 @@
 function(page) {
   var hh = page.getHttpHeaders()
+  console.log(hh)
   if (hh) {
     var text = `status code`;
     return this.createResult('HTTP', text, 'info');
