@@ -3,11 +3,11 @@ import sampleEvents from './constants/sampleEvents';
 
 import * as RuleContext from './utils/RuleContext';
 
-const runRule = (name, rule, events) => {
+const runRule = (name, rule, events, callback) => {
   let ruleResult = null;
   try {
     const ruleFunc = eval(`(${rule})`);
-    ruleResult = ruleFunc.apply(RuleContext, [events]);
+    ruleResult = ruleFunc.apply(RuleContext, [events, callback]);
   } catch (e) {
     ruleResult = { label: 'Pending', message: `<b>${e.name}</b>: ${e.message} @<b>${name}</b>`, type: 'pending' };
   }
@@ -45,14 +45,25 @@ const validateRule = (rule) => {
 
 window.addEventListener('message', (event) => {
   const { command, body, args, runId, name } = event.data;
-  if (command === 'validateRule') {
-    let result = validateRule(body);
+
+  var postReturn = function(result){
     result = Object.assign(result || {}, { runId });
     event.source.postMessage(result, event.origin);
   }
+
+  if (command === 'validateRule') {
+    let result = validateRule(body);
+    //result = Object.assign(result || {}, { runId });
+    //event.source.postMessage(result, event.origin);
+    postReturn(result);
+  }
+
   if (command === 'runRule') {
-    let result = runRule(name, body, new EventCollection(args));
-    result = Object.assign(result || {}, { runId });
-    event.source.postMessage(result, event.origin);
+    let result = runRule(name, body, new EventCollection(args), postReturn);
+    //result = Object.assign(result || {}, { runId });
+    //event.source.postMessage(result, event.origin);
+    //if(result !== 'async'){
+      postReturn(result);
+    //}
   }
 });

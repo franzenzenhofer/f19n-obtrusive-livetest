@@ -26,8 +26,6 @@ var nodeToString = (stuff) =>
   };
 };
 
-//console.log(nodeToString(document.querySelectorAll('h1')));
-//console.log(nodeToString('test'));
 
 var allNodesToString = (...stuffs) =>
 {
@@ -40,5 +38,3 @@ var allNodesToString = (...stuffs) =>
   });
   return s;
 }
-
-console.log(allNodesToString(document.querySelectorAll('h1'),document.querySelectorAll('h2'),'test 2'));

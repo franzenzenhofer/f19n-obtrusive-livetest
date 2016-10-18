@@ -15,7 +15,6 @@ export default class EventCollector {
   }
 
   pushEvent(data, event) {
-    console.log(event);
     if (event === this.firstEvent){ this.reset();}
 
     this.events.push(update(data, { $merge: { event } }));

@@ -61,7 +61,6 @@ export default class Rules extends Component {
   }
 
   downloadRule = (id) => {
-    //console.log(rulesStore);
     const js = rulesStore.getJs(id, (v) => {
         var blob = new Blob([v.body], {type: "text/plain;charset=utf-8"});
         FileSaver.saveAs(blob, v.name);

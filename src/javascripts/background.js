@@ -67,17 +67,29 @@ const findOrCreateCollector = (tabId) => {
       chrome.storage.local.get('rules', (data) => {
         // Take only enabled rules
         const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
+        var doneRuleCalls = [];
         const promisedRuleCalls = enabledRules.map((rule) => {
-          return new Promise((resolve) => { runRule(rule, events, (result) => { resolve(result); }); });
+          var r =  new Promise((resolve) => { runRule(rule, events, (result) => {
+          resolve(result); }); });
+          r.then((res)=>{
+            if(!isEmpty(res))
+            {
+              const storeKey = resultStoreKey(tabId);
+              doneRuleCalls.push(res);
+              chrome.storage.local.set({ [storeKey]: doneRuleCalls });
+            }
+          });
+          return r
         });
 
-        Promise.all(promisedRuleCalls).then((results) => {
+        /*Promise.all(promisedRuleCalls).then((results) => {
+          console.log(results);
           const notEmptyResults = results.filter(r => !isEmpty(r));
           setTimeout(() => {
-            const storeKey = resultStoreKey(tabId);
-            chrome.storage.local.set({ [storeKey]: notEmptyResults });
+            //const storeKey = resultStoreKey(tabId);
+            //chrome.storage.local.set({ [storeKey]: notEmptyResults });
           }, 0);
-        });
+        });*/
       });
     },
   });

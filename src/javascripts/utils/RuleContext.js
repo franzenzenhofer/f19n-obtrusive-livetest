@@ -13,6 +13,10 @@ export const createResult = (label, message, type = 'info', what = null) => {
   return result;
 };
 
+export const waitForAsync = (message = 'Waiting for async rule.') => {
+  return createResult('async', message, 'pending');
+}
+
 //https://www.npmjs.com/package/robots-parser
 export const robotsParser = myRobotsParser;
 

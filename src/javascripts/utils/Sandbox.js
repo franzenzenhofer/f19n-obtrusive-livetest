@@ -7,9 +7,13 @@ const callbacks = {};
 window.addEventListener('message', (result) => {
   const runId = result.data.runId;
   const data = result.data;
+  //callbacks[runId](result.data);
   delete data.runId;
-  callbacks[runId](result.data);
-  delete callbacks[runId];
+  if(data.label !== 'async')
+  {
+    callbacks[runId](result.data);
+    delete callbacks[runId];
+  }
 });
 
 proxyIframe = document.createElement('iframe');
