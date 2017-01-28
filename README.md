@@ -13,7 +13,7 @@ npm install
 
 ### Run the build process
 
-run the build process once
+run the build process once (for this you need grunt-cli installed `npm install -g grunt-cli`)
 
 ```shell
 grunt
@@ -44,11 +44,14 @@ Inside [/sample-rules](/sample-rules) are some sample rules plus the documentati
  * All rules within the /public/default-rules/ directory are MIT licensed.
  * See details within the directory.
 
-All other code within this repository - if not defined otherwise - is currently available under a **Contribution License**.
+All other code within this repository - if not defined otherwise - is currently available under a
+
+**Contribution License**.
 
 You are welcome to
 
  * review the code
+ * install the application in your browser
  * submit issues, pull requests, any other feedback
  * compile and use this extension in development mode on your computer with the goal of learning about the codebase or delivering feedback
  * use code for educational purposes for yourself or within your organization
@@ -58,7 +61,7 @@ Currently don't
  * remove this license
  * remove branding or links from/to www.fullstackoptimization.com
  * create a free or commercial product based upon the code of this repository
- * submit this a product based on this code to any app store
+ * submit a product based on this code to any app store
  * install this extension in developer mode on multiple computers within your company
 
  These restrictions do not apply to the /sample-rules/  and the /public/default-rules/  code.
