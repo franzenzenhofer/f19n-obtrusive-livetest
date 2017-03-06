@@ -18,7 +18,7 @@ function(page) {
 
     msg = 'Meta Robots: <a href="https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag#valid-indexing--serving-directives">'+content+'</a>'+this.partialCodeLink(elements);
 
-    return this.createResult('HEAD', msg, 'info', what);
+    return this.createResult('HEAD', msg, type, what);
   }
 
   if (elements.length > 1) {
