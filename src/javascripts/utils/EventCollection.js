@@ -112,9 +112,9 @@ export default class EventCollection {
   }
 
   // function to get the current live DOM
-  getLiveDom() {
-    return null;
-  }
+  //getLiveDom() {
+  //  return null;
+  //}
 
   getLocation(where = 'idle') {
     if (where === 'static')
