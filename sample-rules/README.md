@@ -19,7 +19,10 @@ function(page) {
 
   var { location } = documentEndEvent;
 
-  return { label: 'DEBUG', type: 'info', message: `Loaded ${location.href}` };
+  //you can either return
+  //return { label: 'DEBUG', type: 'info', message: `Loaded ${location.href}`};
+  //return this.createResult(label, msg, type, [what]*); //what is a kind of sublable attached to the front of the message
+  return this.createResult('DEBUG', `Loaded ${location.href}`, 'info');
 }
 ```
 
@@ -40,6 +43,28 @@ function(page) {
 }
 ```
 
+Rules can also have an async return via callback!
+This only make sense if have any async logic (i.e. a call to an extern API) from within your rule-function.
+
+```javascript
+function(page, callback) {
+  var documentIdleEvent = page.documentIdleEvent();
+
+  // Return if no documentIdleEvent (and so location) found
+  if (!documentIdleEvent) { return null; }
+
+  var { document } = documentIdleEvent;
+
+  var countElements = document.querySelectorAll('p').length;
+
+  callback(that.createResult(this.createResult('STATS', `found ${countElements} paragraph elements`));
+
+  //an sync return must tell the rule parse that it's not done yet and it should wait for the asyncreturn
+  //this waitForAsync must be return async function to work
+  return this.waitForAsync();
+}
+```
+
 ## page
 
 The `page`-object is basically a collection of events. This event-collection holds all the occurred events during the page load.
@@ -54,6 +79,14 @@ The `page`-object is basically a collection of events. This event-collection hol
 - responseHeaders
 - documentEnd
 - documentIdle
+
+additional custom event that have additonal information about the envirment
+
+- robotstxt - tried to fetch a robots.txt file at the root of the host
+- soft404test - an event that holds information about a non existing URL at the same directory level of the executed URL
+- fetch - a static represenation of the DOM via the window.fetch event (an unscripted envirment)+
+
+
 
 #### Methods
 
@@ -123,6 +156,28 @@ function(page) {
 ##### documentIdleEvent()
 
 Like `documentEndEvent` except it represents the DOM, location and HTML after `window.onLoad`.
+
+
+##### other helper methods
+
+ - page.soft404TestEvent()
+ - page.robotsTxtEvent()
+ - page.domContentLoadedEvent()
+ - page.fetchEvent()
+ - page.getStaticDom() //most of the time this is the DOM you want to test
+ - page.getDocumentEndDom()
+ - page.getRobotsTxtStatus()
+ - page.getDomContentLoadedDom()
+ - page.getFetchedDom()
+ - page.getIdleDom() //this is the DOM if you care about the final rendered DOM pre user interaction DOM
+ - page.getLocation() //current location of the page (during the document Idle event)
+ - page.getLocation('static') //URL location of the static DOM
+ - page.getHttpHeaders() // the HTTP response headers of the initial GET request
+ - page.getHttpHeaders('last') // the HTTP response headers of the lat GET request (i.e. if there were redirects), all key values are lowercase
+ - page.getRawHttpHeaders(['last']) //same as above, but un-noramlized
+ - TODO other helper methods
+
+
 
 
 ## RuleContext
