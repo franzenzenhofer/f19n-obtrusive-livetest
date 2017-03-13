@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
+import { fromJS } from 'immutable';
+import Modal from 'react-modal';
+
 import RulesList from './RulesList';
 import AddRule from './AddRule';
-import EditRule from './EditRule';
+import ViewRule from './ViewRule';
 import EnabledSites from './EnabledSites';
 
-import FileSaver from 'file-saver';
-
 import rulesStore from './../../store/rules';
-
-import { fromJS } from 'immutable';
-
-import Modal from 'react-modal';
 
 export default class Rules extends Component {
   constructor(props) {
@@ -18,9 +15,11 @@ export default class Rules extends Component {
     this.state = {
       rules: fromJS(props.rules),
       sites: props.sites,
-      editRule: null,
-      editAllowed: true
+      viewRule: null,
     };
+
+    this.storeReady = true;
+    this.queue = this.queue || [];
 
     chrome.storage.onChanged.addListener(this.onStoreChange);
   }
@@ -34,21 +33,16 @@ export default class Rules extends Component {
     }
   }
 
-  updateRule(id, data) {
-    rulesStore.update(id, data);
-  }
+  addRule = (data) => {
+    const handleQueue = () => {
+      if (!this.storeReady || this.queue.length === 0) { return; }
+      this.storeReady = false;
+      const data = this.queue.shift();
+      rulesStore.add(data, () => { this.storeReady = true; handleQueue(); });
+    };
 
-  handleOnSave(id, data) {
-    this.updateRule(id, data);
-    this.setState({ editRule: null });
-  }
-
-  addRule = (data, open = false) => {
-
-    const id = rulesStore.add(data);
-    if (open) {
-      this.setState({ editRule: id });
-    }
+    this.queue.push(data);
+    handleQueue();
   }
 
   toggleRuleStatus = (id) => {
@@ -60,24 +54,8 @@ export default class Rules extends Component {
     rulesStore.remove(id);
   }
 
-  downloadRule = (id) => {
-    const js = rulesStore.getJs(id, (v) => {
-        var blob = new Blob([v.body], {type: "text/plain;charset=utf-8"});
-        FileSaver.saveAs(blob, v.name);
-      });
-    //alert(js);
-  }
-
-  editRule = (id) => {
-    this.setState({ rules: this.state.rules, editRule: id, editAllowed: true });
-  }
-
   viewRule = (id) => {
-    this.setState({ editRule: id, editAllowed: false });
-  }
-
-  duplicateRule = (id) => {
-    rulesStore.duplicate(id, { defaultRule: false });
+    this.setState({ viewRule: id });
   }
 
   updateSites = (sites) => {
@@ -96,8 +74,7 @@ export default class Rules extends Component {
     };
 
     const rules = this.state.rules.toJS();
-    const ruleToEdit = this.state.rules.get(rulesStore.findIndex(rules, this.state.editRule));
-    const editAllowed = this.state.editAllowed;
+    const ruleToView = this.state.rules.get(rulesStore.findIndex(rules, this.state.viewRule));
 
     const defaultRules = rules.filter(r => r.defaultRule);
     const customRules = rules.filter(r => !r.defaultRule);
@@ -116,15 +93,15 @@ export default class Rules extends Component {
         <div className="Wrapper">
           <div className="Section rules">
             <h2>Custom rules</h2>
-            <RulesList rules={customRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} onDownloadClick={this.downloadRule} />
+            <RulesList rules={customRules} onViewClick={this.viewRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
           <div className="Section rules">
             <h2>Default rules</h2>
-            <RulesList rules={defaultRules} onDuplicateClick={this.duplicateRule} onEditClick={this.editRule} onViewClick={this.viewRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
+            <RulesList rules={defaultRules} onViewClick={this.viewRule} onStatusClick={this.toggleRuleStatus} />
           </div>
         </div>
-        <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToEdit && true} onRequestClose={() => this.setState({ editRule: null })}>
-          <EditRule rule={ruleToEdit} onCancel={() => this.setState({ editRule: null })} onSave={(data) => this.handleOnSave(this.state.editRule, data)} readOnly={!editAllowed} />
+        <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToView && true} onRequestClose={() => this.setState({ viewRule: null })}>
+          <ViewRule rule={ruleToView} onCancel={() => this.setState({ viewRule: null })} />
         </Modal>
       </div>
     );
