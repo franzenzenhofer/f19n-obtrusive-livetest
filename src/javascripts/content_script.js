@@ -1,4 +1,4 @@
-/* global $ */
+/* global $, document, window */
 import Frame from 'react-frame-component';
 import Draggable from 'draggable';
 
@@ -23,16 +23,13 @@ const FRAME_TEMPLATE = `
 
 const $appRoot = $('<style>#f19n-panel-root:before { content: " "; cursor: move; position: absolute; left: 0; top: 0; width: calc(100% - 20px); height: 20px; background: transparent;}</style><div id="f19n-panel-root"></div>').css({
   position: 'fixed',
-  top: '10px',
-  left: '10px',
   width: '350px',
   zIndex: 99999,
   backgroundColor: 'white',
   borderColor: 'lightgray',
   border: '1px solid',
-  maxHeight: '300px'
+  maxHeight: '300px',
 });
-//  boxShadow: '0px 0px 8px rgba(0,0,0,1)',
 
 
 const check = (sites, url) => {
@@ -71,8 +68,15 @@ const getAppRootElement = () => {
   return document.getElementById('f19n-panel-root');
 };
 
+const getLimitBoundings = (prev = false) => {
+  return {
+    x: [10, (prev ? window.prevInnerWidth : window.innerWidth) - 10 - $(getAppRootElement()).width()],
+    y: [10, (prev ? window.prevInnerHeight : window.innerHeight) - 10 - $(getAppRootElement()).height()],
+  };
+};
+
 const getPanelPosition = (data, host) => {
-  return data[`panel-position-${host}`] || [10, 10];
+  return data[`panel-position-${host}`] || [getLimitBoundings().x[1], getLimitBoundings().y[0]];
 };
 
 const showPanel = (url, tabId, onMount) => {
@@ -94,11 +98,9 @@ const hidePanel = () => {
   $(getAppRootElement()).remove();
 };
 
-const getLimitBoundings = () => {
-  return {
-    x: [10, window.innerWidth - 10 - $(getAppRootElement()).width()],
-    y: [10, window.innerHeight - 10 - $(getAppRootElement()).height()],
-  };
+const setPrevWindowSize = () => {
+  window.prevInnerWidth = window.innerWidth;
+  window.prevInnerHeight = window.innerHeight;
 };
 
 const initializePanel = ({ position, host }) => {
@@ -110,23 +112,23 @@ const initializePanel = ({ position, host }) => {
   const snapPanel = (draggablePanel) => {
     const panelOffset = $(getAppRootElement()).offset();
     const limit = getLimitBoundings();
+    const prevLimit = getLimitBoundings(true);
 
-    var { x, y } = draggablePanel.get();
+    let { x, y } = draggablePanel.get();
 
-    if (limit.x[1] <= panelOffset.left) {
+    const sizeUpX = prevLimit.x[1] < limit.x[1];
+    const sizeUpY = prevLimit.y[1] < limit.y[1];
+
+    if (limit.x[1] <= panelOffset.left || (sizeUpX && prevLimit.x[1] === x)) {
       x = limit.x[1];
-      //draggablePanel.set(limit.x[1], y);
-      //chrome.storage.local.set({ [`panel-position-${host}`]: [limit.x[1], y] });
     }
 
-    if (limit.y[1] <= panelOffset.top - $(window).scrollTop()) {
+    if (limit.y[1] <= panelOffset.top - $(window).scrollTop() || (sizeUpY && prevLimit.y[1] === y)) {
       y = limit.y[1];
-      //draggablePanel.set(x, limit.y[1]);
-      //chrome.storage.local.set({ [`panel-position-${host}`]: [x, limit.y[1]] });
     }
 
-    if(y < limit.y[0]) { y = limit.y[0]; }
-    if(x < limit.x[0]) { x = limit.x[0]; }
+    if (y < limit.y[0]) { y = limit.y[0]; }
+    if (x < limit.x[0]) { x = limit.x[0]; }
 
     draggablePanel.set(x, y);
     chrome.storage.local.set({ [`panel-position-${host}`]: [x, y] });
@@ -152,10 +154,12 @@ const initializePanel = ({ position, host }) => {
   $(window).on('resize', () => {
     setLimit(draggablePanel);
     snapPanel(draggablePanel);
+    setPrevWindowSize();
   });
 };
 
 const init = () => {
+  setPrevWindowSize();
   chrome.storage.local.get((data) => {
     getTab(({ url, tabId }) => {
       const host = (new URL(url)).host;
