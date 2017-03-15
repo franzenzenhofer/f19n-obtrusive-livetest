@@ -40,7 +40,7 @@ function(page, callback){
     }
   )
   .catch(function(err) {
-    callback(that.createResult('SPEED', 'No Page Speed Insights mobile data. '+err+' <a href="https://developers.google.com/speed/pagespeed/insights/?hl=en&url='+url+'" target="_blank">Page Speed Insights</a>', "warning"));
+    callback(that.createResult('SPEED', 'No Page Speed Insights <b>mobile</b> data. '+err+' <a href="https://developers.google.com/speed/pagespeed/insights/?hl=en&url='+url+'" target="_blank">Page Speed Insights</a>', "warning"));
   });
 
   //callback(this.createResult('test', "async test", "warning"));
