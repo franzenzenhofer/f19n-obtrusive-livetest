@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Highlight from 'react-highlight';
 
 export default class ViewRule extends Component {
   constructor(props) {
@@ -12,10 +13,11 @@ export default class ViewRule extends Component {
     const { name, body } = this.state.rule;
     return (
       <div className="edit-rule">
-        <h2>{name}</h2>
-        Script
-        <pre>{body}</pre>
-        <a onClick={this.props.onCancel}>Close</a>
+        <h4>{name}</h4>
+        <Highlight className="javascript">
+          {body}
+        </Highlight>
+        <button className="Button Button--haptic" onClick={this.props.onCancel}>Close</button>
       </div>
     );
   }

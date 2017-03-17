@@ -72,11 +72,20 @@ export default class Rules extends Component {
   render() {
     const modalStyles = {
       content: {
-        positon: 'absolute',
-        top: 10,
-        left: 10,
-        right: 10,
-        bottom: 10
+        background: 'white',
+        border: '1px #888 solid',
+        padding: '20px',
+        borderRadius: 0,
+        position: 'inherit',
+        left: 'auto',
+        top: 'auto',
+        right: 'auto',
+        bottom: 'auto',
+      },
+      overlay: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
       },
     };
 
@@ -107,7 +116,7 @@ export default class Rules extends Component {
             <RulesList rules={defaultRules} onViewClick={this.viewRule} onStatusClick={this.toggleRuleStatus} />
           </div>
         </div>
-        <Modal style={modalStyles} shouldCloseOnOverlayClick={false} isOpen={ruleToView && true} onRequestClose={() => this.setState({ viewRule: null })}>
+        <Modal style={modalStyles} isOpen={ruleToView && true} onRequestClose={() => this.setState({ viewRule: null })}>
           <ViewRule rule={ruleToView} onCancel={() => this.setState({ viewRule: null })} />
         </Modal>
       </div>
