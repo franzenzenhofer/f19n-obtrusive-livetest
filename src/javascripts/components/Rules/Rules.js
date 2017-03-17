@@ -104,11 +104,11 @@ export default class Rules extends Component {
             <span className="Header-brandLink u-floatRight">by <a href="http://www.fullstackoptimization.com/" target="_blank">fullstackoptimization</a></span>
           </div>
         </header>
-        <AddRule onAddRule={this.addRule} />
         <EnabledSites sites={this.state.sites} onChange={this.updateSites} />
         <div className="Wrapper">
           <div className="Section rules">
             <h2>Custom rules</h2>
+            <AddRule onAddRule={this.addRule} />
             <RulesList rules={customRules} onViewClick={this.viewRule} onStatusClick={this.toggleRuleStatus} onDeleteClick={this.removeRule} />
           </div>
           <div className="Section rules">

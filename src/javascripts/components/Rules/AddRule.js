@@ -38,12 +38,7 @@ export default class AddRule extends Component {
 
   render() {
     return (
-      <div className="Header-subHeader Section add-rule">
-        <div className="Wrapper">
-          <h2>Add rule</h2>
-          <input className="Button Upload" type="file" ref="file" onChange={this.handleAddRule} multiple />
-        </div>
-      </div>
+      <input className="Button Upload" type="file" ref="file" onChange={this.handleAddRule} multiple />
     );
   }
 }
