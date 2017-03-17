@@ -38,7 +38,14 @@ export default class Rules extends Component {
       if (!this.storeReady || this.queue.length === 0) { return; }
       this.storeReady = false;
       const data = this.queue.shift();
-      rulesStore.add(data, () => { this.storeReady = true; handleQueue(); });
+
+      const ruleIndexForName = rulesStore.findIndex(this.state.rules.toJS(), (r) => { console.log(data, r.toJS()); return r.get('name') === data.name && !r.get('defaultRule'); });
+
+      if (ruleIndexForName !== -1) {
+        rulesStore.update(ruleIndexForName, data, () => { this.storeReady = true; handleQueue(); });
+      } else {
+        rulesStore.add(data, () => { this.storeReady = true; handleQueue(); });
+      }
     };
 
     this.queue.push(data);

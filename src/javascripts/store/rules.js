@@ -10,6 +10,9 @@ const getRuleId = () => {
 const findIndex = (rules, which) => {
   let index = null;
   switch (typeof(which)) {
+    case 'function':
+      index = fromJS(rules).findIndex(which);
+      break;
     case 'string':
       index = fromJS(rules).findIndex(r => r.get('id') === which);
       break;
