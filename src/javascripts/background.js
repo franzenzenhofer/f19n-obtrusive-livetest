@@ -175,6 +175,16 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     const tabId = sender.tab.id;
     findOrCreateCollector(tabId).pushEvent(request.data, 'documentIdle');
   }
+
+  if (request.event === 'chrome_load_times') {
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(request.data, 'chromeLoadTimes');
+  }
+
+  if (request.event === 'window_performance') {
+    const tabId = sender.tab.id;
+    findOrCreateCollector(tabId).pushEvent(request.data, 'windowPerformance');
+  }
 });
 
 chrome.browserAction.onClicked.addListener((tab) => {

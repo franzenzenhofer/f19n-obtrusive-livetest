@@ -41,6 +41,37 @@ export default class EventCollection {
     return event;
   }
 
+  chromeLoadTimesEvent()
+  {
+    let event = this.lastEventOfType('chromeLoadTimes');
+    return event;
+  }
+
+  getChromeLoadTimes() {
+    let e = this.chromeLoadTimesEvent();
+    //console.log('chromeloadtimes');
+    //console.log(e);
+    return e.snapshot;
+  }
+
+  windowPerformanceEvent()
+  {
+    let event = this.lastEventOfType('windowPerformance');
+    return event;
+  }
+
+  getWindowPerformance() {
+    return this.windowPerformanceEvent().snapshot;
+  }
+
+  getWindowPerformanceTiming() {
+    let e = this.windowPerformanceEvent();
+    return e.snapshot.timing
+  }
+
+
+
+
   documentEndEvent() {
     let event = this.lastEventOfType('documentEnd');
     if (event && event.html) {

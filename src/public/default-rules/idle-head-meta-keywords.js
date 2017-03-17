@@ -8,7 +8,7 @@ function(page) {
 
 	  if(meta_ks > 1)
 	  {
-      return this.createResult(lable, 'Multiple unnecessary meta keywords tags found.'+this.partialCodeLink(meta_ks), 'info', what);
+      return this.createResult(lable, 'Multiple unnecessary meta keywords tags found.'+this.partialCodeLink(meta_ks), 'warning', what);
 	  }
 
 	  //some category of stuff your are testing i.e.: 'DOM', 'HEAD', 'BODY', 'HTTP', 'SPEED', ...
@@ -18,7 +18,7 @@ function(page) {
     //msg = msg+' '+this.partialCodeLink(dom);
     msg = msg+this.partialCodeLink(meta_ks);
 
-	  var type = 'info'; //should be 'info', 'warning', 'error'
+	  var type = 'warning'; //should be 'info', 'warning', 'error'
 
 	  return this.createResult(lable, msg, type, what);
 	}

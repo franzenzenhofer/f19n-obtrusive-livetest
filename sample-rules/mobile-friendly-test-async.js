@@ -32,11 +32,16 @@ function(page, callback){
 
     if(response.status !== 200)
     {
+      //check for 429
+      //check for 500
+      //everything else
+      //TODO a lowest priority sorting for failed tests
       console.log(response);
-      callback(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> failed! Response Status: "+response.status+' '+response.text, "warning"));
+      callback(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> failed! Response Status: "+response.status+' '+response.text(), "warning"));
     }
   })
-  .catch(function(err) {
+  .catch(function(err)
+    //TODO failes test should be lables as such, not a warning
     callback(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> failed! "+err, "warning"));
   });
   return this.waitForAsync();
