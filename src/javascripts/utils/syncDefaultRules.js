@@ -27,7 +27,7 @@ const deleteUnsupportedRules = (supportedRules) => {
   };
 
   rulesStore.all((allRules) => {
-    const allRulesNames = allRules.toJS().map(r => r.name);
+    const allRulesNames = allRules.toJS().filter(r => r.defaultRule === true).map(r => r.name);
     const supportedRulesNames = supportedRules.map(r => r.name);
 
     const ruleNamesToDelete = difference(allRulesNames, supportedRulesNames);
