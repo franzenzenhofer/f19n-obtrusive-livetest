@@ -16,13 +16,12 @@ const updateOrImportRules = (rulesToImport, done = () => {}) => {
 
 const deleteUnsupportedRules = (supportedRules) => {
   const deleteRules = (rules = []) => {
+    if (rules.length <= 0) { return; }
     const ruleToDelete = rules.shift();
     rulesStore.remove((r) => {
       return r.get('name') === ruleToDelete;
     }, () => {
-      if (rules.length > 0) {
-        deleteRules(rules);
-      }
+      deleteRules(rules);
     });
   };
 
@@ -53,9 +52,12 @@ export default (path = 'default-rules') => {
 
               rulesList.push({ name, body });
 
+              const copy = rulesList.slice();
+              const copy2 = rulesList.slice();
+
               if (rulesList.length >= jsFilesOnly.length) {
-                updateOrImportRules(rulesList.slice(), () => {
-                  deleteUnsupportedRules(rulesList);
+                updateOrImportRules(copy, () => {
+                  deleteUnsupportedRules(copy2);
                 });
               }
             };
