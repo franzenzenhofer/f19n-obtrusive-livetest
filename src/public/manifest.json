@@ -49,6 +49,7 @@
     "tabs",
     "webRequest",
     "webNavigation",
+    "unlimitedStorage",
     "*://*/*"
   ]
 }
