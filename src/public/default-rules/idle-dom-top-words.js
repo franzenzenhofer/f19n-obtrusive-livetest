@@ -1,6 +1,6 @@
 function(page)
 {
-
+ 
 function getFrequency2(string, cutOff, minlength) {
   if(!minlength){minlength = 0}
   var cleanString = string.replace(/[\.,-\/#!$%\^&\*;:{}=\-_`~()<>"']/g," "),
@@ -28,8 +28,7 @@ if(dom)
   var parser = new DOMParser();
   var doc = parser.parseFromString(dom.body.innerText, "text/html");
   var wA = getFrequency2( doc.body.innerText, 1000, 5);
-  console.log(dom.body.innerText);
-  console.log(wA);
+
   var top10 = wA.slice(0,10).join(', ');
   return this.createResult('DOM', 'Top words (5 or more chars): '+top10+' - '+this.partialTextLink('more',wA), 'info', 'idle');
 }
