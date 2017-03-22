@@ -28,7 +28,6 @@ const $appRoot = $('<style>#f19n-panel-root:before { content: " "; cursor: move;
   backgroundColor: 'white',
   borderColor: 'lightgray',
   border: '1px solid',
-  maxHeight: '300px',
 });
 
 
@@ -141,17 +140,22 @@ const initializePanel = ({ position, host }) => {
     },
   });
 
+  const getPanelIFrameHeight = () => {
+    return $(getAppRootElement()).find('iframe').get(0).contentDocument.querySelector('#panel').offsetHeight + 28;
+  }
+
   draggablePanel.set(position[0], position[1]);
   setLimit(draggablePanel);
 
   window.addEventListener('message', () => {
-    const height = $(getAppRootElement()).find('iframe').get(0).contentDocument.querySelector('#panel').offsetHeight;
-    $(getAppRootElement()).css({ height: Math.min(window.innerHeight - 20, height) });
+    $(getAppRootElement()).css({ height: Math.min(window.innerHeight - 20, getPanelIFrameHeight()) });
     setLimit(draggablePanel);
     snapPanel(draggablePanel);
   });
 
   $(window).on('resize', () => {
+    const height = $(getAppRootElement()).find('iframe').get(0).contentDocument.querySelector('#panel').offsetHeight;
+    $(getAppRootElement()).css({ height: Math.min(window.innerHeight - 20, getPanelIFrameHeight()) });
     setLimit(draggablePanel);
     snapPanel(draggablePanel);
     setPrevWindowSize();
