@@ -9,11 +9,28 @@ export default class ViewRule extends Component {
     };
   }
 
+  configurationFields = () => {
+    const { body, id, configuration } = this.state.rule;
+    const configurationKeys = body && body.match(/%([^%]+%)/g);
+
+    if (configurationKeys && configurationKeys.length > 0) {
+      return configurationKeys.map((key) => {
+        const cleanKey = key.replace(/%/g, '');
+        return <input placeholder={key} defaultValue={configuration[cleanKey]} onChange={e => this.props.onConfigurationChange(id, { key: cleanKey, value: e.target.value })} />;
+      });
+    }
+
+    return null;
+  }
+
   render() {
     const { name, body } = this.state.rule;
     return (
       <div className="edit-rule">
         <h4>{name}</h4>
+
+        {this.configurationFields()}
+
         <Highlight className="javascript">
           {body}
         </Highlight>
