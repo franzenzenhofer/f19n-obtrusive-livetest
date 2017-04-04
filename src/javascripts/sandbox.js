@@ -1,5 +1,4 @@
 import EventCollection from './utils/EventCollection';
-import sampleEvents from './constants/sampleEvents';
 
 import * as RuleContext from './utils/RuleContext';
 
