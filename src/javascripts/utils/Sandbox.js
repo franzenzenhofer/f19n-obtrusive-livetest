@@ -36,12 +36,6 @@ export const postMessage = (data, origin) => {
   }
 };
 
-export const validateRule = (body, callback) => {
-  const runId = Math.round(Math.random() * 10000000);
-  callbacks[runId] = callback;
-  postMessage({ command: 'validateRule', body, runId }, '*');
-};
-
 export const runRule = (rule, args, callback) => {
   const runId = Math.round(Math.random() * 10000000);
   callbacks[runId] = callback;
