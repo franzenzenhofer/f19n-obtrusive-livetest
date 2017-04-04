@@ -1,8 +1,7 @@
-import EventCollector from './utils/EventCollector';
+import { isEmpty, fromPairs, xor, difference, without } from 'lodash';
 import update from 'react-addons-update';
 
-import { isEmpty, fromPairs, xor, difference, without } from 'lodash';
-
+import EventCollector from './utils/EventCollector';
 import resultStoreKey from './utils/resultStoreKey';
 import { runRule } from './utils/Sandbox';
 
@@ -67,19 +66,22 @@ const findOrCreateCollector = (tabId) => {
       chrome.storage.local.get('rules', (data) => {
         // Take only enabled rules
         const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
-        var doneRuleCalls = [];
-        const promisedRuleCalls = enabledRules.map((rule) => {
-          var r =  new Promise((resolve) => { runRule(rule, events, (result) => {
-          resolve(result); }); });
-          r.then((res)=>{
-            if(!isEmpty(res))
-            {
+        const doneRuleCalls = [];
+        enabledRules.forEach((rule) => {
+          const r = new Promise((resolve) => {
+            runRule(rule, events, (result) => {
+              resolve(result);
+            });
+          });
+
+          r.then((res) => {
+            if (!isEmpty(res)) {
               const storeKey = resultStoreKey(tabId);
               doneRuleCalls.push(res);
               chrome.storage.local.set({ [storeKey]: doneRuleCalls });
             }
           });
-          return r
+          return r;
         });
       });
     },
@@ -134,7 +136,7 @@ chrome.tabs.onRemoved.addListener(() => {
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
   if (request === 'tabIdPls') {
-    callback({ tabId: sender.tab.id, url:sender.tab.url });
+    callback({ tabId: sender.tab.id, url: sender.tab.url });
   }
 
   if (request.event === 'fetch') {
