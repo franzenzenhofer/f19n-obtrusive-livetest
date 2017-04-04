@@ -81,15 +81,6 @@ const findOrCreateCollector = (tabId) => {
           });
           return r
         });
-
-        /*Promise.all(promisedRuleCalls).then((results) => {
-          console.log(results);
-          const notEmptyResults = results.filter(r => !isEmpty(r));
-          setTimeout(() => {
-            //const storeKey = resultStoreKey(tabId);
-            //chrome.storage.local.set({ [storeKey]: notEmptyResults });
-          }, 0);
-        });*/
       });
     },
   });

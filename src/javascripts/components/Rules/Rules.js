@@ -39,7 +39,7 @@ export default class Rules extends Component {
       this.storeReady = false;
       const data = this.queue.shift();
 
-      const ruleIndexForName = rulesStore.findIndex(this.state.rules.toJS(), (r) => { console.log(data, r.toJS()); return r.get('name') === data.name && !r.get('defaultRule'); });
+      const ruleIndexForName = rulesStore.findIndex(this.state.rules.toJS(), (r) => { return r.get('name') === data.name && !r.get('defaultRule'); });
 
       if (ruleIndexForName !== -1) {
         rulesStore.update(ruleIndexForName, data, () => { this.storeReady = true; handleQueue(); });
