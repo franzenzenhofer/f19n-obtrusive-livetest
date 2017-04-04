@@ -1,3 +1,5 @@
+/* global window */
+
 import EventCollection from './utils/EventCollection';
 
 import * as RuleContext from './utils/RuleContext';
@@ -16,17 +18,13 @@ const runRule = (name, rule, events, callback) => {
 window.addEventListener('message', (event) => {
   const { command, body, args, runId, name } = event.data;
 
-  var postReturn = function(result){
-    result = Object.assign(result || {}, { runId });
-    event.source.postMessage(result, event.origin);
-  }
+  const postReturn = (result = {}) => {
+    const resultWithRunId = Object.assign(result, { runId });
+    event.source.postMessage(resultWithRunId, event.origin);
+  };
 
   if (command === 'runRule') {
-    let result = runRule(name, body, new EventCollection(args), postReturn);
-    //result = Object.assign(result || {}, { runId });
-    //event.source.postMessage(result, event.origin);
-    //if(result !== 'async'){
-      postReturn(result);
-    //}
+    const result = runRule(name, body, new EventCollection(args), postReturn);
+    postReturn(result);
   }
 });
