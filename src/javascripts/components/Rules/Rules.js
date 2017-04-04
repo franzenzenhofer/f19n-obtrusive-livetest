@@ -76,11 +76,12 @@ export default class Rules extends Component {
         border: '1px #888 solid',
         padding: '20px',
         borderRadius: 0,
-        position: 'inherit',
+        position: 'relative',
         left: 'auto',
         top: 'auto',
         right: 'auto',
         bottom: 'auto',
+        margin: '20px',
       },
       overlay: {
         display: 'flex',
