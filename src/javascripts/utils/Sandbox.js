@@ -39,5 +39,5 @@ export const postMessage = (data, origin) => {
 export const runRule = (rule, args, callback) => {
   const runId = Math.round(Math.random() * 10000000);
   callbacks[runId] = callback;
-  postMessage({ command: 'runRule', name: rule.name, body: rule.body, args, runId }, '*');
+  postMessage({ command: 'runRule', configuration: rule.configuration, ame: rule.name, body: rule.body, args, runId }, '*');
 };

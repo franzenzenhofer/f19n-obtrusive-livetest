@@ -2,16 +2,18 @@ import React from 'react';
 import classNames from 'classnames';
 
 export default function RulesListItem(props) {
-  const { name, id, status, onViewClick, onDeleteClick, onStatusClick, index, defaultRule } = props;
+  const { name, body, id, status, onViewClick, onDeleteClick, onStatusClick, index, defaultRule } = props;
 
   function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
+  const configurable = body.match(/%([^%]+)%/);
+
   return (
     <tr className={classNames('rule', { disabled: status === 'disabled' })}>
       <td className="RuleTable-ruleName">
-        <a onClick={onViewClick}><h3>{name}</h3><span>#{capitalizeFirstLetter(id)} / Index: {index}</span></a>
+        <a onClick={onViewClick}><h3>{name} {configurable ? '(configurable)' : null}</h3><span>#{capitalizeFirstLetter(id)} / Index: {index}</span></a>
         <div>
           {<button className="Button Button--haptic" onClick={onViewClick}>View</button>}
         </div>

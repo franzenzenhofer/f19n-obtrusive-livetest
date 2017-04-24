@@ -52,6 +52,10 @@ export default class Rules extends Component {
     handleQueue();
   }
 
+  handleOnRuleConfigurationChange = (id, { key, value }) => {
+    rulesStore.update(id, { configuration: { [key]: value } });
+  }
+
   toggleRuleStatus = (id) => {
     const status = this.state.rules.getIn([rulesStore.findIndex(this.state.rules.toJS(), id), 'status']) === 'enabled' ? 'disabled' : 'enabled';
     rulesStore.update(id, { status });
@@ -118,7 +122,7 @@ export default class Rules extends Component {
           </div>
         </div>
         <Modal style={modalStyles} isOpen={ruleToView && true} onRequestClose={() => this.setState({ viewRule: null })}>
-          <ViewRule rule={ruleToView} onCancel={() => this.setState({ viewRule: null })} />
+          <ViewRule rule={ruleToView} onConfigurationChange={this.handleOnRuleConfigurationChange} onCancel={() => this.setState({ viewRule: null })} />
         </Modal>
       </div>
     );
