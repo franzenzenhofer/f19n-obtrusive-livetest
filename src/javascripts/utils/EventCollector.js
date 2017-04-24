@@ -5,8 +5,9 @@ export default class EventCollector {
     this.events = options.events || [];
     this.timeout = options.timeout || 5000;
     this.firstEvent = options.firstEvent || 'onBeforeNavigate';
-    this.lastEvent = options.lastEvent || 'documentIdle'; //'fetch';
+    this.lastEvent = options.lastEvent || 'documentIdle';
     this.onFinished = options.onFinished || null;
+    this.onStart = options.onStart || (() => {});
     this.timeoutHandle = null;
   }
 
@@ -14,8 +15,16 @@ export default class EventCollector {
     this.events = [];
   }
 
+  setRunId() {
+    this.runId = Math.round(Math.random() * 999999999999999);
+  }
+
   pushEvent(data, event) {
-    if (event === this.firstEvent){ this.reset();}
+    if (event === this.firstEvent) {
+      this.reset();
+      this.setRunId();
+      this.onStart(this.events.slice(), this.runId);
+    }
 
     this.events.push(update(data, { $merge: { event } }));
 
@@ -30,8 +39,8 @@ export default class EventCollector {
   }
 
   finished() {
-    this.onFinished(this.events.slice());
-    //this.reset();
+    this.onFinished(this.events.slice(), this.runId);
+    this.reset();
   }
 
   startTimeout() {

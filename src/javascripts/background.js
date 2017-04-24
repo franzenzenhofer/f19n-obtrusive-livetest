@@ -4,6 +4,7 @@ import update from 'react-addons-update';
 import EventCollector from './utils/EventCollector';
 import resultStoreKey from './utils/resultStoreKey';
 import { runRule } from './utils/Sandbox';
+import { createResult } from './utils/RuleContext';
 
 import syncDefaultRules from './utils/syncDefaultRules';
 
@@ -13,6 +14,7 @@ const filter = {
 };
 
 const collector = {};
+const currentTabCollectorId = {};
 
 const setDefaultScope = (callback = null) => {
   chrome.storage.local.get((data) => {
@@ -61,31 +63,52 @@ const cleanup = () => {
 
 const findOrCreateCollector = (tabId) => {
   collector[tabId] = collector[tabId] || new EventCollector({
-    onFinished: (events) => {
+    onStart: (events, id) => {
+      currentTabCollectorId[tabId] = id;
+    },
+    onFinished: (events, id) => {
       // Fetch rules from storage
       chrome.storage.local.get('rules', (data) => {
         // Take only enabled rules
         const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
-        const doneRuleCalls = [];
-        enabledRules.forEach((rule) => {
-          const r = new Promise((resolve) => {
-            runRule(rule, events, (result) => {
-              resolve(result);
-            });
-          });
+        const storeKey = resultStoreKey(tabId);
 
-          r.then((res) => {
-            if (!isEmpty(res)) {
-              const storeKey = resultStoreKey(tabId);
-              doneRuleCalls.push(res);
-              chrome.storage.local.set({ [storeKey]: doneRuleCalls });
-            }
+        const initialRulesResult = enabledRules.map((enabledRule) => {
+          return Object.assign(createResult('WAIT', `Running <b>${enabledRule.name}</b>`, 'info'), { name: enabledRule.name });
+        });
+
+        chrome.storage.local.set({ [storeKey]: initialRulesResult }, () => {
+          enabledRules.forEach((rule) => {
+            const r = new Promise((resolve) => {
+              runRule(rule, events, (result) => {
+                if (currentTabCollectorId[tabId] === id) {
+                  resolve(result);
+                }
+              });
+            });
+
+            r.then((res) => {
+              if (!isEmpty(res)) {
+                chrome.storage.local.get(storeKey, (d) => {
+                  const results = d[storeKey] || [];
+                  const indexToReplace = results.findIndex(result => result.name === res.name);
+                  if (indexToReplace !== -1) {
+                    results[indexToReplace] = res;
+                  } else {
+                    results.push(res);
+                  }
+                  chrome.storage.local.set({ [storeKey]: results });
+                });
+              }
+            });
+
+            return r;
           });
-          return r;
         });
       });
     },
   });
+
   return collector[tabId];
 };
 
@@ -137,21 +160,6 @@ chrome.tabs.onRemoved.addListener(() => {
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
   if (request === 'tabIdPls') {
     callback({ tabId: sender.tab.id, url: sender.tab.url });
-  }
-
-  if (request.event === 'fetch') {
-    const tabId = sender.tab.id;
-    findOrCreateCollector(tabId).pushEvent(request.data, 'fetch');
-  }
-
-  if (request.event === 'robotstxt') {
-    const tabId = sender.tab.id;
-    findOrCreateCollector(tabId).pushEvent(request.data, 'robotstxt');
-  }
-
-  if (request.event === 'soft404test') {
-    const tabId = sender.tab.id;
-    findOrCreateCollector(tabId).pushEvent(request.data, 'soft404test');
   }
 
   if (request.event === 'DOMContentLoaded') {

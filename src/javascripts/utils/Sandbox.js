@@ -1,18 +1,35 @@
+/* global window, document, fetch */
+
 let loaded = false;
 let proxyIframe = null;
 
 const stack = [];
 const callbacks = {};
 
-window.addEventListener('message', (result) => {
-  const runId = result.data.runId;
-  const data = result.data;
-  //callbacks[runId](result.data);
-  delete data.runId;
-  if(data.label !== 'async')
-  {
-    callbacks[runId](result.data);
+window.addEventListener('message', (event) => {
+  const { command, runId } = event.data;
+
+  if (command === 'ruleResult') {
+    const { data } = event;
+    delete data.runId;
+    delete data.command;
+    callbacks[runId](data);
     delete callbacks[runId];
+  }
+
+  if (command === 'fetch') {
+    const { url, options } = event.data;
+    const responseFormat = options.responseFormat;
+    delete options.responseFormat;
+
+
+    console.log(1, options, responseFormat);
+
+    fetch(url, options || {}).then((response) => {
+      response[responseFormat || 'text']().then((data) => {
+        event.source.postMessage({ command: 'fetchResult', response: data, runId }, '*');
+      });
+    });
   }
 });
 
@@ -39,5 +56,5 @@ export const postMessage = (data, origin) => {
 export const runRule = (rule, args, callback) => {
   const runId = Math.round(Math.random() * 10000000);
   callbacks[runId] = callback;
-  postMessage({ command: 'runRule', configuration: rule.configuration, ame: rule.name, body: rule.body, args, runId }, '*');
+  postMessage({ command: 'runRule', configuration: rule.configuration, name: rule.name, body: rule.body, args, runId }, '*');
 };

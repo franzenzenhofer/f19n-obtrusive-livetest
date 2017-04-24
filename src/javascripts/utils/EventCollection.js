@@ -114,15 +114,6 @@ export default class EventCollection {
     return getStaticDom();
   }
 
-  getRobotsTxtStatus() {
-    const e = this.robotsTxtEvent();
-    return e;
-  }
-
-  getSoft404Status() {
-    return this.soft404TestEvent();
-  }
-
   getFetchedStaticDom() {
     const e = this.fetchEvent();
     return e && e.document;
