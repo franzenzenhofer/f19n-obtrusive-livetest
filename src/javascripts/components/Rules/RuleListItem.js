@@ -1,6 +1,8 @@
 import React from 'react';
 import classNames from 'classnames';
 
+import { configurableKeyMatcher } from './../../utils/configurableRules';
+
 export default function RulesListItem(props) {
   const { name, body, id, status, onViewClick, onDeleteClick, onStatusClick, index, defaultRule } = props;
 
@@ -8,7 +10,7 @@ export default function RulesListItem(props) {
     return string.charAt(0).toUpperCase() + string.slice(1);
   }
 
-  const configurable = body.match(/%([^%]+)%/);
+  const configurable = body.match(configurableKeyMatcher());
 
   return (
     <tr className={classNames('rule', { disabled: status === 'disabled' })}>

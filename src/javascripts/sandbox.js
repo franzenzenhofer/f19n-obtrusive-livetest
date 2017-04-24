@@ -1,14 +1,8 @@
 /* global window */
 
 import EventCollection from './utils/EventCollection';
-
+import { interpolateConfiguration } from './utils/configurableRules';
 import * as RuleContext from './utils/RuleContext';
-
-const interpolateConfiguration = (rule, configuration) => {
-  return rule.replace(/%([^%]+%)/g, (key) => {
-    return configuration[key.replace(/%/g, '')] || key;
-  });
-};
 
 const runRule = (name, rule, configuration, events, callback) => {
   let ruleResult = null;

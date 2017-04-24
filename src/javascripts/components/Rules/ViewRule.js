@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Highlight from 'react-highlight';
 
+import { configurableKeyMatcher } from './../../utils/configurableRules';
+
 export default class ViewRule extends Component {
   constructor(props) {
     super(props);
@@ -11,12 +13,12 @@ export default class ViewRule extends Component {
 
   configurationFields = () => {
     const { body, id, configuration } = this.state.rule;
-    const configurationKeys = body && body.match(/%([^%]+%)/g);
+    const configurationKeys = body && body.match(configurableKeyMatcher());
 
     if (configurationKeys && configurationKeys.length > 0) {
       return configurationKeys.map((key) => {
         const cleanKey = key.replace(/%/g, '');
-        return <input placeholder={key} defaultValue={configuration[cleanKey]} onChange={e => this.props.onConfigurationChange(id, { key: cleanKey, value: e.target.value })} />;
+        return <input placeholder={key} defaultValue={configuration && configuration[cleanKey]} onChange={e => this.props.onConfigurationChange(id, { key: cleanKey, value: e.target.value })} />;
       });
     }
 
