@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var idle_dom = page.getIdleDom();
   var nr_dom_nodes = idle_dom.getElementsByTagName("*").length;
   var type = "info";
@@ -15,5 +15,5 @@ function(page) {
     comment = "Excessive DOM!";
     type="error";
   }
-  return this.createResult("DOM", text+" "+comment, type, "Idle");
+  done(this.createResult("DOM", text+" "+comment, type, "Idle"));
 }

@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var that = this
   var dom = page.getStaticDom();
   const what = 'static';
@@ -28,13 +28,13 @@ function(page) {
           }
         )
         //var rellist='<br><textarea readonly>'+codestring+'</textarea>';
-      return this.createResult(lable, alternates.length+' link-rel-alternate found. '+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type, what);
+      done(this.createResult(lable, alternates.length+' link-rel-alternate found. '+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type, what));
     }
     else {
       //return this.createResult(lable, 'No link-rel-alternate-hreflang found.', type, what);
-      return null;
+      //return null;
     }
 
   //return this.createResult(lable, 'Title: '+titletags[0].innerText, 'info');
-  return null;
+  //return null;
 }

@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var t = page.getChromeLoadTimes();
   var p = page.getLocation().protocol;
   //console.log(p);
@@ -11,10 +11,9 @@ function(page) {
     if(prot.includes("h2")) { is_h2 = true; }
     if(is_https == true && is_h2 == false)
     {
-      return this.createResult('HTTP', "Network protocol: "+prot+" (but https protocol)", 'warning');
+      return done(this.createResult('HTTP', "Network protocol: "+prot+" (but https protocol)", 'warning'));
     }
 
-    return this.createResult('HTTP', "Network protocol: "+prot, 'info');
+    return done(this.createResult('HTTP', "Network protocol: "+prot, 'info'));
   }
-  return null;
 }

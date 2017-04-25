@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var sc = page.getStatusCode();
   var rawHttpHeader = page.getRawHttpHeaders();
   var url = page.getURL();
@@ -12,7 +12,6 @@ function(page) {
     if (sc >= 500) { type ='error'; anchor="#5xx_Server_Error" }
     var text = `${url} → <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes${anchor}" target="_top">HTTP ${sc}</a>`;
     var text = text + this.partialCodeLink(rawHttpHeader);
-    return this.createResult('HTTP', text, type);
+    done(this.createResult('HTTP', text, type));
   }
-  return null;
 }

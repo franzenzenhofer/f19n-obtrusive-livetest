@@ -9,7 +9,7 @@ function(page, done) {
 //  console.log(idle_dom.body.innerHTML);
 //  console.log(static_dom.body.innerHTML);
   var msg = '';
-  if(diff_size>1)
+  if(diff_size > 1)
   {
     var diff_percentage = Math.round((diff_size -1) * 100);
     msg = "Idle-DOM is "+diff_percentage+"% bigger then the Static-DOM.";
