@@ -24,9 +24,16 @@ window.addEventListener('message', (event) => {
     const responseFormat = options.responseFormat;
     delete options.responseFormat;
 
+
     fetch(url, options || {}).then((response) => {
       response[responseFormat || 'text']().then((data) => {
-        event.source.postMessage({ command: 'fetchResult', response: data, runId }, '*');
+        var r = {}
+        r.status = response.status;
+        r.statusText = response.statusText;
+        r.ok = response.ok;
+        r.redirected = response.redirected;
+        r.body = data;
+        event.source.postMessage({ command: 'fetchResult', response: r, runId }, '*');
       });
     });
   }
