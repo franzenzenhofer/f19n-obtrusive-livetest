@@ -5,11 +5,13 @@ import { interpolateConfiguration } from './utils/configurableRules';
 import * as RuleContext from './utils/RuleContext';
 
 const runRule = (name, rule, configuration, events, callback) => {
-  let ruleResult = null;
-  const configuredRule = interpolateConfiguration(rule, configuration || {});
-  const ruleFunc = eval(`(${configuredRule})`);
-  ruleResult = ruleFunc.apply(RuleContext, [events, callback]);
-  return ruleResult;
+  try {
+    const configuredRule = interpolateConfiguration(rule, configuration || {});
+    const ruleFunc = eval(`(${configuredRule})`);
+    ruleFunc.apply(RuleContext, [events, callback]);
+  } catch (e) {
+    callback(RuleContext.createResult('ERROR', `${e}`, 'warning'));
+  }
 };
 
 window.addEventListener('message', (event) => {
