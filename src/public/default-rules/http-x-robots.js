@@ -7,4 +7,5 @@ function(page, done) {
   {
     done(this.createResult('HTTP', "X-Robots-Tag HTTP Header: "+xr+ this.partialCodeLink(hr), 'warning'));
   }
+  done();
 }

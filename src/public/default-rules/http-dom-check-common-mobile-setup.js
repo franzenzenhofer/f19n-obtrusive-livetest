@@ -10,5 +10,7 @@ function(page, done){
   if(!(isvary || (medias && medias.length>0) || (meta_viewports && meta_viewports.length > 0)))
   {
     done(this.createResult('HTTP DOM', "No common mobile setup (<a href='https://developers.google.com/webmasters/mobile-sites/mobile-seo/' target='_blank'>responsive, dynamic serving, different URL</a>) discovered! <a href='https://www.google.com/webmasters/tools/mobile-friendly/?hl=en&url="+u+"' target='_blank'>Mobile Friendly Test</a>", "error"));
+    return null;
   }
+  done();
 }

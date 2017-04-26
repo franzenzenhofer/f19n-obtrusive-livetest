@@ -12,4 +12,5 @@ function(page, done) {
     }
     done(this.createResult("DOM","Seperate mobile URL "+more+" discovered."+this.partialCodeLink(medias), "warning", "Idle"));
   }
+  done();
 }

@@ -22,4 +22,5 @@ function(page, done) {
 
 	  done(this.createResult(lable, msg, type, what));
 	}
+	done();
 }

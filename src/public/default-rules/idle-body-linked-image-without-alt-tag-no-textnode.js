@@ -8,4 +8,5 @@ function(page, done) {
     var msg = elems.length+" linked "+image_s+" without alt-text or other linked text found."+this.partialCodeLink(elems);
     done(this.createResult('BODY',msg,'warning','idle'));
   }
+  done();
 }

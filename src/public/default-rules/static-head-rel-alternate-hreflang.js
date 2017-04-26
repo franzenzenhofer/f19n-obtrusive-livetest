@@ -37,4 +37,5 @@ function(page, done) {
 
   //return this.createResult(lable, 'Title: '+titletags[0].innerText, 'info');
   //return null;
+  done();
 }
