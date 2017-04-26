@@ -46,15 +46,23 @@ const hashFromNameValuePairArray = (array) => {
 const cleanup = () => {
   chrome.tabs.query({ windowId: chrome.windows.WINDOW_ID_CURRENT }, (tabs) => {
     const openTabIds = tabs.map(t => t.id);
+    const openTabHosts = tabs.map(t => (new URL(t.url)).host);
+
     chrome.storage.local.get(null, (data) => {
+      const savedPanelPositionHosts = Object
+        .keys(data)
+        .filter(key => key.match(/panel-position-(.+)/))
+        .map(key => key.split('panel-position-')[1]);
       const savedTabResultIds = Object
         .keys(data)
         .filter(key => key.match(/results-\d+/))
         .map(key => key.split('-')[1])
         .map(key => Number(key));
       const tabIdsToRemove = xor(openTabIds, savedTabResultIds);
+      const panelPositionsToRemove = xor(openTabHosts, savedPanelPositionHosts);
       const hiddenPanels = data['hidden-panels'] || [];
       chrome.storage.local.remove(tabIdsToRemove.map(id => resultStoreKey(id)));
+      chrome.storage.local.remove(panelPositionsToRemove.map(host => `panel-position-${host}`));
       chrome.storage.local.set({ 'hidden-panels': difference(hiddenPanels, tabIdsToRemove) });
       tabIdsToRemove.forEach((id) => { delete collector[id]; });
     });
