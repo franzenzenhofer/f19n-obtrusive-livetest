@@ -43,8 +43,6 @@ export const fetch = (url, options, callback) => {
   const runId = Math.round(Math.random() * 10000000);
   callbacks[runId] = callback;
 
-  console.log(0, options);
-
   window.parent.postMessage({ command: 'fetch', url, options, runId }, '*');
 };
 

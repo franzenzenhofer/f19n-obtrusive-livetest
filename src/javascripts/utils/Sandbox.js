@@ -22,9 +22,6 @@ window.addEventListener('message', (event) => {
     const responseFormat = options.responseFormat;
     delete options.responseFormat;
 
-
-    console.log(1, options, responseFormat);
-
     fetch(url, options || {}).then((response) => {
       response[responseFormat || 'text']().then((data) => {
         event.source.postMessage({ command: 'fetchResult', response: data, runId }, '*');
