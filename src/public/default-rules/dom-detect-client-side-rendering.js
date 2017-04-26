@@ -5,7 +5,7 @@ function(page, done) {
 
   this.fetch(url, { responseFormat: 'text' }, (response) => {
       var parser = new DOMParser();
-      var static_dom = parser.parseFromString(response, "text/html");
+      var static_dom = parser.parseFromString(response.body, "text/html");
       var status = 'info';
       var diff_size = (idle_dom.head.innerHTML.length+idle_dom.head.innerHTML.length)/(static_dom.head.innerHTML.length+static_dom.head.innerHTML.length)
       var msg = '';
