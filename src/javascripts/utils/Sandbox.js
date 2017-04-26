@@ -13,8 +13,10 @@ window.addEventListener('message', (event) => {
     const { data } = event;
     delete data.runId;
     delete data.command;
-    callbacks[runId](data);
-    delete callbacks[runId];
+    if (callbacks[runId]) {
+      callbacks[runId](data);
+      delete callbacks[runId];
+    }
   }
 
   if (command === 'fetch') {
