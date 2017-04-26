@@ -73,9 +73,29 @@ const findOrCreateCollector = (tabId) => {
         const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
         const storeKey = resultStoreKey(tabId);
 
+        let storeLocked = false;
+
         const initialRulesResult = enabledRules.map((enabledRule) => {
           return Object.assign(createResult('WAIT', `Running <b>${enabledRule.name}</b>`, 'info'), { name: enabledRule.name });
         });
+
+        const updateStore = (key, res) => {
+          if (storeLocked) {
+            setTimeout(() => { updateStore(key, res); }, 1);
+          } else {
+            storeLocked = true;
+            chrome.storage.local.get(key, (d) => {
+              const results = d[key] || [];
+              const indexToReplace = results.findIndex(result => result.name === res.name);
+              if (indexToReplace !== -1) {
+                results[indexToReplace] = res;
+              } else {
+                results.push(res);
+              }
+              chrome.storage.local.set({ [key]: results }, () => { storeLocked = false; });
+            });
+          }
+        };
 
         chrome.storage.local.set({ [storeKey]: initialRulesResult }, () => {
           enabledRules.forEach((rule) => {
@@ -89,16 +109,7 @@ const findOrCreateCollector = (tabId) => {
 
             r.then((res) => {
               if (!isEmpty(res)) {
-                chrome.storage.local.get(storeKey, (d) => {
-                  const results = d[storeKey] || [];
-                  const indexToReplace = results.findIndex(result => result.name === res.name);
-                  if (indexToReplace !== -1) {
-                    results[indexToReplace] = res;
-                  } else {
-                    results.push(res);
-                  }
-                  chrome.storage.local.set({ [storeKey]: results });
-                });
+                updateStore(storeKey, res);
               }
             });
 
