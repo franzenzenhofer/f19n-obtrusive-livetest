@@ -76,7 +76,7 @@ const findOrCreateCollector = (tabId) => {
         let storeLocked = false;
 
         const initialRulesResult = enabledRules.map((enabledRule) => {
-          return Object.assign(createResult('WAIT', `Running <b>${enabledRule.name}</b>`, 'info'), { name: enabledRule.name });
+          return Object.assign(createResult('WAIT', `Running <b>${enabledRule.name}</b>`, 'pending'), { name: enabledRule.name });
         });
 
         const updateStore = (key, res) => {
