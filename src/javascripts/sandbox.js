@@ -10,7 +10,7 @@ const runRule = (name, rule, configuration, events, callback) => {
     const ruleFunc = eval(`(${configuredRule})`);
     ruleFunc.apply(RuleContext, [events, callback]);
   } catch (e) {
-    callback(RuleContext.createResult('ERROR', `${e}`, 'warning'));
+    callback(RuleContext.createResult('ERROR', `${e} in <b>${name}</b>`, 'warning'));
   }
 };
 
