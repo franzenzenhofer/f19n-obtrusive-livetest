@@ -7,4 +7,5 @@ function(page, done) {
   {
     done(this.createResult('HTTP', u+" no GZIP compression! - <a href='https://checkgzipcompression.com/?url="+u+"' target='_blank'>Test</a>"+ this.partialCodeLink(hr), 'error'));
   }
+  done();
 }
