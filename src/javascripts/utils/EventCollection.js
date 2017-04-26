@@ -31,10 +31,7 @@ export default class EventCollection {
     return event;
   }
 
-  soft404TestEvent() {
-    let event = this.lastEventOfType('soft404test');
-    return event;
-  }
+
 
   robotsTxtEvent() {
     let event = this.lastEventOfType('robotstxt');
