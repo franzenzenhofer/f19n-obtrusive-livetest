@@ -8,8 +8,11 @@ function(page, done) {
   if (st && it && st.innerText && it.innerText) {
     if (st.innerText.trim() !== it.innerText.trim())
     {
-      done(this.createResult('HEAD', "Static and Idle Titles to not match!"+this.partialCodeLink('Static DOM title:',st,'Idle DOM title:',it), "error"));
+      done(this.createResult('HEAD', "Static and Idle Titles to not match! "+this.partialCodeLink('Static DOM title:',st,'Idle DOM title:',it), "error"));
     }
-    done(this.createResult('HEAD', text, 'info', 'static'));
+    else
+    {
+      done();
+    }
   }
 }

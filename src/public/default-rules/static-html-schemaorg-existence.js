@@ -11,4 +11,8 @@ function(page, done) {
     });
     done(this.createResult('HTML', 'Schema.org: '+a.join(', ')+ '<br><a href="https://search.google.com/structured-data/testing-tool?hl=en&url='+url+'" target="_blank">Structured Data Testing Tool</a>', 'info', what));
   }
+  else
+  {
+    done();
+  }
 }
