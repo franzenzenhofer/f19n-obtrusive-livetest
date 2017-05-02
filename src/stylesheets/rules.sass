@@ -4,6 +4,9 @@
 
 .f19n-rules
 
+body.ReactModal__Body--open
+  overflow: hidden
+
 .Wrapper
   margin-left: 16px
   max-width: 800px
@@ -59,9 +62,24 @@
 .RuleTable button + button
   margin-left: 2px !important
 
-.RuleTable-ruleName span
-  color: $greyAccentDarker
-  display: block
+.RuleTable-ruleName
+  span
+    &.rule-meta
+      color: $greyAccentDarker
+      display: block
+
+    &.rule-configurable
+      background: cornflowerblue
+      padding: 2px 4px
+      border-radius: 4px
+      color: white
+
+    &.rule-missing-configuration
+      background: red
+      padding: 2px 4px
+      border-radius: 4px
+      color: white
+
 
 .RuleTable-ruleActions
   width: 240px

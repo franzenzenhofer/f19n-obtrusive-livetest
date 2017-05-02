@@ -86,6 +86,8 @@ export default class Rules extends Component {
         right: 'auto',
         bottom: 'auto',
         margin: '20px',
+        maxHeight: 'calc(100vh - 40px)',
+        boxSizing: 'border-box',
       },
       overlay: {
         display: 'flex',
