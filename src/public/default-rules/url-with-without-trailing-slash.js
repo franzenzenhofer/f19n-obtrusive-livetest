@@ -2,6 +2,7 @@ function(page, done) {
   var url = page.getURL("last");
   var parser = document.createElement('a');
   parser.href = url;
+
 /*
 parser.protocol; // => "http:"
 parser.hostname; // => "example.com"
@@ -57,7 +58,16 @@ parser.host;     // => "example.com:3000"
     }
     else {
       //now we have to check for canonical
-      done(this.createResult('URL', 'URL variation '+what_case+' trailingslash <a href="'+new_url+'" target="_blank">'+new_url+'</a> returns HTTP '+response.status+' (Check for canonical)', 'warning'));
+      var parser = new DOMParser();
+      var static_dom = parser.parseFromString(response.body, "text/html");
+      var c = static_dom.querySelectorAll('link[rel=canonical]');
+      if(c.length === 1)
+      {
+        done(this.createResult('URL', 'URL variation '+what_case+' trailingslash <a href="'+new_url+'" target="_blank">'+new_url+'</a> returns HTTP '+response.status+' (Check for canonical)', 'warning'));
+      }
+      else {
+        done(this.createResult('URL', 'URL variation '+what_case+' trailingslash <a href="'+new_url+'" target="_blank">'+new_url+'</a> returns HTTP '+response.status+'. No canonical found!', 'error'));
+      }
     }
   });
 }
