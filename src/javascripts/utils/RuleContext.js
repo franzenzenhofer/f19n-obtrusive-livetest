@@ -1,5 +1,9 @@
+/* global window, document */
+
 import { isNumber } from 'lodash';
 import myRobotsParser from 'robots-parser';
+
+const callbacks = {};
 
 export const createResult = (label, message, type = 'info', what = null) => {
   let result = { label: label, message: message, type: type, what: what };
@@ -24,7 +28,23 @@ export const htmlEntitiesEncode = (str) => {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 };
 
+export const fetch = (url, options, callback) => {
+  window.addEventListener('message', (event) => {
+    const { command } = event.data;
+    if (command === 'fetchResult') {
+      const { runId, response } = event.data;
+      if (callbacks[runId]) {
+        callbacks[runId](response);
+        delete callbacks[runId];
+      }
+    }
+  });
 
+  const runId = Math.round(Math.random() * 10000000);
+  callbacks[runId] = callback;
+
+  window.parent.postMessage({ command: 'fetch', url, options, runId }, '*');
+};
 
 export const utf8TextLink = (str, anchor) =>
 {

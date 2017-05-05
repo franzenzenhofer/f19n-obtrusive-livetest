@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var dom = page.getStaticDom();
   var idom = page.getIdleDom();
   var st = dom.querySelector('title');
@@ -8,9 +8,11 @@ function(page) {
   if (st && it && st.innerText && it.innerText) {
     if (st.innerText.trim() !== it.innerText.trim())
     {
-      return this.createResult('HEAD', "Static and Idle Titles to not match!"+this.partialCodeLink('Static DOM title:',st,'Idle DOM title:',it), "error");
+      done(this.createResult('HEAD', "Static and Idle Titles to not match! "+this.partialCodeLink('Static DOM title:',st,'Idle DOM title:',it), "error"));
     }
-    return this.createResult('HEAD', text, 'info', 'static');
+    else
+    {
+      done();
+    }
   }
-  return null;
 }

@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
 	var dom = page.getIdleDom();
   const what = 'idle';
   var lable = 'HEAD';
@@ -8,7 +8,7 @@ function(page) {
 
 	  if(meta_ks > 1)
 	  {
-      return this.createResult(lable, 'Multiple unnecessary meta keywords tags found.'+this.partialCodeLink(meta_ks), 'warning', what);
+      	done(this.createResult(lable, 'Multiple unnecessary meta keywords tags found.'+this.partialCodeLink(meta_ks), 'warning', what));
 	  }
 
 	  //some category of stuff your are testing i.e.: 'DOM', 'HEAD', 'BODY', 'HTTP', 'SPEED', ...
@@ -20,7 +20,7 @@ function(page) {
 
 	  var type = 'warning'; //should be 'info', 'warning', 'error'
 
-	  return this.createResult(lable, msg, type, what);
+	  done(this.createResult(lable, msg, type, what));
 	}
-	return null;
+	done();
 }

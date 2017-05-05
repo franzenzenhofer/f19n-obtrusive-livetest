@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var dom = page.getStaticDom();
   const what = 'static';
   var elements = dom.querySelectorAll('head>meta[name=robots]');
@@ -18,12 +18,12 @@ function(page) {
 
     msg = 'Meta Robots: <a href="https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag#valid-indexing--serving-directives">'+content+'</a>'+this.partialCodeLink(elements);
 
-    return this.createResult('HEAD', msg, type, what);
+    done(this.createResult('HEAD', msg, type, what));
   }
 
   if (elements.length > 1) {
-    return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>Multiple robots meta tags.</a>"+this.partialCodeLink(elements), 'warning', what);
+    done(this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>Multiple robots meta tags.</a>"+this.partialCodeLink(elements), 'warning', what));
   }
 
-  return this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>No robots meta tag.</a>", 'info', what);
+  done(this.createResult('HEAD', "<a href='https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag?hl=en#using-the-robots-meta-tag'>No robots meta tag.</a>", 'info', what));
 }

@@ -72,8 +72,6 @@ The `page`-object is basically a collection of events. This event-collection hol
 
 additional custom event that have additonal information about the envirment
 
-- robotstxt - tried to fetch a robots.txt file at the root of the host
-- soft404test - an event that holds information about a non existing URL at the same directory level of the executed URL
 - fetch - a static represenation of the DOM via the window.fetch event (an unscripted envirment)+
 
 

@@ -41,7 +41,7 @@ export default class ResultList extends Component {
   }
 
   render() {
-    let results = this.state.results;
+    let results = this.state.results || [];
 
     //gets rid of results without required fields
     results = results.filter(r => r.type && r.message && r.label);

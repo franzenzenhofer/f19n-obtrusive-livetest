@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
 
   function countDomDepth(main) {
     var depth = 0;
@@ -41,5 +41,5 @@ function(page) {
     comment = "Excessivly nested DOM! (Good value ~10, OK until ~20! >32 harmful!)";
     type="error";
   }
-  return this.createResult("DOM", text+" "+comment, type, "Idle");
+  done(this.createResult("DOM", text+" "+comment, type, "Idle"));
 }

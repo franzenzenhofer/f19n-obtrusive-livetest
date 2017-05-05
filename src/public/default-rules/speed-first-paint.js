@@ -3,7 +3,7 @@ firstPaint = window.chrome.loadTimes().firstPaintTime * 1000;
 api.firstPaintTime = firstPaint - window.performance.timing.navigationStart;
 
 */
-function(page){
+function(page, done){
   var clt = page.getChromeLoadTimes();
   var wt = page.getWindowPerformanceTiming();
   console.log(clt);
@@ -21,5 +21,5 @@ function(page){
     text = "Time to first paint: Could not calculate!"
   }
 
-  return this.createResult('SPEED', text, type);
+  done(this.createResult('SPEED', text, type));
 }

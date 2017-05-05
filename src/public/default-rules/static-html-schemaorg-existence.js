@@ -1,4 +1,4 @@
-function(page) {
+function(page, done) {
   var dom = page.getStaticDom();
   const what = 'static';
   var any = dom.querySelectorAll('*[itemtype]');
@@ -9,7 +9,10 @@ function(page) {
     any.forEach(function(e){
       a.push(e.getAttribute('itemtype').trim().replace('http.*org/',''));
     });
-    return this.createResult('HTML', 'Schema.org: '+a.join(', ')+ '<br><a href="https://search.google.com/structured-data/testing-tool?hl=en&url='+url+'" target="_blank">Structured Data Testing Tool</a>', 'info', what);
+    done(this.createResult('HTML', 'Schema.org: '+a.join(', ')+ '<br><a href="https://search.google.com/structured-data/testing-tool?hl=en&url='+url+'" target="_blank">Structured Data Testing Tool</a>', 'info', what));
   }
-  return null;
+  else
+  {
+    done();
+  }
 }

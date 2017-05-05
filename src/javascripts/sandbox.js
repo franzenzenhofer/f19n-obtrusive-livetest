@@ -5,27 +5,24 @@ import { interpolateConfiguration } from './utils/configurableRules';
 import * as RuleContext from './utils/RuleContext';
 
 const runRule = (name, rule, configuration, events, callback) => {
-  let ruleResult = null;
   try {
     const configuredRule = interpolateConfiguration(rule, configuration || {});
     const ruleFunc = eval(`(${configuredRule})`);
-    ruleResult = ruleFunc.apply(RuleContext, [events, callback]);
+    ruleFunc.apply(RuleContext, [events, callback]);
   } catch (e) {
-    ruleResult = { label: 'Pending', message: `<b>${e.name}</b>: ${e.message} @<b>${name}</b>`, type: 'pending' };
+    callback(RuleContext.createResult('ERROR', `${e} in <b>${name}</b>`, 'warning'));
   }
-  return ruleResult;
 };
 
 window.addEventListener('message', (event) => {
   const { command, body, args, runId, name, configuration } = event.data;
 
   const postReturn = (result = {}) => {
-    const resultWithRunId = Object.assign(result, { runId });
-    event.source.postMessage(resultWithRunId, event.origin);
+    const resultWithRunIdAndAction = Object.assign(result, { runId, name, command: 'ruleResult' });
+    event.source.postMessage(resultWithRunIdAndAction, event.origin);
   };
 
   if (command === 'runRule') {
-    const result = runRule(name, body, configuration, new EventCollection(args), postReturn);
-    postReturn(result);
+    runRule(name, body, configuration, new EventCollection(args), postReturn);
   }
 });

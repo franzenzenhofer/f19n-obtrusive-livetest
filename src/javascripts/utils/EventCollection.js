@@ -31,10 +31,7 @@ export default class EventCollection {
     return event;
   }
 
-  soft404TestEvent() {
-    let event = this.lastEventOfType('soft404test');
-    return event;
-  }
+
 
   robotsTxtEvent() {
     let event = this.lastEventOfType('robotstxt');
@@ -112,15 +109,6 @@ export default class EventCollection {
 
   getDocumentEndDom () {
     return getStaticDom();
-  }
-
-  getRobotsTxtStatus() {
-    const e = this.robotsTxtEvent();
-    return e;
-  }
-
-  getSoft404Status() {
-    return this.soft404TestEvent();
   }
 
   getFetchedStaticDom() {

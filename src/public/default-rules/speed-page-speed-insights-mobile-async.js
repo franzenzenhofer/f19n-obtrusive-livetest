@@ -1,6 +1,6 @@
 function(page, callback){
   var that = this;
-  var key = ''; //<-- add your API key here https://developers.google.com/speed/docs/insights/v2/first-app#APIKey din't forget to enable it for Google Page Speed Insights
+  var key = '%GOOGLEAPIKEY%'; //<-- add your API key here https://developers.google.com/speed/docs/insights/v2/first-app#APIKey din't forget to enable it for Google Page Speed Insights
   var strategy = 'mobile';
   var url = page.getURL('first');
   var type = 'info';
@@ -44,6 +44,6 @@ function(page, callback){
   });
 
   //callback(this.createResult('test', "async test", "warning"));
-  return this.waitForAsync();
+  //return this.waitForAsync();
   //return('async');
 }
