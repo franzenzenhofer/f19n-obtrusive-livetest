@@ -196,7 +196,7 @@ The response is a plain object containing the following keys:
 {
  body: [STRING](The HTML body of the requested site)
  ok: [BOOLEAN](If the request was successful)
- redirected: [BOOLEAN](If any redirect occured)
+ redirected: [BOOLEAN](If any redirect occurred)
  status: [INTEGER](HTTP-Statuscode)
  statusText: [STRING](HTTP-Statustext)
 }
