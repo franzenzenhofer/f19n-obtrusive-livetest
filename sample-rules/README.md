@@ -1,6 +1,8 @@
 ## Custom rules
 
-A custom rule consists of one javascript function receiving an `Page` object as first argument and must return a [valid rule result](#rulecontext).
+A custom rule consists of one javascript function receiving an `Page` object as first argument and a `callback` function as the second argument that needs to be called with an [valid rule result](#rulecontext) when the rule is done.
+
+If you call `done` with `nil` as the argument, the rule result will be removed from the result list.
 
 - [Page Object](#page)
 - [RuleContext](#rulecontext) (rule helper methods)
@@ -11,7 +13,7 @@ A custom rule consists of one javascript function receiving an `Page` object as 
 Always returns the host of the visited site
 
 ```javascript
-function(page) {
+function(page, done) {
   var documentEndEvent = page.documentEndEvent();
 
   // Return if no documentEndEvent (and so location) found
@@ -22,14 +24,14 @@ function(page) {
   //you can either return
   //return { label: 'DEBUG', type: 'info', message: `Loaded ${location.href}`};
   //return this.createResult(label, msg, type, [what]*); //what is a kind of sublable attached to the front of the message
-  return this.createResult('DEBUG', `Loaded ${location.href}`, 'info');
+  return done(this.createResult('DEBUG', `Loaded ${location.href}`, 'info'));
 }
 ```
 
 Counts the occurrence of paragraph elements after document idle
 
 ```javascript
-function(page) {
+function(page, done) {
   var documentIdleEvent = page.documentIdleEvent();
 
   // Return if no documentIdleEvent (and so location) found
@@ -39,29 +41,17 @@ function(page) {
 
   var countElements = document.querySelectorAll('p').length;
 
-  return this.createResult('STATS', `found ${countElements} paragraph elements`);
+  return done(this.createResult('STATS', `found ${countElements} paragraph elements`));
 }
 ```
 
-Rules can also have an async return via callback!
-This only make sense if have any async logic (i.e. a call to an extern API) from within your rule-function.
+Example of an async rule
 
 ```javascript
-function(page, callback) {
-  var documentIdleEvent = page.documentIdleEvent();
-
-  // Return if no documentIdleEvent (and so location) found
-  if (!documentIdleEvent) { return null; }
-
-  var { document } = documentIdleEvent;
-
-  var countElements = document.querySelectorAll('p').length;
-
-  callback(that.createResult(this.createResult('STATS', `found ${countElements} paragraph elements`));
-
-  //an sync return must tell the rule parse that it's not done yet and it should wait for the asyncreturn
-  //this waitForAsync must be return async function to work
-  return this.waitForAsync();
+function(page, done) {
+  setTimeout(function() {
+    done(this.createResult('STATS', 'I fired after 5 seconds', 'info'));
+  }, 5000);
 }
 ```
 
@@ -160,13 +150,10 @@ Like `documentEndEvent` except it represents the DOM, location and HTML after `w
 
 ##### other helper methods
 
- - page.soft404TestEvent()
- - page.robotsTxtEvent()
  - page.domContentLoadedEvent()
  - page.fetchEvent()
  - page.getStaticDom() //most of the time this is the DOM you want to test
  - page.getDocumentEndDom()
- - page.getRobotsTxtStatus()
  - page.getDomContentLoadedDom()
  - page.getFetchedDom()
  - page.getIdleDom() //this is the DOM if you care about the final rendered DOM pre user interaction DOM
@@ -196,5 +183,32 @@ function(page) {
   var host = location.host;
   var divs = document.querySelectorAll('div').length;
   return this.createResult('DEBUG', `${divs} div elements found on ${location.host}`);
+}
+```
+
+##### fetch(url [STRING], options [OBJECT], callback [FUNCTION])
+
+Use this method if you need to make an cross site fetch request inside your rule. Due to some restrictions this is not the native fetch method but it behaves quite similar.
+
+The response is a plain object containing the following keys:
+
+```javascript
+{
+ body: [STRING](The HTML body of the requested site)
+ ok: [BOOLEAN](If the request was successful)
+ redirected: [BOOLEAN](If any redirect occured)
+ status: [INTEGER](HTTP-Statuscode)
+ statusText: [STRING](HTTP-Statustext)
+}
+```
+
+Example:
+
+```javascript
+function(page, done) {
+  var pageToLoad = 'https://google.com';
+  this.fetch(pageToLoad, { method: 'GET' }, (response) => {
+    done(this.createResult('INFO', `${response.status}: Page size from ${pageToLoad) is ${response.body.length}`));
+  });
 }
 ```
