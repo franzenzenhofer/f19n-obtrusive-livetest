@@ -19,7 +19,10 @@ The extension collects the whole lifecycle of a pageload (http-headers, onpagelo
 
 It has multiple pre-defined rules currently targeting SEO and webperformance best practices.
 
+See  [/src/public/default-rules](/src/public/default-rules) for a list of what currently gets tested.
+
 Additional it can call third party REST-APIs from within these rules.
+
 
 ### What can it do?
 
