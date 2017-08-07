@@ -1,4 +1,4 @@
-![Obstrusive Live Test Logo](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/src/public/images/icon.png)
+![Obtrusive Live Test Logo](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/src/public/images/icon.png)
 
 # f19n Obtrusive Livetest Chrome Extension
 

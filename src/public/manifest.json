@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "f19n Obstrusive Live Test",
-  "description": "Obstrusive Live Test is a sandboxed, extendable framework to run tests on webpages while browsing the internet!",
+  "name": "f19n Obtrusive Live Test",
+  "description": "Obtrusive Live Test is a sandboxed, extendable framework to run tests on webpages while browsing the internet!",
   "version": "0.0.1",
   "browser_action": {
-    "default_title": "Obstrusive Live Test by fullstackoptimization.com"
+    "default_title": "Obtrusive Live Test by fullstackoptimization.com"
   },
   "icons": {
     "16": "images/icon.png",
