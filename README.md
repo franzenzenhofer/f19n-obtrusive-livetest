@@ -5,6 +5,26 @@
 by http://www.fullstackoptimization.com/
 developed in cooperation with https://die-antwort.eu/
 
+Chrome App Store: https://chrome.google.com/webstore/detail/f19n-obstrusive-live-test/jbnaibigcohjfefpfocphcjeliohhold?hl=en
+
+### What is it?
+
+It's a sandboxed, extendable testing chrome extension and framework! It runs pre-defined and custom tests on each page that you visit.
+
+![Sample Output](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/src/public/images/icon.png)
+
+### What does it do?
+
+The extension collects the whole lifecycle of a pageload (http-headers, onpageload, onDOMready, ...) in an object, then it executes javascript functions against this object and returns testing feedback.
+
+It has multiple pre-defined rules currently targeting SEO and webperformance best practices.
+
+Additional it can call third party REST-APIs from within these rules.
+
+### What can it do?
+
+Everything! You can write your own tests! Anything that happens in the browser during the pageload and render lifecycle can be inspected and dissected!
+
 ## Development
 
 ### Install all dependencies
@@ -38,7 +58,10 @@ Open [chrome://extensions/](chrome://extensions/) and point the installation of 
 
 ## Rules
 
+The production ready rules can be found within [/src/public/default-rules](/src/public/default-rules)
+
 Inside [/sample-rules](/sample-rules) are some sample rules plus the documentation how to write your own rules.
+
 
 ## License
 
