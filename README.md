@@ -38,7 +38,7 @@ Open [chrome://extensions/](chrome://extensions/) and point the installation of 
 
 Inside [/sample-rules](/sample-rules) are some sample rules plus the documentation how to write your own rules.
 
-##License
+## License
 
  * All rules within the /sample-rules/ directory are MIT licensed.
  * All rules within the /public/default-rules/ directory are MIT licensed.
