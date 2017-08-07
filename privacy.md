@@ -1,4 +1,4 @@
-f19n obstrusive livetest
+f19n obtrusive livetest
 
 does currently not track anything
 
@@ -8,4 +8,4 @@ does not send any data somewhere
 
 does not have any analytics within the app
 
-on the chrome app store install page google analytics is enabled 
+on the chrome app store install page google analytics is enabled
