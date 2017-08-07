@@ -1,5 +1,5 @@
 {
-  "name": "f19n_Livetest",
+  "name": "f19n-obtrusive-livetest",
   "version": "0.0.1",
   "devDependencies": {
     "babel-core": "^6.7.6",
