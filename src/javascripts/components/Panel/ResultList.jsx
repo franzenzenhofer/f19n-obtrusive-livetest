@@ -71,7 +71,7 @@ export default class ResultList extends Component {
             </a>
           </div>
           <div className="Header-controls u-cf">
-            <a className="Button u-floatLeft" target="_blank" href={chrome.extension.getURL('rules.html')}>Settings</a>
+            <a className="Button u-floatLeft" target="_blank" href={chrome.extension.getURL('rules.html')}>&#9881 Settings</a>
             <span className="u-floatRight">{clearFilterLink}</span>
           </div>
         </div>
