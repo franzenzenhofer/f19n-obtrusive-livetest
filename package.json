@@ -1,6 +1,8 @@
 {
   "name": "f19n-obtrusive-livetest",
   "version": "0.0.1",
+  "license": "contributor and eductional license",
+  "repository": "https://github.com/franzenzenhofer/f19n-obtrusive-livetest",
   "devDependencies": {
     "babel-core": "^6.7.6",
     "babel-eslint": "^6.0.3",
