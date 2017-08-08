@@ -21,6 +21,7 @@ const FRAME_TEMPLATE = `
   </html>
 `;
 
+
 //this  defines the area where the dragevent can start
 const $appRoot = $('<style>#f19n-panel-root:before { content: " "; cursor: move; position: absolute; left: 0; top: 0; width: calc(100% - 90px); height: 20px; background: transparent;}</style><div id="f19n-panel-root"></div>').css({
   position: 'fixed',
