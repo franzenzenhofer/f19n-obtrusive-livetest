@@ -1,6 +1,6 @@
 {
   "name": "f19n-obtrusive-livetest",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "license": "contributor and eductional license",
   "repository": "https://github.com/franzenzenhofer/f19n-obtrusive-livetest#",
   "devDependencies": {

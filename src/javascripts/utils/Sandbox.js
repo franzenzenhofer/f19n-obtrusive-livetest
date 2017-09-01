@@ -32,6 +32,12 @@ window.addEventListener('message', (event) => {
         r.statusText = response.statusText;
         r.ok = response.ok;
         r.redirected = response.redirected;
+        r.url = response.url;
+        /*r.headers = [];
+        const headers = response.headers.entries();
+        for (h of headers) {
+          r.headers.push(h)
+        }*/
         r.body = data;
         event.source.postMessage({ command: 'fetchResult', response: r, runId }, '*');
       });
