@@ -91,10 +91,16 @@ export const nodeToString = (stuff) =>
   if (stuff.outerHTML) { return stuff.outerHTML; }
   if (isIterable(stuff)) {
     if (isString(stuff)) {return stuff;}
-    if (Array.isArray(stuff)) {
+    /*if (Array.isArray(stuff)) {
+      console.log('is Array');
+      console.log(stuff);
+      //return allNodesToString(stuff);
       return stuff.join("\n");
+    }*/
+    if(!Array.isArray(stuff))
+    {
+      stuff = Array.from(stuff);
     }
-    stuff = Array.prototype.slice.call(stuff);
     /*console.log('what is it');
     if((stuff.isNodeList && stuff.isNodeList()) ||
     {*/
@@ -130,9 +136,14 @@ export const nodeToString = (stuff) =>
 
 export const allNodesToString = (...stuffs) =>
 {
+  //console.log('allnodestostring');
 	//console.log(stuffs);
-  stuffs = Array.prototype.slice.call(stuffs);
+  if(!Array.isArray(stuffs))
+  {
+    stuffs = Array.from(stuffs);
+  }
 	if(!stuffs){return false;}
+  if(stuffs.length===0){return false;}
 	var s = '';
   stuffs.forEach(function(stuff){
   	s = s + "\n" + nodeToString(stuff);
