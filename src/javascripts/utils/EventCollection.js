@@ -32,11 +32,12 @@ export default class EventCollection {
   }
 
 
-
+ /*
   robotsTxtEvent() {
     let event = this.lastEventOfType('robotstxt');
     return event;
   }
+  */
 
   chromeLoadTimesEvent()
   {
