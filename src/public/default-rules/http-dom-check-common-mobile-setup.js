@@ -1,7 +1,9 @@
 function(page, done){
   var hh = page.getHttpHeaders("last");
+  //console.log(hh);
+  //console.log(hh['vary']);
   var vary = hh['vary'] || "";
-  var isvary = function(){if(vary.indexOf("agent")===-1){ return false} return true}();
+  var isvary = function(){if(vary.toLowerCase().indexOf("agent")===-1){ return false} return true}();
   var u = page.getURL("last");
   var idle_dom = page.getIdleDom();
   var medias = idle_dom.querySelectorAll("link[rel=alternate][media][href]");
