@@ -6,7 +6,6 @@ api.firstPaintTime = firstPaint - window.performance.timing.navigationStart;
 function(page, done){
   var clt = page.getChromeLoadTimes();
   var wt = page.getWindowPerformanceTiming();
-  console.log(clt);
   var first_paint = clt.firstPaintTime * 1000;
   var first_paint_time = first_paint - wt.navigationStart;
 
