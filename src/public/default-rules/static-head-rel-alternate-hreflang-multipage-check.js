@@ -9,6 +9,7 @@ function(page,done)
   var self_reference = false;
   let max_wait_time = 10000;
   let onpage_hreflang = '';
+  let page_vs_canonical = 'this page';
 
   let upgradType = (new_type,type) =>
   {
@@ -57,6 +58,7 @@ function(page,done)
   const canonicals = sdom.querySelectorAll('head > link[rel=canonical]');
   if(canonicals.length === 1){
     canonical = canonicals[0].href;
+    page_vs_canonical = "<a href='"+canonical+"'>canonical URL</a>"
   }
   else { //warning of no canonical
     msg_partial = msg_partial+"No valid canonical found. ";
@@ -96,46 +98,57 @@ function(page,done)
         let analyzer = (relalt, origin_url) => {
           this.fetch(relalt.href, { responseFormat: 'text' }, (response) =>
           {
-            
+            let is_200 = true;
             //check reference URLs for redirects
             if(response.redirected === true)
             {
-                msg_partial = msg_partial+"'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' URL triggers redirect!"+that.partialCodeLink(relalt)+" ";
+                msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' URL triggers redirect!"+that.partialCodeLink(relalt)+" ";
                 type = upgradType("warning",type);
             }
-            let relalt_self_reference = false;
-            let relalt_back_reference = false;
 
-            if (response.body)
+            if(response.status!=200)
             {
-              let parser = new DOMParser();
-              let dom = parser.parseFromString(response.body, "text/html");
-              
-              let selfies_selector = 'head > link[rel=alternate][hreflang="'+relalt.hreflang+'"][href="'+relalt.href+'"]';
-              let backreferences_selector = 'head > link[rel="alternate"][hreflang][href="'+canonical+'"]';
+                msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' returns HTTP "+response.status+"!"+that.partialCodeLink(relalt)+" ";
+                type = upgradType("error",type);
+                is_200 = false;
+            }
+            if(is_200)
+            {
+              let relalt_self_reference = false;
+              let relalt_back_reference = false;
 
-              if(self_reference===true)
+              if (response.body)
               {
-                backreferences_selector = 'head > link[rel="alternate"][hreflang="'+onpage_hreflang+'"][href="'+canonical+'"]';
+                let parser = new DOMParser();
+                let dom = parser.parseFromString(response.body, "text/html");
+                
+                let selfies_selector = 'head > link[rel=alternate][hreflang="'+relalt.hreflang+'"][href="'+relalt.href+'"]';
+                let backreferences_selector = 'head > link[rel="alternate"][hreflang][href="'+canonical+'"]';
+                console.log(backreferences_selector);
+
+                if(self_reference===true)
+                {
+                  backreferences_selector = 'head > link[rel="alternate"][hreflang="'+onpage_hreflang+'"][href="'+canonical+'"]';
+                }
+
+                let selfies = dom.querySelectorAll(selfies_selector);
+                if(selfies.length>0){ relalt_self_reference = true; }
+
+                let backreferences = dom.querySelectorAll(backreferences_selector); 
+                if(backreferences.length>0) { relalt_back_reference = true; }
               }
 
-              let selfies = dom.querySelectorAll(selfies_selector);
-              if(selfies.length>0){ relalt_self_reference = true; }
+              if(!relalt_self_reference )
+              {
+                msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' no self reference found!"+that.partialCodeLink(relalt)+"";
+                type = upgradType("error",type);
+              }
 
-              let backreferences = dom.querySelectorAll(backreferences_selector); 
-              if(backreferences.length>0) { relalt_back_reference = true; }
-            }
-
-            if(!relalt_self_reference)
-            {
-              msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' no self reference found!"+that.partialCodeLink(relalt)+"";
-              type = upgradType("error",type);
-            }
-
-            if(!relalt_back_reference)
-            {
-              msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' no back reference to this page found!"+that.partialCodeLink(relalt)+"";
-              type = upgradType("error",type);
+              if(!relalt_back_reference )
+              {
+                msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' no back reference to "+page_vs_canonical+" found!"+that.partialCodeLink(relalt)+"";
+                type = upgradType("error",type);
+              }
             }
          });
       }
@@ -147,7 +160,7 @@ function(page,done)
 //check for self reference
   if(self_reference === false)
   {
-    msg_partial = msg_partial+"No onpage self reference found! ";
+    msg_partial = msg_partial+"<b>No onpage self reference found!</b> ";
     type = upgradType("error",type); 
   }
 
@@ -158,7 +171,7 @@ function(page,done)
 setTimeout(function(){
     if(msg_partial!='')
     {
-      done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang: "+msg_partial+" Full markup:"+that.partialCodeLink(canonicals, hreflangs), type, 'static'));
+      done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang"+that.partialCodeLink(canonicals, hreflangs)+": "+msg_partial, type, 'static'));
       return; 
     }
     done();
