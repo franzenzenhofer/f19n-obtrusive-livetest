@@ -6,6 +6,9 @@ function(page,done)
   let msg_partial = "";
   let type = 'info';
   let canonical = false;
+  var self_reference = false;
+  let max_wait_time = 10000;
+  let onpage_hreflang = '';
 
   let upgradType = (new_type,type) =>
   {
@@ -37,30 +40,128 @@ function(page,done)
 
   }
 //collect all rel=alternate
-  const hreflangs = sdom.querySelectorAll('link[rel=alternate][hreflang]');
-  if (hreflangs.length === 0) { done();return;}
+  const hreflangs = sdom.querySelectorAll('head > link[rel=alternate][hreflang]');
+  if (hreflangs.length === 0)
+  { 
+    //check if the hreflangs are somewhere else
+    if(sdom.querySelectorAll('link[rel=alternate][hreflang]').length!=0)
+    {
+    done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang markup in &lt;body&gt; not in &lt;head&gt;! Maybe &lt;noscript&gt; with whitespaces in &lt;head&gt;!"+that.partialCodeLink(canonicals, hreflangs), "error", 'static')); return;
+    }
+    done();return;
+  }
+
+
 
 //collect canonical
-  const canonicals = sdom.querySelectorAll('link[rel=canonical]');
+  const canonicals = sdom.querySelectorAll('head > link[rel=canonical]');
   if(canonicals.length === 1){
-    canonical = canonicals[0];
+    canonical = canonicals[0].href;
   }
   else { //warning of no canonical
-    msg_partial = "No valid canonical.";
+    msg_partial = msg_partial+"No valid canonical found. ";
+    if(url.indexOf('?')===-1)
+    {
+       msg_partial = msg_partial + "Rel=alternate invalid if page <a href='"+url+"?foo=bar'>referenced using parameters</a>. ";   
+    }
+    else
+    {
+      msg_partial = msg_partial + "Rel=alternate invalid if page referenced using parameters. ";
+    }
     type = upgradType("warning",type);
+    canonical = url;
+  }
+
+  //onpage check for self reference
+  let onpage_self_reference_relalts = sdom.querySelectorAll('link[rel="alternate"][hreflang][href="'+canonical+'"]');
+
+  if(onpage_self_reference_relalts.length > 0)
+  {
+    self_reference = true;
+    //we just choose the first self reference even though there could be multiple...
+    onpage_hreflang = onpage_self_reference_relalts[0].hreflang; 
   }
 
 
-//collect DOM of all rel=alternate URLs (but not itself or canonical)
+  //get all URLs
+  for (var relalt of hreflangs)
+  {
+    if(relalt.href && relalt.href === canonical)
+    {
+      //self_reference = true;
+      //no need to check, pointing to itself
+    }
+    else if(relalt.href)
+    {
+        let analyzer = (relalt, origin_url) => {
+          this.fetch(relalt.href, { responseFormat: 'text' }, (response) =>
+          {
+            
+            //check reference URLs for redirects
+            if(response.redirected === true)
+            {
+                msg_partial = msg_partial+"'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' URL triggers redirect!"+that.partialCodeLink(relalt)+" ";
+                type = upgradType("warning",type);
+            }
+            let relalt_self_reference = false;
+            let relalt_back_reference = false;
+
+            if (response.body)
+            {
+              let parser = new DOMParser();
+              let dom = parser.parseFromString(response.body, "text/html");
+              
+              let selfies_selector = 'head > link[rel=alternate][hreflang="'+relalt.hreflang+'"][href="'+relalt.href+'"]';
+              let backreferences_selector = 'head > link[rel="alternate"][hreflang][href="'+canonical+'"]';
+
+              if(self_reference===true)
+              {
+                backreferences_selector = 'head > link[rel="alternate"][hreflang="'+onpage_hreflang+'"][href="'+canonical+'"]';
+              }
+
+              let selfies = dom.querySelectorAll(selfies_selector);
+              if(selfies.length>0){ relalt_self_reference = true; }
+
+              let backreferences = dom.querySelectorAll(backreferences_selector); 
+              if(backreferences.length>0) { relalt_back_reference = true; }
+            }
+
+            if(!relalt_self_reference)
+            {
+              msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' no self reference found!"+that.partialCodeLink(relalt)+"";
+              type = upgradType("error",type);
+            }
+
+            if(!relalt_back_reference)
+            {
+              msg_partial = msg_partial+"<br>'<a href='"+relalt.href+"'>"+relalt.hreflang+"</a>' no back reference to this page found!"+that.partialCodeLink(relalt)+"";
+              type = upgradType("error",type);
+            }
+         });
+      }
+      analyzer(relalt, canonical);
+    }
+  }
+
 
 //check for self reference
+  if(self_reference === false)
+  {
+    msg_partial = msg_partial+"No onpage self reference found! ";
+    type = upgradType("error",type); 
+  }
 
-//check reference URLs for redirects
+
 
 //check for back reference
 
-
-
-
-
+setTimeout(function(){
+    if(msg_partial!='')
+    {
+      done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang: "+msg_partial+" Full markup:"+that.partialCodeLink(canonicals, hreflangs), type, 'static'));
+      return; 
+    }
+    done();
+    return;
+  },max_wait_time);
 }
