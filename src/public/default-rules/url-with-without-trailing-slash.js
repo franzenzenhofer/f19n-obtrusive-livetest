@@ -15,7 +15,6 @@ parser.host;     // => "example.com:3000"
   if(parser.pathname === '/')
   {
     //URL is in root, ending slash does not apply to root urls
-    console.log('root url');
     done();
   }
   if (url.indexOf('?')!=-1)
