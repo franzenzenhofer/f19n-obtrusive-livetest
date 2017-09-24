@@ -1,7 +1,6 @@
 function(page, done) {
   var that = this;
   var url_s = page.getURL("last");
-  console.log(url_s);
   var url = new URL(url_s);
   var maindomain = url.hostname;
   if (((maindomain.match(/\./g) || []).length) > 2)
