@@ -49,6 +49,7 @@ module.exports = function(grunt) {
           "<%= grunt.config.get('buildDir') %>/css/application.css": "src/stylesheets/application.sass",
           "<%= grunt.config.get('buildDir') %>/css/panel.css": "src/stylesheets/panel.sass",
           "<%= grunt.config.get('buildDir') %>/css/rules.css": "src/stylesheets/rules.sass",
+          "<%= grunt.config.get('buildDir') %>/css/popup.css": "src/stylesheets/popup.sass",
           "<%= grunt.config.get('buildDir') %>/css/content_styles.css": "src/stylesheets/content_styles.sass"
         }
       }
@@ -86,6 +87,7 @@ module.exports = function(grunt) {
              background: "./src/javascripts/background.js",
                   panel: "./src/javascripts/panel.js",
                   rules: "./src/javascripts/rules.js",
+                  popup: "./src/javascripts/popup.js",
                 sandbox: "./src/javascripts/sandbox.js",
          content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",

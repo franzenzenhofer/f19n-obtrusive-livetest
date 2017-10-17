@@ -4,7 +4,8 @@
   "description": "Obtrusive Live Test is a sandboxed, extendable framework to run tests on webpages while browsing the internet!",
   "version": "0.0.4",
   "browser_action": {
-    "default_title": "Obtrusive Live Test by fullstackoptimization.com"
+    "default_title": "Obtrusive Live Test by fullstackoptimization.com",
+    "default_popup": "popup.html"
   },
   "icons": {
     "16": "images/icon.png",
