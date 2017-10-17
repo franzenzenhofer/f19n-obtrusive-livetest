@@ -137,17 +137,30 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask("reloadChrome", "reload extension", function() {
-    var sys = require("sys");
     var exec = require("child_process").exec;
     var done = this.async();
-    return exec("chrome-cli list tabs", function(error, stdout, stderr) {
+    return exec("chrome-cli list links", function(error, stdout, stderr) {
       var tabId, _ref;
-      if (tabId = (_ref = stdout.match(/\[(\d+:)?([\d]+)\] Extensions/)) != null ? _ref[2] : void 0) {
+
+      var openExtensionWindows = stdout.match(/(chrome-extension:\/\/flklgoghmajjcajlpecnkgdheicooaae.+)/g);
+
+      if (tabId = (_ref = stdout.match(/\[(\d+:)?([\d]+)\] chrome:\/\/extensions\/?/)) != null ? _ref[2] : void 0) {
         return exec("chrome-cli reload -t " + tabId, function(error, stdout, stderr) {
+          for (var urlIndex in openExtensionWindows) {
+            return exec('chrome-cli open ' + openExtensionWindows[urlIndex], function() {
+              return done();
+            });
+          }
+
           return done();
         });
       } else {
         return exec("chrome-cli open chrome://extensions && chrome-cli reload", function(error, stdout, stderr) {
+          for (var urlIndex in openExtensionWindows) {
+            return exec('chrome-cli open ' + openExtensionWindows[urlIndex], function() {
+              return done();
+            });
+          }
           return done();
         });
       }
