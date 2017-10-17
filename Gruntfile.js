@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
@@ -91,18 +93,17 @@ module.exports = function(grunt) {
           document_start: "./src/javascripts/document_start.js",
         },
         output: {
-          path: "<%= grunt.config.get('buildDir') %>/js",
+          path: path.resolve(__dirname, "./<%= grunt.config.get('buildDir') %>/js"),
           filename: "[name].js",
         },
         resolve: {
-          modulesDirectories: [
+          modules: [
             'javascripts/containers',
             'javascripts/components',
             'javascripts/utils',
             'node_modules',
           ],
           extensions: [
-            '',
             '.js',
             '.jsx',
           ],
