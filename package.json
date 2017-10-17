@@ -3,6 +3,9 @@
   "version": "0.0.4",
   "license": "contributor and eductional license",
   "repository": "https://github.com/franzenzenhofer/f19n-obtrusive-livetest#",
+  "scripts": {
+    "dev": "grunt --reload-extension"
+  },
   "devDependencies": {
     "babel-core": "^6.7.6",
     "babel-eslint": "^6.0.3",
