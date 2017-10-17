@@ -8,9 +8,9 @@
     "default_popup": "popup.html"
   },
   "icons": {
-    "16": "images/icon.png",
-    "48": "images/icon.png",
-    "128": "images/icon.png"
+    "16": "images/icon-inactive.png",
+    "48": "images/icon-inactive.png",
+    "128": "images/icon-inactive.png"
   },
   "background": {
     "scripts": ["js/background.js"],

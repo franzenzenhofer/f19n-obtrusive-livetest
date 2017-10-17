@@ -202,6 +202,11 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     callback({ tabId: sender.tab.id, url: sender.tab.url });
   }
 
+  if (request.event === 'requestSetIcon') {
+    const { path, tabId } = request.data;
+    chrome.browserAction.setIcon({ path, tabId });
+  }
+
   if (request.event === 'DOMContentLoaded') {
     const tabId = sender.tab.id;
     ifPanelOpenForTab(tabId, () => {

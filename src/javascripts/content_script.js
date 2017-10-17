@@ -175,8 +175,10 @@ const init = () => {
         initializePanel({ position, host });
       };
       if (visible) {
+        chrome.runtime.sendMessage({ event: 'requestSetIcon', data: { tabId, path: chrome.extension.getURL('images/icon.png') } });
         showPanel(url, tabId, onMount);
       } else {
+        chrome.runtime.sendMessage({ event: 'requestSetIcon', data: { tabId, path: chrome.extension.getURL('images/icon-inactive.png') } });
         hidePanel();
       }
     });
