@@ -8,7 +8,7 @@ export default class EnabledSites extends Component {
           <h2>Enabled sites - Whitelist / Blacklist</h2><div>Blacklisted URL-schemas start with !</div>
           <textarea style={{ height: 50, width: '100%' }} defaultValue={this.props.sites} onChange={(e) => this.props.onChange(e.target.value)} />
           <p>
-            <button className="Button Button--haptic" onClick={(e) => this.props.onChange(e.target.value)}>Apply</button>
+            <button className="Button Button--haptic" onClick={(e) => this.props.onChange(this.props.sites)}>Apply</button>
           </p>
         </div>
       </div>
