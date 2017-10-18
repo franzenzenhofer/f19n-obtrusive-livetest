@@ -59,7 +59,7 @@ const handleClosePanelRequest = () => {
 const panelShouldBeVisible = (data, tabId) => {
   const hiddenPanels = data['hidden-panels'] || [];
   const enabledSites = data.sites;
-  const enabledSite = check(enabledSites.split('\n'), document.location.href);
+  const enabledSite = check(enabledSites.split('\n'), document.location.href.replace(/\/$/, ''));
   let hidden = hiddenPanels.indexOf(tabId) !== -1;
   hidden = hidden || !enabledSite;
   return !hidden;
