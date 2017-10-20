@@ -3,8 +3,14 @@ import React from 'react';
 export default function Popup({ location, disabled, hidden, onToggleSite, onToggleHidden }) {
   let sites = [];
 
-  const withoutTld = location.host.split('.').slice(0, -1);
-  const tld = location.host.split('.').slice(-1).join('.');
+  const withoutTld = location.host
+    // Replace www. at the beginning if present
+    .replace(/^www./, '')
+    // Split by '.' to get domain parts
+    .split('.')
+    // Remove the last part probably the TLD
+    .slice(0, -1);
+  const tld = location.host.split('.').slice(-1)[0];
   const subdomainCombinations = withoutTld.map((part, index) => {
     return [`*.${withoutTld.slice(index).join('.')}.${tld}/*`, `${location.protocol}//*.${withoutTld.slice(index + 1).join('.')}.${tld}*`];
   });
