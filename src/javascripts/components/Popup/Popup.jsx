@@ -12,7 +12,7 @@ export default function Popup({ location, disabled, hidden, onToggleSite, onTogg
     .slice(0, -1);
   const tld = location.host.split('.').slice(-1)[0];
   const subdomainCombinations = withoutTld.map((part, index) => {
-    return [`*.${withoutTld.slice(index).join('.')}.${tld}/*`, `${location.protocol}//*.${withoutTld.slice(index + 1).join('.')}.${tld}*`];
+    return [`*.${withoutTld.slice(index).join('.')}.${tld}/*`, `${location.protocol}//*.${withoutTld.slice(index).join('.')}.${tld}*`];
   });
 
   sites = sites.concat(
