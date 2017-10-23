@@ -7,6 +7,7 @@ import { runRule } from './utils/Sandbox';
 import { createResult } from './utils/RuleContext';
 
 import syncDefaultRules from './utils/syncDefaultRules';
+import { activeForTab } from './utils/activeForTab';
 
 const filter = {
   urls: ['http://*/*', 'https://*/*'],
@@ -24,10 +25,9 @@ const setDefaultScope = (callback = null) => {
   });
 };
 
-const ifPanelOpenForTab = (tabId, callback) => {
-  chrome.storage.local.get('hidden-panels', (data) => {
-    const hiddenPanels = (data['hidden-panels'] || []);
-    if (hiddenPanels.indexOf(tabId) === -1) {
+const ifPanelOpenForTab = ({ id, url }, callback) => {
+  activeForTab({ id, url }).then(({ disabled, hidden }) => {
+    if (!hidden && !disabled) {
       callback();
     }
   });
@@ -141,40 +141,40 @@ const findOrCreateCollector = (tabId) => {
 };
 
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
-  const { tabId } = data;
-  ifPanelOpenForTab(tabId, () => {
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
     if (data.frameId === 0) {
-      findOrCreateCollector(tabId).pushEvent(data, 'onBeforeNavigate');
+      findOrCreateCollector(id).pushEvent(data, 'onBeforeNavigate');
     }
   });
 }, filter);
 
 chrome.webNavigation.onCommitted.addListener((data) => {
-  const { tabId } = data;
-  ifPanelOpenForTab(tabId, () => {
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
     if (data.frameId === 0) {
-      findOrCreateCollector(tabId).pushEvent(data, 'onCommitted');
+      findOrCreateCollector(id).pushEvent(data, 'onCommitted');
     }
   });
 }, filter);
 
 chrome.webRequest.onBeforeSendHeaders.addListener((data) => {
-  const { tabId } = data;
-  ifPanelOpenForTab(tabId, () => {
-    findOrCreateCollector(tabId).pushEvent(data, 'onBeforeSendHeaders');
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
+    findOrCreateCollector(id).pushEvent(data, 'onBeforeSendHeaders');
   });
 }, filter);
 
 chrome.webRequest.onBeforeRequest.addListener((data) => {
-  const { tabId } = data;
-  ifPanelOpenForTab(tabId, () => {
-    findOrCreateCollector(tabId).pushEvent(data, 'onBeforeRequest');
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
+    findOrCreateCollector(id).pushEvent(data, 'onBeforeRequest');
   });
 }, filter);
 
 chrome.webRequest.onHeadersReceived.addListener((data) => {
-  const { tabId, responseHeaders } = data;
-  ifPanelOpenForTab(tabId, () => {
+  const { tabId: id, url, responseHeaders } = data;
+  ifPanelOpenForTab({ id, url }, () => {
     const eventData = update(
       data,
       {
@@ -182,14 +182,14 @@ chrome.webRequest.onHeadersReceived.addListener((data) => {
         rawResponseHeaders: { $set: hashFromNameValuePairArray(responseHeaders) },
       }
     );
-    findOrCreateCollector(tabId).pushEvent(eventData, 'onHeadersReceived');
+    findOrCreateCollector(id).pushEvent(eventData, 'onHeadersReceived');
   });
 }, filter, ['responseHeaders']);
 
 chrome.webRequest.onCompleted.addListener((data) => {
-  const { tabId } = data;
-  ifPanelOpenForTab(tabId, () => {
-    findOrCreateCollector(tabId).pushEvent(data, 'onCompleted');
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
+    findOrCreateCollector(id).pushEvent(data, 'onCompleted');
   });
 }, filter);
 
@@ -208,41 +208,42 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
   }
 
   if (request.event === 'DOMContentLoaded') {
-    const tabId = sender.tab.id;
-    ifPanelOpenForTab(tabId, () => {
-      findOrCreateCollector(tabId).pushEvent(request.data, 'DOMContentLoaded');
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'DOMContentLoaded');
     });
   }
 
   if (request.event === 'document_end') {
-    const tabId = sender.tab.id;
-    ifPanelOpenForTab(tabId, () => {
-      findOrCreateCollector(tabId).pushEvent(request.data, 'documentEnd');
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'documentEnd');
     });
   }
 
   if (request.event === 'document_idle') {
-    const tabId = sender.tab.id;
-    ifPanelOpenForTab(tabId, () => {
-      findOrCreateCollector(tabId).pushEvent(request.data, 'documentIdle');
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'documentIdle');
     });
   }
 
   if (request.event === 'chrome_load_times') {
-    const tabId = sender.tab.id;
-    ifPanelOpenForTab(tabId, () => {
-      findOrCreateCollector(tabId).pushEvent(request.data, 'chromeLoadTimes');
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'chromeLoadTimes');
     });
   }
 
   if (request.event === 'window_performance') {
-    const tabId = sender.tab.id;
-    ifPanelOpenForTab(tabId, () => {
-      findOrCreateCollector(tabId).pushEvent(request.data, 'windowPerformance');
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'windowPerformance');
     });
   }
 });
 
+// FIXME: Remove. Never gets called since we introduced the extension-popup
 chrome.browserAction.onClicked.addListener((tab) => {
   chrome.storage.local.get('hidden-panels', (data) => {
     const tabId = tab.id;

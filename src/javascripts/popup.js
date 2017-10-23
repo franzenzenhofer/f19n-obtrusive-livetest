@@ -3,21 +3,7 @@ import ReactDOM from 'react-dom';
 
 import Popup from './components/Popup/Popup';
 
-const check = (sites, url) => {
-  const entry = sites.reverse().find((l) => {
-    const regexp = `\^${l}\$`.replace(/\*/g, '[^ ]*').replace('!', '');
-    return url.match(new RegExp(regexp));
-  });
-  return entry ? (entry.match(/^!.+/) !== null ? false : true) : false;
-};
-
-const panelShouldBeVisible = (data, tabId, path) => {
-  const hiddenPanels = data['hidden-panels'] || [];
-  const enabledSites = data.sites;
-  const enabledSite = check(enabledSites.split('\n'), path);
-  const hidden = hiddenPanels.indexOf(tabId) !== -1;
-  return { hidden, disabled: !enabledSite };
-};
+import { activeForTab } from './utils/activeForTab';
 
 const toggleHidden = (tabId) => {
   chrome.storage.local.get((data) => {
@@ -59,11 +45,10 @@ const toggleSite = (site, disabled) => {
 };
 
 chrome.tabs.query({ active: true }, (res) => {
-  const { url, id: tabId } = res[0];
-  chrome.storage.local.get((data) => {
-    const { disabled, hidden } = panelShouldBeVisible(data, tabId, url);
+  const { id, url } = res[0];
+  activeForTab({ url, id }).then(({ hidden, disabled }) => {
     const location = document.createElement('a');
     location.href = url;
-    ReactDOM.render(<Popup location={location} disabled={disabled} hidden={hidden} onToggleSite={(site) => toggleSite(site, disabled)} onToggleHidden={() => toggleHidden(tabId)} />, document.getElementById('app'));
+    ReactDOM.render(<Popup location={location} disabled={disabled} hidden={hidden} onToggleSite={(site) => toggleSite(site, disabled)} onToggleHidden={() => toggleHidden(id)} />, document.getElementById('app'));
   });
 });
