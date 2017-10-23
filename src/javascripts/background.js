@@ -9,6 +9,8 @@ import { createResult } from './utils/RuleContext';
 import syncDefaultRules from './utils/syncDefaultRules';
 import { activeForTab } from './utils/activeForTab';
 
+import Config from './config';
+
 const filter = {
   urls: ['http://*/*', 'https://*/*'],
   types: ['main_frame'],
@@ -17,10 +19,17 @@ const filter = {
 const collector = {};
 const currentTabCollectorId = {};
 
-const setDefaultScope = (callback = null) => {
+const setDefaults = (callback = null) => {
+  const { panelPosition, sites, mode } = Config.defaults;
   chrome.storage.local.get((data) => {
     if (!data.sites) {
-      chrome.storage.local.set({ sites: '*://*\n!*://*google\\.*\n!*://validator.ampproject.org*\n!*://*webpagetest.org*\n!*://*facebook.com*\n', panelPosition: [10, 10] }, callback);
+      chrome.storage.local.set({ sites }, callback);
+    }
+    if (!data.panelPosition) {
+      chrome.storage.local.set({ panelPosition }, callback);
+    }
+    if (!data.mode) {
+      chrome.storage.local.set({ mode }, callback);
     }
   });
 };
@@ -35,7 +44,7 @@ const ifPanelOpenForTab = ({ id, url }, callback) => {
 
 chrome.runtime.onInstalled.addListener(() => {
   syncDefaultRules();
-  setDefaultScope();
+  setDefaults();
 });
 
 const normalizeHeaders = (responseHeaders) => {
@@ -242,6 +251,7 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     });
   }
 });
+
 
 // FIXME: Remove. Never gets called since we introduced the extension-popup
 chrome.browserAction.onClicked.addListener((tab) => {
