@@ -2,8 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Panel from './components/Panel/Panel';
-
-
 import resultStoreKey from './utils/resultStoreKey';
 
 const handleClosePanelRequest = () => {
