@@ -10,7 +10,7 @@ export const activeForTab = ({ id, url }) => {
   return new Promise((resolve) => {
     chrome.storage.local.get((data) => {
       const hiddenPanels = data['hidden-panels'] || [];
-      const sites = data.sites;
+      const sites = { CUSTOM: data.sites, ALL: '*://*', DISABLED: '!*://*' }[data.mode];
       const enabledSite = check(sites.split('\n'), url.replace(/\/$/, ''));
       const hidden = hiddenPanels.indexOf(id) !== -1;
       return resolve({ hidden, disabled: !enabledSite });

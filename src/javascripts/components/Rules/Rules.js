@@ -6,6 +6,7 @@ import RulesList from './RulesList';
 import AddRule from './AddRule';
 import ViewRule from './ViewRule';
 import EnabledSites from './EnabledSites';
+import ExtensionMode from './ExtensionMode';
 
 import rulesStore from './../../store/rules';
 
@@ -15,6 +16,7 @@ export default class Rules extends Component {
     this.state = {
       rules: fromJS(props.rules),
       sites: props.sites,
+      mode: props.mode || 'ALL',
       viewRule: null,
     };
 
@@ -30,6 +32,9 @@ export default class Rules extends Component {
     }
     if (data && data.sites && data.sites.newValue) {
       this.setState({ sites: fromJS(data.sites.newValue) });
+    }
+    if (data && data.mode && data.mode.newValue) {
+      this.setState({ mode: data.mode.newValue });
     }
   }
 
@@ -73,6 +78,10 @@ export default class Rules extends Component {
     chrome.storage.local.set({ sites });
   }
 
+  updateMode = (mode) => {
+    chrome.storage.local.set({ mode });
+  }
+
   render() {
     const modalStyles = {
       content: {
@@ -113,7 +122,10 @@ export default class Rules extends Component {
               <a href="http://www.fullstackoptimization.com/" target="_blank">fullstackoptimization</a> - <a href="https://github.com/franzenzenhofer/f19n-obtrusive-livetest" target="_blank">Documentation on Github</a></span>
           </div>
         </header>
-        <EnabledSites sites={this.state.sites} onChange={this.updateSites} />
+
+        <ExtensionMode mode={this.state.mode} onChange={this.updateMode} />
+        {this.state.mode === 'CUSTOM' && <EnabledSites sites={this.state.sites} onChange={this.updateSites} enabled={this.state.mode === 'CUSTOM'} />}
+
         <div className="Wrapper">
           <div className="Section rules">
             <h2>Custom rules</h2>

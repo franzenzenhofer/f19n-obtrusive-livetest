@@ -20,6 +20,8 @@ const toggleHidden = (tabId) => {
 
 const toggleSite = (site, disabled) => {
   chrome.storage.local.get((data) => {
+    const newMode = data.mode !== 'CUSTOM' ? 'CUSTOM' : data.mode;
+
     const sites = (data.sites || '').split('\n');
     const escapedSite = site.replace(/\*/g, '\\*').replace(/\/$/, '');
     const siteIndex = sites.findIndex(s => s.match(new RegExp(`!?${escapedSite}`)));
@@ -35,7 +37,7 @@ const toggleSite = (site, disabled) => {
       sites.push(`${disabled ? '' : '!'}${site.replace(/\/$/, '')}`);
     }
 
-    chrome.storage.local.set({ sites: sites.join('\n') }, () => {
+    chrome.storage.local.set({ sites: sites.join('\n'), mode: newMode }, () => {
       chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
         chrome.tabs.update(tabs[0].id, { url: tabs[0].url });
         self.close();
