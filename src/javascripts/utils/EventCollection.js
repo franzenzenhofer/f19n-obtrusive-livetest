@@ -136,22 +136,7 @@ export default class EventCollection {
   //  return null;
   //}
 
-  getLocation(where = 'idle') {
-    if (where === 'static')
-    {
-      var e = this.documentEndEvent();
-      return e.location;
-    }
-    else if (where === 'live')
-    {
-      //return live location
-    }
-    else {
-    //if (where === 'idle') {
-      var e = this.documentIdleEvent();
-      return e.location;
-    }
-  }
+
 
   getHttpHeaders(what) {
     if(what==="last")
@@ -161,6 +146,7 @@ export default class EventCollection {
     else {
       var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
     }
+    if (!onHeadersReceivedEvent) { return false; }
     var { responseHeaders } = onHeadersReceivedEvent;
     return responseHeaders;
   }
@@ -173,6 +159,8 @@ export default class EventCollection {
     else {
       var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
     }
+    if (!onHeadersReceivedEvent) { return false; }
+
     var { rawResponseHeaders } = onHeadersReceivedEvent;
     return rawResponseHeaders;
   }
@@ -185,11 +173,31 @@ export default class EventCollection {
     else {
       var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
     }
+    if (!onHeadersReceivedEvent) { return false; }
+
     var { statusCode } = onHeadersReceivedEvent;
     return statusCode;
   }
 
+
+  getLocation(where = 'idle') {
+    if (where === 'static')
+    {
+      var e = this.documentEndEvent();
+      return e.location;
+    }
+    else {
+    //if (where === 'idle') {
+      var e = this.documentIdleEvent();
+      return e.location;
+    }
+  }
+
   getURL(what) {
+
+/*
+
+    //last
     if(what==="last")
     {
       var onHeadersReceivedEvent = this.lastEventOfType('onHeadersReceived');
@@ -198,6 +206,38 @@ export default class EventCollection {
       var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
     }
       var { url } = onHeadersReceivedEvent;
+
+    if(!url)
+    {
+
+    }
+*/
+    let events = this.events;
+    let url = undefined;
+    //first
+    if(what === "last")
+    {
+        let reverse_e = events.slice(0).reverse();
+        for (let e of reverse_e)
+        {
+          url = e.url; 
+          if (url) { break; }
+         /* url = e.location.href;
+          if (url) {break} */
+        }
+    }
+    else //if (what==="first")
+    {
+       for (let e of events)
+       {
+         url = e.url; 
+         if (url) { break; }
+        /* url = e.location.href;
+         if (url) {break} */
+       }
+    }
+    console.log('getURL:')
+    console.log(url);
     return url;
   }
 
