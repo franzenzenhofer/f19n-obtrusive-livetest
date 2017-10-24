@@ -20,16 +20,13 @@ const collector = {};
 const currentTabCollectorId = {};
 
 const setDefaults = (callback = null) => {
-  const { panelPosition, sites, mode } = Config.defaults;
+  const { panelPosition, sites } = Config.defaults;
   chrome.storage.local.get((data) => {
     if (!data.sites) {
       chrome.storage.local.set({ sites }, callback);
     }
     if (!data.panelPosition) {
       chrome.storage.local.set({ panelPosition }, callback);
-    }
-    if (!data.mode) {
-      chrome.storage.local.set({ mode }, callback);
     }
   });
 };
