@@ -3,7 +3,12 @@
 //multiple canonicals
 function(page, done) {
     var dom = page.getStaticDom();
-    const what = 'static';
+    var  what = 'static';
+    if(dom)
+    {
+        dom = page.getIdleDom();
+        what = 'idle';
+    }
     var c = dom.querySelectorAll('link[rel=canonical]');
     var location = page.getLocation();
     if (c.length > 0) {

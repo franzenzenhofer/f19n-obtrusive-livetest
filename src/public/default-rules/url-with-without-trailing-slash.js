@@ -67,7 +67,7 @@ parser.host;     // => "example.com:3000"
 
         if(response.url!=url) {
           type = 'error';
-          done(this.createResult('URL', 'URL variation <b>'+what_case+'</b> trailingslash <a href="'+new_url+'" >'+new_url+'</a> triggers redirect to <a href="'+response.url+'" >'+response.url+"</a> (OK).", type));
+          done(this.createResult('URL', 'URL variation <b>'+what_case+'</b> trailingslash <a href="'+new_url+'" >'+new_url+'</a> triggers redirect to <a href="'+response.url+'" >'+response.url+"</a>.", type));
         }
         else {
           type = 'info';

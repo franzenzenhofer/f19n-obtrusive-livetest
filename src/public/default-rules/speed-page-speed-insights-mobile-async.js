@@ -23,7 +23,7 @@ function(page, callback){
         var mobile_speed_score=data.ruleGroups.SPEED.score;
         var mobile_usability_score=data.ruleGroups.USABILITY.score;
 
-        if (mobile_speed_score < 80) {
+        if (mobile_speed_score < 85) {
           type = "error";
           color = "orange";
         }

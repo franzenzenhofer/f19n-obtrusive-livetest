@@ -124,7 +124,6 @@ function(page,done)
                 
                 let selfies_selector = 'head > link[rel=alternate][hreflang="'+relalt.hreflang+'"][href="'+relalt.href+'"]';
                 let backreferences_selector = 'head > link[rel="alternate"][hreflang][href="'+canonical+'"]';
-                console.log(backreferences_selector);
 
                 if(self_reference===true)
                 {

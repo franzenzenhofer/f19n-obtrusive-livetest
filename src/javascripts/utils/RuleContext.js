@@ -46,12 +46,34 @@ export const fetch = (url, options, callback) => {
   window.parent.postMessage({ command: 'fetch', url, options, runId }, '*');
 };
 
-export const utf8TextLink = (str, anchor) =>
+/*export const utf8TextLink = (str, anchor) =>
 {
   //str = String(str).replace(/"/g, '\\"');
   str = str.trim();
   str = encodeURIComponent(str);
   return '<a href="data:text/plain;charset=utf-8,'+str+'" target="_blank" title="">'+anchor+'</a>';
+}*/
+
+export const utf8TextLink = (str, anchor) => //utf8TextLinkObjectUrl = (str, anchor) =>
+{
+  //str = String(str).replace(/"/g, '\\"');
+  str = str.trim();
+  let blob = new Blob([str], {type: "text/plain;charset=utf-8"});
+  let bloburl = URL.createObjectURL(blob);
+  //let str_enc = encodeURIComponent(str);
+  //return '<a href="data:text/plain;charset=utf-8,'+str+'" target="_blank" title="">'+anchor+'</a>';
+  //return '<a href="'+bloburl+'" onclick="this.href=\'data:text/plain;charset=utf-8,'+str_enc+'\'" target="_blank" title="">'+anchor+'</a
+
+  function htmlEscape(str) {
+    return str
+        .replace(/&/g, '&amp;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;');
+  }
+  let anchor_enc = htmlEscape(anchor);
+  return '<a href="'+bloburl+'" onclick="this.innerText=this.title" onmouseover="this.tempanchor=this.innerText" onmouseout="this.innerHTML=\''+anchor_enc+'\'" target="_blank" title=\'Right Click and Open Link in New Tab\'>'+anchor+'</a>';
 }
 
 export const dataUrlTextLink = (str, anchor) => {

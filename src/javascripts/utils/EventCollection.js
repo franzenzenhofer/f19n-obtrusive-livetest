@@ -236,8 +236,6 @@ export default class EventCollection {
          if (url) {break} */
        }
     }
-    console.log('getURL:')
-    console.log(url);
     return url;
   }
 

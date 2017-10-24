@@ -2,6 +2,9 @@ function(page, done) {
   var hh = page.getHttpHeaders("last");
   var hr = page.getRawHttpHeaders("last");
   var u = page.getURL("last");
+
+  if(!hh){done();return;} //wenn keine header, keine aussage
+
   var encoding = hh['content-encoding'] || "";
   if (encoding.indexOf('gzip')===-1)
   {

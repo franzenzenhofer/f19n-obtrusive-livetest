@@ -33,7 +33,7 @@ function(page, done) {
     }
     var href = x.getAttribute('href');
     //console.log(maindomain);
-    if(!href.includes('//')) { console.log('hey'); console.log(href); return true; }
+    if(!href.includes('//')) {  return true; }
     if(href.includes(maindomain)) {
       return partOfDomain(href,maindomain)
     }
