@@ -38,7 +38,7 @@ const toggleSite = (site, disabled) => {
     }
 
     chrome.storage.local.set({ sites: sites.join('\n'), mode: newMode }, () => {
-      chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
+      chrome.tabs.query({ active: true, lastFocusedWindow: true }, (tabs) => {
         chrome.tabs.update(tabs[0].id, { url: tabs[0].url });
         self.close();
       });
@@ -46,7 +46,7 @@ const toggleSite = (site, disabled) => {
   });
 };
 
-chrome.tabs.query({ active: true }, (res) => {
+chrome.tabs.query({ active: true, lastFocusedWindow: true }, (res) => {
   const { id, url } = res[0];
   activeForTab({ url, id }).then(({ hidden, disabled }) => {
     const location = document.createElement('a');
