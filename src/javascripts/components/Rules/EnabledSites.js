@@ -13,11 +13,11 @@ export default class EnabledSites extends Component {
           <div className="radios">
             <label>
               <input type="radio" onChange={() => onModeChange('ALL')} checked={mode === 'ALL'} />
-              Run on every page
+              Run on every page (default enabled).
             </label>
             <label>
               <input type="radio" onChange={() => onModeChange('CUSTOM')} checked={mode === 'CUSTOM'} />
-              Only run on enabled pages
+              Only run on whitelisted pages (default disabled).
             </label>
           </div>
 
