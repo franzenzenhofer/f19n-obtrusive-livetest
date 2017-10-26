@@ -3,6 +3,7 @@ import { filter, last, first } from 'lodash';
 export default class EventCollection {
   constructor(events) {
     this.events = events;
+    //console.log(chrome.extension.getURL('codeview.html'));
   }
 
   events() {
@@ -242,4 +243,5 @@ export default class EventCollection {
   getUrl(what) { return getURL(what); }
   //TODO
   //getProtokoll
+
 }

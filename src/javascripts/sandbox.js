@@ -8,6 +8,7 @@ const runRule = (name, rule, configuration, events, callback) => {
   try {
     const configuredRule = interpolateConfiguration(rule, configuration || {});
     const ruleFunc = eval(`(${configuredRule})`);
+    //RuleContext.codeviewurl = chrome.extension.getURL('codeview.html')
     ruleFunc.apply(RuleContext, [events, callback]);
   } catch (e) {
     callback(RuleContext.createResult('ERROR', `${e} in <b>${name}</b>`, 'warning'));

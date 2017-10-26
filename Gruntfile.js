@@ -89,6 +89,7 @@ module.exports = function(grunt) {
                   rules: "./src/javascripts/rules.js",
                   popup: "./src/javascripts/popup.js",
                 sandbox: "./src/javascripts/sandbox.js",
+              codeview: "./src/javascripts/codeview.js",
          content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",
           document_idle: "./src/javascripts/document_idle.js",

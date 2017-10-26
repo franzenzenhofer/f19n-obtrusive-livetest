@@ -55,7 +55,9 @@ export const fetch = (url, options, callback) => {
 }*/
 
 export const utf8TextLink = (str, anchor) => //utf8TextLinkObjectUrl = (str, anchor) =>
-{
+{ 
+  //  let codeviewurl = chrome.extension.getURL('codeview.html')
+  console.log(this.codeviewurl);
   //str = String(str).replace(/"/g, '\\"');
   str = str.trim();
   let blob = new Blob([str], {type: "text/plain;charset=utf-8"});
