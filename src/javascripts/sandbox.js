@@ -4,11 +4,11 @@ import EventCollection from './utils/EventCollection';
 import { interpolateConfiguration } from './utils/configurableRules';
 import * as RuleContext from './utils/RuleContext';
 
-const runRule = (name, rule, configuration, events, callback) => {
+const runRule = (name, rule, configuration, events, callback, ruleContextGlobals) => {
   try {
     const configuredRule = interpolateConfiguration(rule, configuration || {});
     const ruleFunc = eval(`(${configuredRule})`);
-    //RuleContext.codeviewurl = chrome.extension.getURL('codeview.html')
+    RuleContext.setGlobals(ruleContextGlobals);
     ruleFunc.apply(RuleContext, [events, callback]);
   } catch (e) {
     callback(RuleContext.createResult('ERROR', `${e} in <b>${name}</b>`, 'warning'));
@@ -16,7 +16,7 @@ const runRule = (name, rule, configuration, events, callback) => {
 };
 
 window.addEventListener('message', (event) => {
-  const { command, body, args, runId, name, configuration } = event.data;
+  const { command, body, args, runId, name, configuration, ruleContextGlobals } = event.data;
 
   const postReturn = (result = {}) => {
     const resultWithRunIdAndAction = Object.assign(result, { runId, name, command: 'ruleResult' });
@@ -24,6 +24,6 @@ window.addEventListener('message', (event) => {
   };
 
   if (command === 'runRule') {
-    runRule(name, body, configuration, new EventCollection(args), postReturn);
+    runRule(name, body, configuration, new EventCollection(args), postReturn, ruleContextGlobals);
   }
 });

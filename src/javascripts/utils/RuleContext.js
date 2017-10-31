@@ -5,6 +5,16 @@ import myRobotsParser from 'robots-parser';
 
 const callbacks = {};
 
+let globals = {};
+
+export const setGlobals = (object) => {
+  globals = object;
+};
+
+export const getGlobals = () => {
+  return globals;
+};
+
 export const createResult = (label, message, type = 'info', what = null) => {
   let result = { label: label, message: message, type: type, what: what };
 
