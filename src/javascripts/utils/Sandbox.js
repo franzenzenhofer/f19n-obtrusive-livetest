@@ -9,6 +9,7 @@ const callbacks = {};
 const getRuleContextGlobals = () => {
   return {
     codeviewUrl: chrome.extension.getURL('codeview.html'),
+    rulesUrl: chrome.extension.getURL('rules.html'),
   };
 };
 

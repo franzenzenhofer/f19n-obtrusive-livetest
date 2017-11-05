@@ -20,7 +20,7 @@
     "pages": ["sandbox.html"]
   },
   "web_accessible_resources": [
-    "code-view.html",
+    "codeview.html",
     "panel.html",
     "rules.html",
     "sandbox.html",
