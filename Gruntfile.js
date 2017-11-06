@@ -1,3 +1,5 @@
+var path = require('path');
+
 module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON("package.json"),
@@ -47,6 +49,7 @@ module.exports = function(grunt) {
           "<%= grunt.config.get('buildDir') %>/css/application.css": "src/stylesheets/application.sass",
           "<%= grunt.config.get('buildDir') %>/css/panel.css": "src/stylesheets/panel.sass",
           "<%= grunt.config.get('buildDir') %>/css/rules.css": "src/stylesheets/rules.sass",
+          "<%= grunt.config.get('buildDir') %>/css/popup.css": "src/stylesheets/popup.sass",
           "<%= grunt.config.get('buildDir') %>/css/content_styles.css": "src/stylesheets/content_styles.sass"
         }
       }
@@ -84,25 +87,26 @@ module.exports = function(grunt) {
              background: "./src/javascripts/background.js",
                   panel: "./src/javascripts/panel.js",
                   rules: "./src/javascripts/rules.js",
+                  popup: "./src/javascripts/popup.js",
                 sandbox: "./src/javascripts/sandbox.js",
+              codeview: "./src/javascripts/codeview.js",
          content_script: "./src/javascripts/content_script.js",
            document_end: "./src/javascripts/document_end.js",
           document_idle: "./src/javascripts/document_idle.js",
           document_start: "./src/javascripts/document_start.js",
         },
         output: {
-          path: "<%= grunt.config.get('buildDir') %>/js",
+          path: path.resolve(__dirname, "./<%= grunt.config.get('buildDir') %>/js"),
           filename: "[name].js",
         },
         resolve: {
-          modulesDirectories: [
+          modules: [
             'javascripts/containers',
             'javascripts/components',
             'javascripts/utils',
             'node_modules',
           ],
           extensions: [
-            '',
             '.js',
             '.jsx',
           ],
@@ -137,17 +141,30 @@ module.exports = function(grunt) {
   });
 
   grunt.registerTask("reloadChrome", "reload extension", function() {
-    var sys = require("sys");
     var exec = require("child_process").exec;
     var done = this.async();
-    return exec("chrome-cli list tabs", function(error, stdout, stderr) {
+    return exec("chrome-cli list links", function(error, stdout, stderr) {
       var tabId, _ref;
-      if (tabId = (_ref = stdout.match(/\[(\d+:)?([\d]+)\] Extensions/)) != null ? _ref[2] : void 0) {
+
+      var openExtensionWindows = stdout.match(/(chrome-extension:\/\/flklgoghmajjcajlpecnkgdheicooaae.+)/g);
+
+      if (tabId = (_ref = stdout.match(/\[(\d+:)?([\d]+)\] chrome:\/\/extensions\/?/)) != null ? _ref[2] : void 0) {
         return exec("chrome-cli reload -t " + tabId, function(error, stdout, stderr) {
+          for (var urlIndex in openExtensionWindows) {
+            return exec('chrome-cli open ' + openExtensionWindows[urlIndex], function() {
+              return done();
+            });
+          }
+
           return done();
         });
       } else {
         return exec("chrome-cli open chrome://extensions && chrome-cli reload", function(error, stdout, stderr) {
+          for (var urlIndex in openExtensionWindows) {
+            return exec('chrome-cli open ' + openExtensionWindows[urlIndex], function() {
+              return done();
+            });
+          }
           return done();
         });
       }

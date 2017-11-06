@@ -6,7 +6,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import Panel from './components/Panel/Panel';
-
+import { activeForTab } from './utils/activeForTab';
 import resultStoreKey from './utils/resultStoreKey';
 
 const FRAME_TEMPLATE = `
@@ -21,8 +21,7 @@ const FRAME_TEMPLATE = `
   </html>
 `;
 
-
-//this  defines the area where the dragevent can start
+// this  defines the area where the dragevent can start
 const $appRoot = $('<style>#f19n-panel-root:before { content: " "; cursor: move; position: absolute; left: 0; top: 0; width: calc(100% - 90px); height: 20px; background: transparent;}</style><div id="f19n-panel-root"></div>').css({
   position: 'fixed',
   width: '350px',
@@ -31,15 +30,6 @@ const $appRoot = $('<style>#f19n-panel-root:before { content: " "; cursor: move;
   borderColor: 'lightgray',
   border: '1px solid',
 });
-
-
-const check = (sites, url) => {
-  const entry = sites.reverse().find((l) => {
-    const regexp = `\^${l}\$`.replace(/\*/g, '[^ ]*').replace('!', '');
-    return url.match(new RegExp(regexp));
-  });
-  return entry ? (entry.match(/^!.+/) !== null ? false : true) : false;
-};
 
 const getTab = (callback) => {
   chrome.runtime.sendMessage('tabIdPls', (response) => {
@@ -54,15 +44,6 @@ const handleClosePanelRequest = () => {
       chrome.storage.local.set({ 'hidden-panels': hiddenPanels });
     });
   });
-};
-
-const panelShouldBeVisible = (data, tabId) => {
-  const hiddenPanels = data['hidden-panels'] || [];
-  const enabledSites = data.sites;
-  const enabledSite = check(enabledSites.split('\n'), document.location.href);
-  let hidden = hiddenPanels.indexOf(tabId) !== -1;
-  hidden = hidden || !enabledSite;
-  return !hidden;
 };
 
 const getAppRootElement = () => {
@@ -156,7 +137,6 @@ const initializePanel = ({ position, host }) => {
   });
 
   $(window).on('resize', () => {
-    const height = $(getAppRootElement()).find('iframe').get(0).contentDocument.querySelector('#panel').offsetHeight;
     $(getAppRootElement()).css({ height: Math.min(window.innerHeight - 20, getPanelIFrameHeight()) });
     setLimit(draggablePanel);
     snapPanel(draggablePanel);
@@ -168,17 +148,21 @@ const init = () => {
   setPrevWindowSize();
   chrome.storage.local.get((data) => {
     getTab(({ url, tabId }) => {
-      const host = (new URL(url)).host;
-      const visible = panelShouldBeVisible(data, tabId);
-      const position = getPanelPosition(data, host);
-      const onMount = () => {
-        initializePanel({ position, host });
-      };
-      if (visible) {
-        showPanel(url, tabId, onMount);
-      } else {
-        hidePanel();
-      }
+      activeForTab({ id: tabId, url }).then(({ hidden, disabled }) => {
+        const host = (new URL(url)).host;
+        const visible = !hidden && !disabled;
+        const position = getPanelPosition(data, host);
+        const onMount = () => {
+          initializePanel({ position, host });
+        };
+        if (visible) {
+          chrome.runtime.sendMessage({ event: 'requestSetIcon', data: { tabId, path: chrome.extension.getURL('images/icon.png') } });
+          showPanel(url, tabId, onMount);
+        } else {
+          chrome.runtime.sendMessage({ event: 'requestSetIcon', data: { tabId, path: chrome.extension.getURL('images/icon-inactive.png') } });
+          hidePanel();
+        }
+      });
     });
   });
 };

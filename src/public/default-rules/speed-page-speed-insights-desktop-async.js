@@ -26,7 +26,7 @@ function(page, callback){
 
         var desktop_speed_score=data.ruleGroups.SPEED.score;
 
-        if (desktop_speed_score < 80) {
+        if (desktop_speed_score < 85) {
           type = "error";
           color = "orange";
         }

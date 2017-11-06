@@ -2,8 +2,16 @@ function(page, done){
   var hh = page.getHttpHeaders("last");
   //console.log(hh);
   //console.log(hh['vary']);
+  if(hh)
+  {
   var vary = hh['vary'] || "";
   var isvary = function(){if(vary.toLowerCase().indexOf("agent")===-1){ return false} return true}();
+  }
+  else
+  {
+    var vary = "";
+    var isvary = false;
+  }
   var u = page.getURL("last");
   var idle_dom = page.getIdleDom();
   var medias = idle_dom.querySelectorAll("link[rel=alternate][media][href]");

@@ -1,0 +1,76 @@
+@import "base"
+@import "button"
+
+html
+  box-sizing: border-box
+
+*, *:before, *:after
+  box-sizing: inherit
+
+html, body
+  min-width: 300px
+  min-height: 250px
+
+body
+  background: $backgroundColorLight
+  border:none !important
+  line-height: 1.25
+  font-size: 75%
+
+#app
+  width: 100% !important
+  height: 100%
+  padding: 1rem
+
+#app header
+  background: $backgroundColorDark
+  border-bottom: 1px solid $greyAccent
+  display: flex
+  align-items: center
+  padding: .5rem
+  margin: -1rem -1rem 0 -1rem
+
+#app header h1 
+  font-size: .85rem
+  letter-spacing: -.5px
+
+#app .logo 
+  width: 1rem
+  height: 1rem
+  margin-right: .5rem
+
+#app > div 
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+#app > div > * + * 
+  margin-top: .5rem
+
+#app > div *
+  white-space: nowrap
+
+#app h3
+  font-size: .8rem
+
+ul
+  margin-left: 1rem
+  padding: 0
+
+li + li
+  margin-top: .25rem
+
+.popup-actions
+  display: flex;
+  background: $backgroundColorDark
+  border-top: 1px solid $greyAccent
+  padding: .5rem
+  margin: -1rem -1rem -1rem -1rem
+
+.Button
+  white-space: nowrap
+  flex-grow: 1
+
+.Button + .Button
+  margin-left: .5rem
