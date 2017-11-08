@@ -14,7 +14,8 @@ export default {
 !*://*facebook.com*
 !*/wp-admin*
 !*\\.xml
-!*\\.pdf`,
+!*\\.pdf
+!chrome-devtools://*`,
     panelPosition: [10, 10],
   },
 };
