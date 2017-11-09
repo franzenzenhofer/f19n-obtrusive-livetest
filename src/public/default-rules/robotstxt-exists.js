@@ -4,7 +4,7 @@ function (page, done) {
 	if(!url){ done(); return; }
 	let u = new URL(url);
 	let r = u.origin+'/robots.txt'
-	let rl = "<a href='"+r+"' target='_blank'>"+u.origin+'/<b>robots.txt</b>'+"</a>";
+	let rl = "<a href='"+r+"' target='_blank'>"+u.origin+'/robots.txt'+"</a>";
 	let msg = "";
 	let type = "info";
 	this.fetch(r, { responseFormat: 'text' }, (response) => {
@@ -19,25 +19,25 @@ function (page, done) {
       	{
       		if((response.body.includes('<div')) || (response.body.includes('<body')) || (response.body.includes('<DIV')) || (response.body.includes('href="')) || (response.body.includes("href='")))
       		{
-      			type="error"
-      			msg= rl+"returns HTTP "+response.status+", but looks like it is an HTML page."
+      			type="error";
+      			msg= rl+"returns HTTP "+response.status+", but looks like it is an HTML page.";
       		}
       		else
       		{
-      			type="info"
-      			msg=rl+" returns HTTP "+response.status
+      			type="info";
+      			msg=rl+" returns HTTP "+response.status;
       		}
       	}
       	else
       	{
       		type="warning";
-      		msg=rl+" returns HTTP "+response.status
+      		msg=rl+" returns HTTP "+response.status;
       	}
       }
       if(msg!="")
 	  {
-	  	 msg = msg + " <a href='https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&authuser=0&siteUrl="+u.origin+"/' target='_blank'>GSC</a>"
-		 done(this.createResult('META', msg, type));
+	  	 msg = msg + " <a href='https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&authuser=0&siteUrl="+u.origin+"/' target='_blank'>GSC</a>";
+		 done(this.createResult('SITE', msg, type));
 	  }
 	  done();
 	});
