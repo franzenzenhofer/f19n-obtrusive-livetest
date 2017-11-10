@@ -4,6 +4,8 @@ export default {
 !chrome-extension://*
 !chrome-search://*
 !chrome://*
+!chrome-devtools://*
+!devtools://*
 !about:*
 !blob:*
 !file:*
@@ -15,7 +17,7 @@ export default {
 !*/wp-admin*
 !*\\.xml
 !*\\.pdf
-!chrome-devtools://*`,
+!undefined`,
     panelPosition: [10, 10],
   },
 };

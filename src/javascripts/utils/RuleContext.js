@@ -2,7 +2,7 @@
 
 import { isNumber } from 'lodash';
 //import myRobotsParser from 'robots-parser';
-import robotsTxt from 'robotstxt';
+import _robotsTxt from 'robotstxt';
 
 const callbacks = {};
 
@@ -35,7 +35,11 @@ export const waitForAsync = (message = 'Waiting for async rule.') => {
 //https://www.npmjs.com/package/robots-parser
 //export const robotsParser = myRobotsParser;
 
-export const robtstxt = robotsTxt;
+export const robotsTxt = function(useragent ="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+{
+  let blank_robots_txt = _robotsTxt(null, useragent);
+  return blank_robots_txt;
+}
 
 export const htmlEntitiesEncode = (str) => {
   return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -178,6 +182,10 @@ export const allNodesToString = (...stuffs) =>
 export const partialCodeLink = (...nodes) => {
 	var str = allNodesToString(...nodes);
   return '     '+utf8TextLink(str, '<span class="show-partial-source Button Button--haptic Button--inline">&lt;/&gt;</span>');
+}
+
+export const partialStringifyLink = (obj) => {
+  return '     '+utf8TextLink(JSON.stringify(obj, null, 2), '<span class="show-partial-source Button Button--haptic Button--inline">&lt;/&gt;</span>');
 }
 
 export const partialTextLink = (anchor, ...nodes) => {

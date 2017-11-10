@@ -7,8 +7,11 @@ function (page, done) {
 	let rl = "<a href='"+r+"' target='_blank'>"+u.origin+'/robots.txt'+"</a>";
 	let msg = "";
 	let type = "info";
+      //TODO: set the robots.txt body of that domain in a global map so to prevent unnecessary fetched
 	this.fetch(r, { responseFormat: 'text' }, (response) => {
-	if(response.redirected == false )
+	//if(response.redirected == false )
+      //even a redirected sitemap can be valid
+      if(true)
       {
       	if(response.status===200)
       	{

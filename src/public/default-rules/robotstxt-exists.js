@@ -7,6 +7,7 @@ function (page, done) {
 	let rl = "<a href='"+r+"' target='_blank'>"+u.origin+'/robots.txt'+"</a>";
 	let msg = "";
 	let type = "info";
+          //TODO: set the robots.txt body of that domain in a global map so to prevent unnecessary fetched
 	this.fetch(r, { responseFormat: 'text' }, (response) => {
 	  if(response.redirected == true )
       {
@@ -22,10 +23,16 @@ function (page, done) {
       			type="error";
       			msg= rl+"returns HTTP "+response.status+", but looks like it is an HTML page.";
       		}
+                  else if(response.body.trim()==="")
+                  {
+                        type="info";
+                        msg=rl+" returns HTTP "+response.status+" but no content (<b>blank robots.txt</b>)";  
+                  }
       		else
       		{
       			type="info";
       			msg=rl+" returns HTTP "+response.status;
+                        //TODO ad stats about how much rules, user agents and so on
       		}
       	}
       	else
