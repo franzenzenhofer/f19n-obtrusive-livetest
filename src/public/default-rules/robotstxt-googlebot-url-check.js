@@ -7,7 +7,7 @@ function(page, done) {
 		let type = "note";
 		let urls_tested = 0;
 		let is_done = false;
-		let max_wait_time = 10000;
+		let max_wait_time = 5000;
 
 		var checkForEndgame = function()
 		{
@@ -59,7 +59,9 @@ function(page, done) {
 						catch(e)
 						{
 							//wehardcrash
-							console.log(e);done();return;
+							console.log(e);
+							done(that.createResult('URL', 'Could not finish robots.txt disallow check.', 'warning'));
+							return;
 						}
 						Robotstxt.on('ready', function (gk) 
 						{
