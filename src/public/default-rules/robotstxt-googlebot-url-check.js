@@ -6,6 +6,8 @@ function(page, done) {
 		let msgA = [];
 		let type = "note";
 		let urls_tested = 0;
+		let is_done = false;
+		let max_wait_time = 10000;
 
 		var checkForEndgame = function()
 		{
@@ -21,6 +23,7 @@ function(page, done) {
 
 		var endgame = function()
 		{
+			is_done = true;
 			if(msgA.length>0)
 			{
 				msg = msgA.join('<br>');
@@ -50,7 +53,14 @@ function(page, done) {
 					   (response.body.includes('USER-AGENT:')) ||
 					   (response.body.includes('User-Agent:')))
 	      			{
-						let Robotstxt = that.robotsTxt('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+	      				try{
+							var Robotstxt = that.robotsTxt('Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)');
+						}
+						catch(e)
+						{
+							//wehardcrash
+							console.log(e);done();return;
+						}
 						Robotstxt.on('ready', function (gk) 
 						{
 	    					if(gk.isDisallowed(u))
@@ -74,5 +84,5 @@ function(page, done) {
 				} else { urls_tested++; checkForEndgame(); } //else //no valid robots.txt
 			});
 		}
-
+	setTimeout(function(){if(!is_done){endgame();}},max_wait_time);
 }

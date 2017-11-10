@@ -144,9 +144,7 @@ export const nodeToString = (stuff) =>
   };
   if(stuff !== null && typeof stuff === 'object')
   {
-    //console.log('stuff');
-    //console.log(stuff);
-    //console.log(Object.keys(stuff));
+
     var stuff_keys = Object.keys(stuff);
     stuff_keys.forEach(function(k)
     {
@@ -157,15 +155,11 @@ export const nodeToString = (stuff) =>
   return "Don't know how to transform this data into a data URL!";
 };
 
-//show only beginning tag tag = elem.innerHTML ? elem.outerHTML.slice(0,elem.outerHTML.indexOf(elem.innerHTML)) : elem.outerHTML;
 
-//console.log(nodeToString(document.querySelectorAll('h1')));
-//console.log(nodeToString('test'));
 
 export const allNodesToString = (...stuffs) =>
 {
-  //console.log('allnodestostring');
-	//console.log(stuffs);
+
   if(!Array.isArray(stuffs))
   {
     stuffs = Array.from(stuffs);

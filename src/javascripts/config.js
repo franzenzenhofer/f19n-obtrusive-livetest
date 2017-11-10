@@ -17,7 +17,8 @@ export default {
 !*/wp-admin*
 !*\\.xml
 !*\\.pdf
-!undefined`,
+!undefined
+`,
     panelPosition: [10, 10],
   },
 };
