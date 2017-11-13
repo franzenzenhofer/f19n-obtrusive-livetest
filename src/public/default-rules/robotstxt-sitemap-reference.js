@@ -30,7 +30,7 @@ function (page, done) {
       }
       if(msg!="")
 	  {
-	  	 msg = msg + " <a href='https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&authuser=0&siteUrl="+u.origin+"/' target='_blank'>GSC</a>"
+	  	 msg = msg + " <a href='https://www.google.com/webmasters/tools/sitemap-list?hl=en&siteUrl="+u.origin+"/#MAIN_TAB=1&CARD_TAB=-1' target='_blank'>GSC</a>"
 		 done(this.createResult('SITE', msg, type));return;
 	  }
 	  done();
