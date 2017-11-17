@@ -1,7 +1,7 @@
-function(page, callback){
+function(page, done){
   //warning the mobile friendly API is highly unstable (lots of 429 and 502)
   var that = this;
-  var key = '';//<-- add your Google API key here
+  var key = '%GOOGLE_API_KEY%';//<-- add your Google API key, get one here https://developers.google.com/webmaster-tools/search-console-api/v1/configure 
   var url2test = page.getURL('first');
   var mft ='https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run?key='+key;
   var mft_link="https://search.google.com/search-console/mobile-friendly?hl=en&url="+url2test;
@@ -16,16 +16,15 @@ function(page, callback){
 		      url: url2test
 	   })
   }).then(function(response){
-    console.log(response);
     if(response.status == 200)
     {
       response.json().then(function(data){
         if(data.mobileFriendliness=="MOBILE_FRIENDLY")
         {
-          callback(that.createResult('MOBILE', "Page is <a href='"+mft_link+"' target='_blank'>Mobile Friendly</a>.", "info"));
+          done(that.createResult('MOBILE', "Page is <a href='"+mft_link+"' target='_blank'>Mobile Friendly</a>.", "info"));
         }
         else {
-          callback(that.createResult('MOBILE', "Page is <a href='"+mft_link+"' target='_blank'>"+data.mobileFriendliness+"</a>.", "error"));
+          done(that.createResult('MOBILE', "Page is <a href='"+mft_link+"' target='_blank'>"+data.mobileFriendliness+"</a>.", "error"));
         }
       });
     }
@@ -37,11 +36,11 @@ function(page, callback){
       //everything else
       //TODO a lowest priority sorting for failed tests
       console.log(response);
-      callback(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> unfinished! Response Status: HTTP "+response.status, "unfinished"));
+      done(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> unfinished! Response Status: HTTP "+response.status, "unfinished"));
     }
   })
   .catch(function(err){
-    callback(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> unfinished! "+err, "unfinished"));
+    done(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> unfinished! "+err, "unfinished"));
     });
   return this.waitForAsync();
 }
