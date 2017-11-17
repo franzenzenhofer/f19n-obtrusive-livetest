@@ -1,6 +1,6 @@
 {
   "name": "f19n-obtrusive-livetest",
-  "version": "0.0.6",
+  "version": "0.1.0",
   "license": "contributor and eductional license",
   "repository": "https://github.com/franzenzenhofer/f19n-obtrusive-livetest#",
   "scripts": {
@@ -48,6 +48,7 @@
     "react-frame-component": "^0.6.5",
     "react-highlight": "^0.9.0",
     "react-modal": "^1.2.1",
+    "simple-functional-robots-txt-parser": "franzenzenhofer/simple-functional-robots-txt-parser",
     "robotstxt": "franzenzenhofer/robotstxt"
   }
 }

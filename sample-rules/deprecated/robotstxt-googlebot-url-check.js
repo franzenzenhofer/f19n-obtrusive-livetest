@@ -13,17 +13,18 @@ function(page, done) {
 		{
 			if(urls_tested===urls.length)
 	    	{
+	    		is_done = true;
 	    		endgame();
 	    	}
 	    	else
 	    	{
-	    		console.log('URLS TESTEd'+urls_tested);
+	    		//console.log('URLS TESTEd'+urls_tested);
 	    	}
 		}
 
 		var endgame = function()
 		{
-			is_done = true;
+			
 			if(msgA.length>0)
 			{
 				msg = msgA.join('<br>');
@@ -31,7 +32,7 @@ function(page, done) {
 			}
 			else
 			{
-				done();return;
+				done(that.createResult('URL', 'Could not test URL for robots.txt complience - V1', 'unfinished'));return;
 			}
 		}
 
@@ -60,7 +61,7 @@ function(page, done) {
 						{
 							//wehardcrash
 							console.log(e);
-							done(that.createResult('URL', 'Could not finish robots.txt disallow check.', 'warning'));
+							done(that.createResult('URL', 'Could not finish robots.txt disallow check.', 'unfinished'));
 							return;
 						}
 						Robotstxt.on('ready', function (gk) 

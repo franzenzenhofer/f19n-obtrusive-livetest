@@ -4,6 +4,8 @@ import { isNumber } from 'lodash';
 //import myRobotsParser from 'robots-parser';
 import _robotsTxt from 'robotstxt';
 
+import simpleRobotParser from 'simple-functional-robots-txt-parser';
+
 const callbacks = {};
 
 let globals = {};
@@ -39,6 +41,11 @@ export const robotsTxt = function(useragent ="Mozilla/5.0 (compatible; Googlebot
 {
   let blank_robots_txt = _robotsTxt(null, useragent);
   return blank_robots_txt;
+}
+
+export const simpleRobotTxt = (txt,url,ua="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")=>
+{
+  return simpleRobotParser(txt,url,ua);
 }
 
 export const htmlEntitiesEncode = (str) => {
@@ -178,9 +185,12 @@ export const partialCodeLink = (...nodes) => {
   return '     '+utf8TextLink(str, '<span class="show-partial-source Button Button--haptic Button--inline">&lt;/&gt;</span>');
 }
 
+
 export const partialStringifyLink = (obj) => {
   return '     '+utf8TextLink(JSON.stringify(obj, null, 2), '<span class="show-partial-source Button Button--haptic Button--inline">&lt;/&gt;</span>');
 }
+
+export const stringifyLink = partialStringifyLink;
 
 export const partialTextLink = (anchor, ...nodes) => {
 	var str = allNodesToString(...nodes);
