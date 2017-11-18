@@ -176,7 +176,13 @@ export default class EventCollection {
     }
     if (!onHeadersReceivedEvent) { return false; }
 
-    var { statusCode } = onHeadersReceivedEvent;
+    let { statusCode } = onHeadersReceivedEvent;
+    let headers = onHeadersReceivedEvent.responseHeaders;
+    let real_statuscode = parseInt(headers['status'],10);
+    if(real_statuscode>99&&real_statuscode<600)
+    {
+      return real_statuscode;
+    }
     return statusCode;
   }
 
