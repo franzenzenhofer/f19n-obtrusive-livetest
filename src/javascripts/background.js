@@ -146,7 +146,17 @@ const findOrCreateCollector = (tabId) => {
   return collector[tabId];
 };
 
+chrome.webNavigation.onHistoryStateUpdated.addListener((data) => {
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
+    if (data.frameId === 0) {
+      findOrCreateCollector(id).pushEvent(data, 'onHistoryStateUpdated');
+    }
+  });
+}, filter);
+
 chrome.webNavigation.onBeforeNavigate.addListener((data) => {
+  //cleanup();
   const { tabId: id, url } = data;
   ifPanelOpenForTab({ id, url }, () => {
     if (data.frameId === 0) {
@@ -178,6 +188,20 @@ chrome.webRequest.onBeforeRequest.addListener((data) => {
   });
 }, filter);
 
+chrome.webRequest.onBeforeRedirect.addListener((data) => {
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
+    findOrCreateCollector(id).pushEvent(data, 'onBeforeRedirect');
+  });
+}, filter);
+
+chrome.webRequest.onResponseStarted.addListener((data) => {
+  const { tabId: id, url } = data;
+  ifPanelOpenForTab({ id, url }, () => {
+    findOrCreateCollector(id).pushEvent(data, 'onResponseStarted');
+  });
+}, filter);
+
 chrome.webRequest.onHeadersReceived.addListener((data) => {
   const { tabId: id, url, responseHeaders } = data;
   ifPanelOpenForTab({ id, url }, () => {
@@ -202,6 +226,20 @@ chrome.webRequest.onCompleted.addListener((data) => {
 chrome.tabs.onRemoved.addListener(() => {
   cleanup();
 });
+
+chrome.tabs.onActivated.addListener(() => {
+  cleanup();
+});
+
+
+/*chrome.tabs.onUpdated.addListener((a,b,c,d) => {
+  //cleanup();
+  if(b&&b.status&&b.status!=='loading')
+  {
+    cleanup();
+  }
+  
+});*/
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
   if (request === 'tabIdPls') {
@@ -247,6 +285,9 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
       findOrCreateCollector(id).pushEvent(request.data, 'windowPerformance');
     });
   }
+
+  //onHistoryStateUpdated
+
 });
 
 

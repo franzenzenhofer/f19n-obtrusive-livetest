@@ -6,10 +6,16 @@ import * as RuleContext from './utils/RuleContext';
 
 const runRule = (name, rule, configuration, events, callback, ruleContextGlobals) => {
   try {
-    const configuredRule = interpolateConfiguration(rule, configuration || {});
-    const ruleFunc = eval(`(${configuredRule})`);
-    RuleContext.setGlobals(ruleContextGlobals);
-    ruleFunc.apply(RuleContext, [events, callback]);
+
+    //
+    function soThatThisWorksForArrowRules(){
+      const configuredRule = interpolateConfiguration(rule, configuration || {});
+      const ruleFunc = eval(`(${configuredRule})`);
+      RuleContext.setGlobals(ruleContextGlobals);
+      ruleFunc.apply(RuleContext, [events, callback]);
+    };
+    soThatThisWorksForArrowRules.apply(RuleContext);
+
   } catch (e) {
     callback(RuleContext.createResult('ERROR', `${e} in <b>${name}</b>`, 'warning'));
   }

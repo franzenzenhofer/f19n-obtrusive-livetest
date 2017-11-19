@@ -13,4 +13,5 @@ function(page,done)
 		let what = 'idle';
 		done(that.createResult('DOM', text, type, what)); return;
 	}
+	done();return;
 }

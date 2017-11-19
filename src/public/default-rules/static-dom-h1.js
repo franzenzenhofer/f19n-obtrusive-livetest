@@ -1,6 +1,9 @@
 function(page, done) {
+  console.log('h1 h1');
   var dom = page.getStaticDom();
   var h1 = dom.querySelectorAll('h1');
+  console.log('h1');
+  console.log(h1);
   if (h1.length>0) {
     if(h1.length === 1) {
       if(h1[0].innerText.trim()!='') {
