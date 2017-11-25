@@ -11,7 +11,8 @@ Chrome App Store: https://chrome.google.com/webstore/detail/f19n-obstrusive-live
 
 It's a sandboxed, extendable testing chrome extension and framework! It runs pre-defined and custom tests on each page that you visit.
 
-![Sample Output](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/promotion/sample-output.png)
+![Sample Output](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/promotion/sample-output-2.png)
+
 
 ### What does it do?
 
