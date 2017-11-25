@@ -21,12 +21,16 @@ It has multiple pre-defined rules currently targeting SEO and webperformance bes
 
 See  [/src/public/default-rules](/src/public/default-rules) for a list of what currently gets tested.
 
-Additional it can call third party REST-APIs from within these rules.
+See [/sample-rules/sample.page-object-25112017.json](/sample-rules/sample-page-object-25112017.json) to see what data of the pageload lifecycle gets collected.
 
 
 ### What can it do?
 
 Everything! You can write your own tests! Anything that happens in the browser during the pageload and render lifecycle can be inspected and dissected!
+
+Additional it can call third party REST-APIs from within these rules. Even ignoring CORS headers or normal fetch restrictions. 
+
+Also you can fetch normale pages and other ressources via fetch, too. I.e.: a rule executed on one page can fetch other URLs of the same domain or from other third party domains.
 
 ## Development
 
@@ -63,7 +67,9 @@ Open [chrome://extensions/](chrome://extensions/) and point the installation of 
 
 The production ready rules can be found within [/src/public/default-rules](/src/public/default-rules)
 
-Inside [/sample-rules](/sample-rules) are some sample rules plus the documentation how to write your own rules.
+Inside [/sample-rules](/sample-rules) are some sample rules plus the documentation how to write your own rules. The rules can then be added to your application on the setting page of the extension.
+
+See [/sample-rules/debug-hello-world.js](/sample-rules/debug-hello-world.js) for a really simple starting point (and [/sample-rules/debug-hello-world-with-comments.js](/sample-rules/debug-hello-world-with-comments.js) for some explaination) 
 
 
 ## License

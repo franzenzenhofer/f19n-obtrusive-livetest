@@ -2,7 +2,7 @@
 
 import { isNumber } from 'lodash';
 //import myRobotsParser from 'robots-parser';
-import _robotsTxt from 'robotstxt';
+//import _robotsTxt from 'robotstxt';
 
 import simpleRobotParser from 'simple-functional-robots-txt-parser';
 
@@ -30,18 +30,18 @@ export const createResult = (label, message, type = 'info', what = null) => {
   return result;
 };
 
-export const waitForAsync = (message = 'Waiting for async rule.') => {
+/*export const waitForAsync = (message = 'Waiting for async rule.') => {
   return createResult('async', message, 'pending');
-}
+}*/
 
 //https://www.npmjs.com/package/robots-parser
 //export const robotsParser = myRobotsParser;
 
-export const robotsTxt = function(useragent ="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
+/*export const robotsTxt = function(useragent ="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")
 {
   let blank_robots_txt = _robotsTxt(null, useragent);
   return blank_robots_txt;
-}
+}*/
 
 export const simpleRobotTxt = (txt,url,ua="Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)")=>
 {
