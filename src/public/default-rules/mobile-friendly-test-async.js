@@ -42,5 +42,4 @@ function(page, done){
   .catch(function(err){
     done(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> unfinished! "+err, "unfinished"));
     });
-  return this.waitForAsync();
 }
