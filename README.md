@@ -9,18 +9,18 @@ Chrome App Store: https://chrome.google.com/webstore/detail/f19n-obstrusive-live
 
 ### What is it?
 
-It's a sandboxed, extendable testing chrome extension and framework! It runs pre-defined and custom tests on each page that you visit.
+It's a sandboxed, extendable live-testing chrome extension and framework! It runs pre-defined and custom tests on each page that you visit and delivers direct visual feedback.
 
 ![Sample Output](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/promotion/sample-output-2.png)
+
+It has multiple pre-defined rules currently targeting SEO, webperformance and social media best practices.
 
 
 ### What does it do?
 
 The extension collects the whole lifecycle of a pageload (http-headers, onpageload, onDOMready, ...) in an object, then it executes javascript functions against this object and returns testing feedback.
 
-It has multiple pre-defined rules currently targeting SEO and webperformance best practices.
-
-See  [/src/public/default-rules](/src/public/default-rules) for a list of what currently gets tested.
+See [/src/public/default-rules](/src/public/default-rules) for a list of what currently tested by default. All rules can be inspeced, disabled/enabled. New default rules are regularly added. 
 
 See [/sample-rules/sample.page-object-25112017.json](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/sample-rules/sample-page-object-25112017.json) to see what data of the pageload lifecycle gets collected.
 
@@ -31,9 +31,13 @@ Everything! You can write your own tests! Anything that happens in the browser d
 
 Additional it can call third party REST-APIs from within these rules. Even ignoring CORS headers or normal fetch restrictions. 
 
-Also you can fetch normale pages and other ressources via fetch, too. I.e.: a rule executed on one page can fetch other URLs of the same domain or from other third party domains.
+Also you can fetch normale pages and other ressources via fetch, too. I.e.: a rule executed on one page can fetch other URLs of the same domain or from other third party domains. See [/default-rules/robotstxt-googlebot-url-check-v2.js](f19n-obtrusive-livetest/src/public/default-rules/robotstxt-googlebot-url-check-v2.js) for a rule that fetches the robots.txt of the domain, and then tests if the currently tested URL is allowed/disallowed.
 
 ## Development
+
+For developing your own rule you can just install the [Extension via the Chrome App Store](https://chrome.google.com/webstore/detail/f19n-obstrusive-live-test/jbnaibigcohjfefpfocphcjeliohhold?hl=en).
+
+If you want to digg deeper, well clone this rep. and then: 
 
 ### Install all dependencies
 
@@ -71,6 +75,8 @@ The production ready rules can be found within [/src/public/default-rules](/src/
 Inside [/sample-rules](/sample-rules) are some sample rules plus the documentation how to write your own rules. The rules can then be added to your application on the setting page of the extension.
 
 See [/sample-rules/debug-hello-world.js](/sample-rules/debug-hello-world.js) for a really simple starting point (and [/sample-rules/debug-hello-world-with-comments.js](/sample-rules/debug-hello-world-with-comments.js) for some explaination) 
+
+Also [/sample-rules/debug-stringify-page-object.js](/sample-rules/debug-stringify-page-object.js) gices you an easy way to inspect the page object (the collected information about the page lifecycle) of every page you visit.
 
 
 ## License
