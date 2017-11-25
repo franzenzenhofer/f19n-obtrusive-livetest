@@ -22,7 +22,7 @@ It has multiple pre-defined rules currently targeting SEO and webperformance bes
 
 See  [/src/public/default-rules](/src/public/default-rules) for a list of what currently gets tested.
 
-See [/sample-rules/sample.page-object-25112017.json](/sample-rules/sample-page-object-25112017.json) to see what data of the pageload lifecycle gets collected.
+See [/sample-rules/sample.page-object-25112017.json](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/sample-rules/sample-page-object-25112017.json) to see what data of the pageload lifecycle gets collected.
 
 
 ### What can it do?
