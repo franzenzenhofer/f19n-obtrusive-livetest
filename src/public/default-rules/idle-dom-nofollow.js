@@ -7,7 +7,7 @@
 	let type = "warning"; 
 	let what = "idle";
 
-	let selector = "*[rel=nofollow]";
+	let selector = "*[rel*=nofollow]";
 
 	let dom = page.getIdleDom();
 	let n = dom.querySelectorAll(selector);
