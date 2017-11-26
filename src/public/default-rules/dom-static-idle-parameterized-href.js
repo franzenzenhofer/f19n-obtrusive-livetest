@@ -72,7 +72,7 @@ function(page, done) {
   }
   else {
     //todo: better message
-    msg = static_paramstuff .length+" parameterized internal ressources found in the static DOM "+this.partialCodeLink(static_paramstuff )+", additonal "+diff_idle_paramstuff.length+" parameterized internal ressources found in the idle DOM "+this.partialCodeLink(diff_idle_paramstuff);
+    msg = static_paramstuff .length+" parameterized internal ressources found in the static DOM "+this.partialCodeLink(static_paramstuff )+", additonal "+diff_idle_paramstuff.length+" parameterized internal ressources found in the idle DOM "+this.partialCodeLink(diff_idle_paramstuff);//+this.highlightLink("[href*='?']", "Highlight all paramterized links.");
     done(this.createResult('DOM', msg, status));
   }
 }
