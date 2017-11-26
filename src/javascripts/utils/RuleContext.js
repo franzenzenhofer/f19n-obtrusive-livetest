@@ -197,6 +197,15 @@ export const partialTextLink = (anchor, ...nodes) => {
   return '     '+utf8TextLink(str, anchor);
 }
 
+export const highlightLink = (selector, anchortext="Highlight", bordercss="5px solid red") =>
+{
+  if(!selector){return "";}
+  selector = selector.replace(/"/g, '\\"');
+  selector = selector.replace(/'/g, "\\'");
+  let link = " <a href='javascript://' onclick=\"for(e of window.top.document.querySelectorAll('"+htmlEntitiesEncode(selector)+"')){e.style.border='"+htmlEntitiesEncode(bordercss)+"';}\">"+anchortext+"</a>";
+  return link;
+}
+
 
 /*
 

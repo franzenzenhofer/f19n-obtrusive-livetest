@@ -1,6 +1,7 @@
 function(page, done) {
   const all_header_received_events = page.eventsOfType('onHeadersReceived');
   const on_completed = page.firstEventOfType('onCompleted');
+  const all_onHistoryStateUpdated_events = page.eventsOfType('onHistoryStateUpdated');
   //console.log("oncomplete");
   //console.log(on_completed)
   const idle_dom = page.getIdleDom();
@@ -9,7 +10,8 @@ function(page, done) {
   if(all_header_received_events.length < 1) {done();return;}
 
   //if there is just one HTTP header and it's not an 30X then this rule does not apply
-  if (all_header_received_events.length === 1 && all_header_received_events[0] && all_header_received_events[0].statusCode && !(all_header_received_events[0].statusCode > 299 && all_header_received_events[0].statusCode < 400)) {
+  //and if there is no history push update
+  if (all_header_received_events.length === 1 && all_header_received_events[0] && all_header_received_events[0].statusCode && !(all_header_received_events[0].statusCode > 299 && all_header_received_events[0].statusCode < 400) && all_onHistoryStateUpdated_events.length<1) {
     done();
     return null;
   }
@@ -32,6 +34,19 @@ function(page, done) {
     msg = msg + l + " via cache" + " → ";
     u = l;
   }
+  console.log('looking for history state change');
+  console.log(all_onHistoryStateUpdated_events);
+  if(all_onHistoryStateUpdated_events && all_onHistoryStateUpdated_events.length>0)
+  {
+    console.log('history push detected')
+    all_onHistoryStateUpdated_events.forEach((v,i) => {
+    console.log(v);
+    u = v.url;
+    msg = msg + "History (URL) State Update (via JS)" + " → " + u + " → ";
+    }
+  )
+  }
+  //todo old school JS redirects
   if(canonical)
   {
     var c_ok = "";
