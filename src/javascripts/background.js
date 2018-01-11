@@ -228,7 +228,7 @@ chrome.tabs.onRemoved.addListener(() => {
 });
 
 chrome.tabs.onActivated.addListener(() => {
-  cleanup();
+  //cleanup();
 });
 
 

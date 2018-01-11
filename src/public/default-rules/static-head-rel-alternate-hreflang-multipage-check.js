@@ -11,10 +11,28 @@ function(page,done)
   let max_wait_time = 10000;
   let onpage_hreflang = '';
   let page_vs_canonical = 'this page';
-  const canonicals = sdom.querySelectorAll('head > link[rel=canonical]');
+  let maybeinbody = false;
+
   //console.log(canonicals);
   let references_tested = 0;
   let is_done = false;
+
+  //collect all rel=alternate
+  let hreflangs = sdom.querySelectorAll('head > link[rel=alternate][hreflang]');
+  let canonicals = sdom.querySelectorAll('head > link[rel=canonical]');
+
+  if(hreflangs.length<1)
+  {
+      //collect all rel=alternate
+    hreflangs = sdom.querySelectorAll('link[rel=alternate][hreflang]');
+    canonicals = sdom.querySelectorAll('link[rel=canonical]'); 
+    maybeinbody=true;
+  }
+
+  console.log('relalts');
+  console.log(hreflangs);
+  console.log(canonicals);
+  console.log(sdom.querySelectorAll('link[rel=alternate][hreflang]'));
 
 
 
@@ -47,18 +65,25 @@ function(page,done)
     return hrefs;
 
   }
-//collect all rel=alternate
-  const hreflangs = sdom.querySelectorAll('head > link[rel=alternate][hreflang]');
-  if (hreflangs.length === 0)
+
+
+  if(!(hreflangs) || hreflangs.length === 0)
   { 
-    //check if the hreflangs are not in the head
+    /*//check if the hreflangs are not in the head
     if(sdom.querySelectorAll('link[rel=alternate][hreflang]').length!=0)
     {
     done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang markup in &lt;body&gt; not in &lt;head&gt;! (Maybe &lt;noscript&gt; in &lt;head&gt;?)"+that.partialCodeLink(canonicals, hreflangs), "error", 'static')); return;
-    }
+    }*/
     done();return;
   }
+  console.log('hreflangs');
+  console.log(hreflangs);
 
+  if(maybeinbody===true)
+  {
+    msg_partial = msg_partial + " Markup maybe in the &lt;body&gt; or there is a DOM parsing issue.<br>";
+    type = upgradType("warning",type);
+  }
 
 
   //collect canonical
