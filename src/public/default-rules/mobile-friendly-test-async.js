@@ -3,12 +3,12 @@ function(page, done){
   var that = this;
   var key = '%GOOGLE_API_KEY%';//<-- add your Google API key, get one here https://developers.google.com/webmaster-tools/search-console-api/v1/configure 
   if(key==='%'+'GOOGLE_API_KEY%'){
-    done(that.createResult('MOBILE', '"Movile Friendly Test Async" rule not yet enabled! Set <a href="https://developers.google.com/webmaster-tools/search-console-api/v1/configure" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
+    done(that.createResult('MOBILE', '"Mobile Friendly Test Async" rule not yet enabled! Set <a href="https://developers.google.com/webmaster-tools/search-console-api/v1/configure" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
     return;
   }
   var url2test = page.getURL('first');
   var mft ='https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run?key='+key;
-  var mft_link="https://search.google.com/search-console/mobile-friendly?hl=en&url="+url2test;
+  var mft_link="https://search.google.com/test/mobile-friendly?hl=en&url="+url2test;
   fetch(mft,
   {
       method: "POST",
