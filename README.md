@@ -7,6 +7,8 @@ developed in cooperation with https://die-antwort.eu/
 
 Chrome App Store: https://chrome.google.com/webstore/detail/f19n-obstrusive-live-test/jbnaibigcohjfefpfocphcjeliohhold?hl=en
 
+User doku: https://docs.google.com/document/d/1UktjtxNe71vPKvw_D4xELX2RMJAXXI4-hrMC7Pinb6U
+
 ### What is it?
 
 It's a sandboxed, extendable live-testing chrome extension and framework! It runs pre-defined and custom tests on each page that you visit and delivers direct visual feedback.

@@ -16,6 +16,8 @@ const filter = {
   types: ['main_frame'],
 };
 
+var old_url = "";
+
 const collector = {};
 const currentTabCollectorId = {};
 
