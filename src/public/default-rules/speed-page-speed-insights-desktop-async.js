@@ -2,7 +2,7 @@ function(page, callback){
   var that = this;
   var key = '%GOOGLEAPIKEY%'; //<-- add your API key here https://developers.google.com/speed/docs/insights/v2/first-app#APIKey din't forget to enable it for Google Page Speed Insights
   if(key==='%'+'GOOGLEAPIKEY%'){
-    callback(that.createResult('SPEED', '"Page Speed Insights desktop" rule not yet enabled! Set <a href="https://developers.google.com/speed/docs/insights/v2/first-app#APIKey " target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
+    callback(that.createResult('SPEED', '"Page Speed Insights desktop" rule not yet enabled! Set <a href="https://developers.google.com/speed/docs/insights/v4/first-app#APIKey" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
     return;
   }
   var strategy = 'desktop';
