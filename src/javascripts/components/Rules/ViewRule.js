@@ -18,7 +18,12 @@ export default class ViewRule extends Component {
     if (configurationKeys && configurationKeys.length > 0) {
       return configurationKeys.map((key) => {
         const cleanKey = key.replace(/%/g, '');
-        return <input placeholder={key} defaultValue={configuration && configuration[cleanKey]} onChange={e => this.props.onConfigurationChange(id, { key: cleanKey, value: e.target.value })} />;
+        return (
+          <div>
+          <input placeholder={key} defaultValue={configuration && configuration[cleanKey]} onChange={e => this.props.onConfigurationChange(id, { key: cleanKey, value: e.target.value })} />
+          <button className="Button Button--haptic" onClick={this.props.onCancel}>Done</button>
+          </div>
+          );
       });
     }
 
