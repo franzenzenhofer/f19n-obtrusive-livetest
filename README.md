@@ -35,6 +35,11 @@ Additional it can call third party REST-APIs from within these rules. Even ignor
 
 Also you can fetch normale pages and other ressources via fetch, too. I.e.: a rule executed on one page can fetch other URLs of the same domain or from other third party domains. See [/default-rules/robotstxt-googlebot-url-check-v2.js](f19n-obtrusive-livetest/src/public/default-rules/robotstxt-googlebot-url-check-v2.js) for a rule that fetches the robots.txt of the domain, and then tests if the currently tested URL is allowed/disallowed.
 
+## User Doku
+
+See [Google Docs](https://docs.google.com/document/d/1UktjtxNe71vPKvw_D4xELX2RMJAXXI4-hrMC7Pinb6U/edit#) 
+
+
 ## Development
 
 For developing your own rule you can just install the [Extension via the Chrome App Store](https://chrome.google.com/webstore/detail/f19n-obstrusive-live-test/jbnaibigcohjfefpfocphcjeliohhold?hl=en).
