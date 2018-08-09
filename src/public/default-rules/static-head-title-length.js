@@ -1,6 +1,6 @@
 (page,done) =>
 {
-	let lable = "DOM";
+	let lable = "HEAD";
 	let msg = "Meta-Title length: ";
 	let type = "info"; 
 	let what = "static";
