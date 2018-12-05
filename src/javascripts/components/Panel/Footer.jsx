@@ -14,7 +14,7 @@ export default function Panel(props) {
 
   var fagbm="https://www.google.com/webmasters/tools/googlebot-fetch?hl=en&authuser=0&siteUrl="+encodeURIComponent(url_parts.origin)+"/&path="+encodeURIComponent(url_parts.pathname.substr(1)+url_parts.search)+"&type=SMARTPHONE_NEW";
 
-  var p = "https://search.google.com/search-console/performance/search-analytics?resource_id="+encodeURIComponent(url_parts.origin)+"&breakdown=page&page=!"+encodeURIComponent(url);
+  var p = "https://search.google.com/search-console/performance/search-analytics?resource_id="+encodeURIComponent(url_parts.origin)+"&breakdown=query&num_of_days=28&page=!"+encodeURIComponent(url);
 
   return (
     <footer>
