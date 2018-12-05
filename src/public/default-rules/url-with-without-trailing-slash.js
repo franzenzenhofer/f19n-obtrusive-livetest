@@ -21,6 +21,10 @@ parser.host;     // => "example.com:3000"
   {
       url = url.substr(0,url.indexOf('?'));
   }
+  if (url.indexOf('#')!=-1)
+  {
+      url = url.substr(0,url.indexOf('#'));
+  }
   var last_char = url.slice(-1);
   var new_url = "";
   var what_case = "";

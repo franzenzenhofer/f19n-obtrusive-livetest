@@ -47,11 +47,12 @@ export default class ResultList extends Component {
     //gets rid of results without required fields
     results = results.filter(r => r.type && r.message && r.label);
     results = this.state.filter ? results.filter(r => r.label === this.state.filter || r.type === this.state.filter) : results;
+    var promotion_results = results.filter(r => r.type === "promotion");
     var error_results = results.filter(r => r.type === "error");
     var warning_results = results.filter(r => r.type === "warning");
     var pending_results = results.filter(r => r.type === "pending");
-    var info_results = results.filter(r => (r.type !== "error" && r.type !== "warning" && r.type !== "pending"));
-    results = error_results.concat(warning_results, info_results, pending_results);
+    var info_results = results.filter(r => (r.type !== "error" && r.type !== "warning" && r.type !== "pending" && r.type !== "promotion"));
+    results = error_results.concat(warning_results, promotion_results, info_results, pending_results);
 
     const clearFilterLink = this.state.filter ? <a href="javascript://" className="clear-filter" onClick={this.clearFilter}>Clear filter</a> : null;
 
