@@ -23,11 +23,6 @@
 	}
 	else
 	{
-		console.log('IN ERROR');
-		console.log(all_header_received_events);
-		console.log(all_header_received_events.length);
-		console.log(all_on_completed);
-		console.log(all_on_completed.length);
 		msg = "Unkown error! Could not collect the lifecycle of the page. Collected data:"+this.stringifyLink(page);
 		type = "error";
 	}

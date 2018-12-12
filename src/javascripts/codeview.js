@@ -12,5 +12,4 @@ var parseQueryString = function(str=window.location.search) {
 
 var params = parseQueryString();
 
-//console.log(params['show']);
 window.document.querySelector('body > pre').innerText=decodeURIComponent(params['show']);

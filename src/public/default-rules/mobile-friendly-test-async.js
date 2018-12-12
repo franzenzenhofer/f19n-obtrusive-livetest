@@ -39,7 +39,7 @@ function(page, done){
       //check for 500
       //everything else
       //TODO a lowest priority sorting for failed tests
-      console.log(response);
+  
       done(that.createResult('MOBILE', "<a href='"+mft_link+"' target='_blank'>Mobile Friendly Test</a> unfinished! Response Status: HTTP "+response.status, "unfinished"));
     }
   })

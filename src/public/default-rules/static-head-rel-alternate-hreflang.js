@@ -19,8 +19,7 @@ function(page, done) {
         alternates_array.forEach(
           function(value)
           {
-            //console.log(value);
-            //console.log(value.outerHTML);
+
             //purecodestring = purecodestring + value.outerHTML + "\n";
             //codestring = codestring + that.htmlEntitiesEncode(value.outerHTML) + "\n";
             linkstring = linkstring + '<a href="'+value.href+'" title="'+value.href+'" target="_top">'+value.hreflang+'</a> ';

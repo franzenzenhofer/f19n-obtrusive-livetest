@@ -14,7 +14,6 @@ function (page, done) {
         {
 
               let nr = (haystack.match(new RegExp(needle, 'gi')) || []).length;
-              console.log(needle+" "+nr);
               return nr;
         }
         else

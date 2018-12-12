@@ -2,7 +2,7 @@ function(page,done)
 {
 	let that=this;
 	let p = page.getLocation('idle').protocol;
-	console.log(p);
+
 	if(p!=='http:'){ done();return; }
 	let dom = page.getIdleDom();
 	let selector = 'input,textarea';

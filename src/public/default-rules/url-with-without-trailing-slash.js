@@ -87,9 +87,7 @@ parser.host;     // => "example.com:3000"
         if(c.length === 1)
         {
 
-          console.log(c);
-          console.log(c[0].href);
-          console.log(url);
+
           var found_canonical_url = c[0].href;
           //the canonical URL might be this URL or the variaton (with/without) trailing slash, both cases might be ok
           //any other case is not ok an triggers an error

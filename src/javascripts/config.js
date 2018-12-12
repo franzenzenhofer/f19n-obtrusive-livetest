@@ -14,6 +14,7 @@ export default {
 !*://validator.ampproject.org*
 !*://*webpagetest.org*
 !*://*facebook.com*
+!*://*stackoverflow.com*
 !*/wp-admin*
 !*\\.xml
 !*\\.pdf

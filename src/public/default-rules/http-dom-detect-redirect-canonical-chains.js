@@ -2,8 +2,7 @@ function(page, done) {
   const all_header_received_events = page.eventsOfType('onHeadersReceived');
   const on_completed = page.firstEventOfType('onCompleted');
   const all_onHistoryStateUpdated_events = page.eventsOfType('onHistoryStateUpdated');
-  //console.log("oncomplete");
-  //console.log(on_completed)
+
   const idle_dom = page.getIdleDom();
   const canonical = idle_dom.querySelector('link[rel=canonical]');
   //to keep it simple, if there is no http header at all, this rule does not apply
@@ -34,13 +33,12 @@ function(page, done) {
     msg = msg + l + " via cache" + " → ";
     u = l;
   }
-  console.log('looking for history state change');
-  console.log(all_onHistoryStateUpdated_events);
+
   if(all_onHistoryStateUpdated_events && all_onHistoryStateUpdated_events.length>0)
   {
-    console.log('history push detected')
+ 
     all_onHistoryStateUpdated_events.forEach((v,i) => {
-    console.log(v);
+
     u = v.url;
     msg = msg + "History (URL) State Update (via JS)" + " → " + u + " → ";
     }

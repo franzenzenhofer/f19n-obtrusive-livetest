@@ -1,7 +1,6 @@
 function(page, done){
   var hh = page.getHttpHeaders("last");
-  //console.log(hh);
-  //console.log(hh['vary']);
+
   if(hh)
   {
   var vary = hh['vary'] || "";

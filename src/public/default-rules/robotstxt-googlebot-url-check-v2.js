@@ -19,13 +19,13 @@ function(page, done) {
 	    	}
 	    	else
 	    	{
-	    		//console.log('URLS TESTEd'+urls_tested);
+	    		
 	    	}
 		}
 
 		var endgame = function()
 		{
-			console.log('in endgame');
+		
 			
 			if(msgA.length>0)
 			{
@@ -57,8 +57,7 @@ function(page, done) {
 					   (response.body.includes('User-Agent:')))
 	      			{
 	      				let robot = that.simpleRobotTxt(response.body,u, my_user_agent);
-	      				console.log("ROBOT V2");
-	      				console.log(robot);
+	      				
 	    					if(robot.disallowed)
 	    					{
 	    						msgA.push('<a href="'+u+'" target="_blank">'+u+'</a> is <b>disallow</b>ed by <a href="'+r+'" target="_blank">'+r+'</a>.');
@@ -88,7 +87,7 @@ function(page, done) {
 	    						msgA[msgA.length-1]=msgA[msgA.length-1]+that.partialStringifyLink(robot)+" "+"<a href='https://www.google.com/webmasters/tools/robots-testing-tool?hl=en&authuser=0&siteUrl="+uo.origin+"/' target='_blank'>GSC</a>";
 	    					}
 	    					urls_tested++;
-	    					console.log(msgA);
+	    				
 							checkForEndgame();
 
 					} else { urls_tested++; checkForEndgame(); }//else //no valid robots.txt, let other f19n rules work this out

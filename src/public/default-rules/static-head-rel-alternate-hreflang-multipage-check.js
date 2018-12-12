@@ -1,9 +1,12 @@
 function(page,done)
 {
+  var do_not_run_string = '%DO_NOT_RUN_DOMAINS%'; //some websites have request limits that block your IP if you do to many requests, these domains can be added here, comma seperated i.e. ecco-verde,vitalabo
+  let do_not_run = [];
+
   var that = this;
   const url = page.getURL('last');
+  let u = new URL(url);
   const sdom = page.getStaticDom();
-  //console.log(sdom);
   let msg_partial = "";
   let type = 'info';
   let canonical = false;
@@ -13,7 +16,17 @@ function(page,done)
   let page_vs_canonical = 'this page';
   let maybeinbody = false;
 
-  //console.log(canonicals);
+  if(do_not_run_string!='%'+'DO_NOT_RUN_DOMAINS%'){
+    do_not_run = do_not_run_string.split(',');
+    do_not_run = do_not_run.map(s => s.trim());
+    if(do_not_run.some(s => u.hostname.includes(s)))
+    {
+      done(that.createResult(lable, "Link-Rel-Alternate-Hreflang Multipage check disabled on "+u.hostname, "warning", what));return; 
+      return;
+    }
+  }
+
+
   let references_tested = 0;
   let is_done = false;
 
@@ -29,10 +42,6 @@ function(page,done)
     maybeinbody=true;
   }
 
-  console.log('relalts');
-  console.log(hreflangs);
-  console.log(canonicals);
-  console.log(sdom.querySelectorAll('link[rel=alternate][hreflang]'));
 
 
 
@@ -76,8 +85,7 @@ function(page,done)
     }*/
     done();return;
   }
-  console.log('hreflangs');
-  console.log(hreflangs);
+
 
   if(maybeinbody===true)
   {
@@ -193,9 +201,7 @@ function(page,done)
             references_tested++
             if(references_tested === hreflangs.length)
             {
-                //console.log('references tested:');
-                //console.log(references_tested);
-                //console.log(hreflangs.length);
+   
                 endgame();
             }
          });
@@ -207,8 +213,7 @@ function(page,done)
 
   var endgame = () =>
   {
-    //console.log('endgame');
-    //console.log(msg_partial);
+ 
     if(msg_partial!='')
     {
       done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang"+that.partialCodeLink(canonicals, hreflangs)+": "+msg_partial, type, 'static'));

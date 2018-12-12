@@ -126,27 +126,17 @@ export const nodeToString = (stuff) =>
   if (stuff.outerHTML) { return stuff.outerHTML; }
   if (isIterable(stuff)) {
     if (isString(stuff)) {return stuff;}
-    /*if (Array.isArray(stuff)) {
-      console.log('is Array');
-      console.log(stuff);
-      //return allNodesToString(stuff);
-      return stuff.join("\n");
-    }*/
+
     if(!Array.isArray(stuff))
     {
       stuff = Array.from(stuff);
     }
-    /*console.log('what is it');
-    if((stuff.isNodeList && stuff.isNodeList()) ||
-    {*/
+
       stuff.forEach(function(v){
     	   if(v.outerHTML){ temp_string = temp_string + v.outerHTML+"\n";}
          else {temp_string = temp_string + v + "\n";}
        });
-    /*}
-    else {
-      return "Iterable but not a NodeString";
-    }*/
+
     return temp_string;
   };
   if(stuff !== null && typeof stuff === 'object')
@@ -207,11 +197,3 @@ export const highlightLink = (selector, anchortext="Highlight", bordercss="5px s
 }
 
 
-/*
-
-export const codeBox = (str) = {
-  var id = this.makeid();
-  var boxcode = '<textarea readonly id="'+id+'">'+str+'</textarea>';
-  viewcodelink = '<a href="data:,'+str+'" target="_blank">View Code</a>';
-}
-*/

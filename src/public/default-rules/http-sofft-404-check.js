@@ -3,12 +3,12 @@
 	let that = this;
 	let l = page.getLocation();
 	let u = l.origin+l.pathname;
-	console.log(u);
+	
 	let un = u.substring(0,u.lastIndexOf('/'));
 	let msg = '';
 	let type = 'info';
 	un = un + "/fake-url-for-soft-404-error-check-"+Math.floor(Math.random() * 100000000000);
-	console.log(un);
+
 	let un_link = "<a href='"+un+"' target='_top'>"+un+"</a>";
 	let redirectmsg = "";
 	let nopriormsg = "";
