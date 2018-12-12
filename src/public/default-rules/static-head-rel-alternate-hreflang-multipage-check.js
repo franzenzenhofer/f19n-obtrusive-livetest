@@ -21,7 +21,7 @@ function(page,done)
     do_not_run = do_not_run.map(s => s.trim());
     if(do_not_run.some(s => u.hostname.includes(s)))
     {
-      done(that.createResult(lable, "Link-Rel-Alternate-Hreflang Multipage check disabled on "+u.hostname, "warning", what));return; 
+      done(that.createResult("HEAD", "Link-Rel-Alternate-Hreflang Multipage check disabled on "+u.hostname, "warning"));return; 
       return;
     }
   }

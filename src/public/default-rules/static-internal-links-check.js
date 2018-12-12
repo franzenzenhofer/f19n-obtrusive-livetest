@@ -32,10 +32,21 @@
 	let ae_ok = [];
 	let ae_other = {};
 
-  //TODO: stupid protocoll relative external links get wrongly selected (hrefs starting with //www.example.com) i.e. like on wikipedia
+  
 	let all_internal_links_slector = "a[href^='"+u.origin+"'], a[href^='/'], a[href^='./'], a[href^='../']";
 
-	var n = dom.querySelectorAll(all_internal_links_slector);
+	var n_raw = dom.querySelectorAll(all_internal_links_slector);
+
+  var n = [];
+  for(let a of n_raw)
+  {
+    if((!a.getAttribute("href").startsWith("//"))&&(a.getAttribute("href")!==u.href))
+    {
+      n.push(a);
+    }
+  }
+
+  
 
   let getAnchor = (status_code) =>
   {
@@ -52,7 +63,7 @@
 	{
 
     var how_many = 0;
-    is_done = true;
+    
     msg = msg + "Internal links check:";
     if(ae_ok.length>0)
     {
@@ -126,10 +137,11 @@
            				 			ae_other['_'+response.status]=[ae];
            				 		}
            				 	}
-           				}
-           				linkstested++;
-           				if(linkstested === n.length)
+           		}
+           	linkstested++;
+           	if(linkstested === n.length)
 						{
+              is_done = true;
 							endgame();
 						}
 
