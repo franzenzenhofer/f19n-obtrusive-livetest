@@ -57,7 +57,7 @@
     if(ae_ok.length>0)
     {
       how_many = how_many + ae_ok.length;
-      msg = msg+" "+ae_ok.length+" links to HTTP 200 (ok).";
+      msg = msg+"<br>"+ae_ok.length+" links to HTTP 200 (ok).";
     }
     if(ae_redirects.length>0)
     {
