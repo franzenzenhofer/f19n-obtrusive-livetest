@@ -1,6 +1,6 @@
 ![Obtrusive Live Test Logo](https://raw.githubusercontent.com/franzenzenhofer/f19n-obtrusive-livetest/master/src/public/images/icon.png)
 
-# f19n Obtrusive Livetest Chrome Extension
+# Fullstackoptimization Live Test - Chrome Extension / Framework
 
 by http://www.fullstackoptimization.com/
 developed in cooperation with https://die-antwort.eu/
@@ -8,6 +8,8 @@ developed in cooperation with https://die-antwort.eu/
 Chrome App Store: https://chrome.google.com/webstore/detail/f19n-obstrusive-live-test/jbnaibigcohjfefpfocphcjeliohhold?hl=en
 
 User doku: https://docs.google.com/document/d/1UktjtxNe71vPKvw_D4xELX2RMJAXXI4-hrMC7Pinb6U ← 🤓📖 
+
+Previously known ad "f19n Obtrusive Live Test" ... the new name is less scary! (It's not a scary app, it's an awesome one!)
 
 ### What is it?
 

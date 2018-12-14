@@ -1,8 +1,8 @@
 {
   "name": "f19n-obtrusive-livetest",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "license": "contributor and eductional license",
-  "repository": "https://github.com/franzenzenhofer/f19n-obtrusive-livetest#",
+  "repository": "https://github.com/franzenzenhofer/f19n-obtrusive-livetest",
   "scripts": {
     "dev": "grunt --reload-extension"
   },
