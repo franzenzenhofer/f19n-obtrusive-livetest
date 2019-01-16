@@ -38,12 +38,39 @@
 	var n_raw = dom.querySelectorAll(all_internal_links_slector);
 
   var n = [];
+  var urls = [];
+
+  let addToN = (element) =>
+  {
+    let h = element.getAttribute("href");
+    if(!urls.includes(h))
+    {
+      urls.push(h);
+      n.push(element);
+    }
+    return n;
+  }
+
   for(let a of n_raw)
   {
-    if((!a.getAttribute("href").startsWith("//"))&&(a.getAttribute("href")!==u.href))
+    if(a.getAttribute("href").startsWith("//"))
+    {
+      if(a.getAttribute("href").startsWith("//"+u.host))
+      {
+          addToN(a);
+      }
+    }
+    else
+    {
+      if(a.getAttribute("href")!==u.href)
+      {
+        addToN(a);
+      }
+    }
+    /*if((!a.getAttribute("href").startsWith("//"))&&(a.getAttribute("href")!==u.href))
     {
       n.push(a);
-    }
+    }*/
   }
 
   

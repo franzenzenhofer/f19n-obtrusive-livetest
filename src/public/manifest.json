@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Fullstackoptimization Live Test",
-  "description": "Fullstackoptimization Live Test is a sandboxed, extendable framework to run webperformance, technical SEO tests on webpages while browsing the internet!",
-  "version": "1.3.1",
+  "description": "Fullstackoptimization Live Test is a extendable tool to run webperformance, technical SEO tests on webpages while browsing!",
+  "version": "1.3.3",
   "browser_action": {
     "default_title": "Fullstackoptimization Live Test",
     "default_popup": "popup.html"
