@@ -16,7 +16,7 @@
       			if (response.status !== 200) { done(that.createResult("fb", "Could not fetch Facebook share count."+' <a href="https://developers.facebook.com/tools/debug/sharing/?q='+url+'" target="_blank">Fb Debugger</a>', "unfinished"));return; }
       			response.json().then((data) => {
       				
-      				let msg = "Facebook share count: "+data.share.share_count+" shares, "+data.share.comment_count+" comment. "+that.stringifyLink(data)+' <a href="https://developers.facebook.com/tools/debug/sharing/?q='+url+'" target="_blank">Fb Debugger</a>';
+      				let msg = "Facebook share count: "+data.share.share_count+" shares, "+data.share.comment_count+" comment. "+that.stringifyLink(data)+'<br><a href="https://developers.facebook.com/tools/debug/sharing/?q='+url+'" target="_blank">Facebook Debugger</a>';
       					done(that.createResult('Fb', msg, 'info'));
       			});
         		//	done(that.createResult('SPEED', 'No Page Speed Insights mobile data. (Response Status '+response.status+' '+response.text+')', "warning"));
