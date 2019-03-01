@@ -30,12 +30,14 @@ export default function Panel(props) {
       <a href={`https://search.google.com/test/rich-results?hl=en&url=${url}`} target="_blank" title="Rich Results Test"><button className="Button Button--haptic">Rr</button></a>
       <a href={`${fagbd}`} target="_blank" title="Fetch as Googlebot Desktop"><button className="Button Button--haptic">Fd</button></a>
       <a href={`${fagbm}`} target="_blank" title="Fetch as Googlebot Mobile"><button className="Button Button--haptic">Fm</button></a>
+      <a href={`http://webcache.googleusercontent.com/search?hl=en&strip=1&q=cache:${url}`} target="_blank" title="Google Cache Text Only"><button className="Button Button--haptic">C</button></a>
       <a href={`${q}`} target="_blank" title="Query Performance Google Search Console"><button className="Button Button--haptic">Q</button></a>
       <a href={`${p}`} target="_blank" title="Page Performance Google Search Console"><button className="Button Button--haptic">P</button></a>
-      &nbsp;
-      <a href={`https://developers.facebook.com/tools/debug/sharing/?q=${url}`} target="_blank" title="Facebook Debugger"><button className="Button Button--haptic">Fb</button></a>
+      
     </footer>
   );
 } 
 
 //<a href={`${l}`} target="_blank" title="Remote Google Lighthouse"><button className="Button Button--haptic">Lh</button></a>
+//&nbsp;
+//      <a href={`https://developers.facebook.com/tools/debug/sharing/?q=${url}`} target="_blank" title="Facebook Debugger"><button className="Button Button--haptic">Fb</button></a>

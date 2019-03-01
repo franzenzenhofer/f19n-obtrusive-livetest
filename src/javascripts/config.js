@@ -11,6 +11,7 @@ export default {
 !file:*
 !data:*
 !*://*google\\.*
+!*://*webcache.googleusercontent\\.*
 !*://validator.ampproject.org*
 !*://*webpagetest.org*
 !*://*facebook.com*
