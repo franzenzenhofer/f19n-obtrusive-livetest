@@ -9,6 +9,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           variables: {
+            webpackMode: "development",
             buildDir: "build",
           }
         }
@@ -16,6 +17,7 @@ module.exports = function(grunt) {
       dist: {
         options: {
           variables: {
+            webpackMode: "production",
             buildDir: "dist",
           }
         }
@@ -57,34 +59,10 @@ module.exports = function(grunt) {
       }
     },
 
-    jade: {
-      compile: {
-        files: [
-          {
-            expand: true,
-            cwd: "src/views",
-            src: "**/*.jade",
-            dest: "<%= grunt.config.get('buildDir') %>/",
-            ext: ".html"
-          }
-        ]
-      }
-    },
-
-    uglify: {
-      options: {
-        mangle: true
-      },
-      dist: {
-        files: {
-          "<%= grunt.config.get('buildDir') %>/js/application.js": ["<%= grunt.config.get('buildDir') %>/js/application.js"],
-          "<%= grunt.config.get('buildDir') %>/js/background.js": ["<%= grunt.config.get('buildDir') %>/js/background.js"]
-        }
-      }
-    },
-
     webpack: {
       someName: {
+        mode: "<%= grunt.config.get('webpackMode') %>",
+        devtool: false,
         entry: {
              background: "./src/javascripts/background.js",
                   panel: "./src/javascripts/panel.js",
@@ -114,7 +92,7 @@ module.exports = function(grunt) {
           ],
         },
         module: {
-          loaders: [
+          rules: [
             { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?presets[]=es2015,presets[]=react,presets[]=stage-0" }
           ]
         },
@@ -178,14 +156,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-webpack");
   grunt.loadNpmTasks("grunt-contrib-watch");
   grunt.loadNpmTasks("grunt-contrib-concat");
-  grunt.loadNpmTasks("grunt-contrib-uglify");
   grunt.loadNpmTasks("grunt-contrib-copy");
-  grunt.loadNpmTasks("grunt-contrib-jade");
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-notify");
   grunt.loadNpmTasks("grunt-zip");
 
-  grunt.registerTask("main", ["clean", "webpack", "sass", "jade", "copy"]);
+  grunt.registerTask("main", ["clean", "webpack", "sass", "copy"]);
 
   var defaultTasks = ["config:dev", "main"];
   if (grunt.option('reload-extension')) {
@@ -193,5 +169,5 @@ module.exports = function(grunt) {
   }
 
   grunt.registerTask("default", defaultTasks.concat(["watch"]));
-  grunt.registerTask("dist", ["config:dist", "main", "uglify", "zip"]);
+  grunt.registerTask("dist", ["config:dist", "main", "zip"]);
 };
