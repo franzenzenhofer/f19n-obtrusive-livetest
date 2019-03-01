@@ -1,3 +1,4 @@
+var sass = require('node-sass');
 var path = require('path');
 
 module.exports = function(grunt) {
@@ -40,6 +41,7 @@ module.exports = function(grunt) {
     sass: {
       dev: {
         options: {
+          implementation: sass,
           style: "expanded",
           includePaths: [].concat(require('node-bourbon').includePaths).concat(require('node-neat').includePaths),
           noCache: true,
