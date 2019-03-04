@@ -1,5 +1,52 @@
 var sass = require('node-sass');
 var path = require('path');
+var webpack = require('webpack');
+
+const webpackConfig = ({ mode, buildDir }) => {
+  return {
+    mode,
+    devtool: false,
+    entry: {
+          background: "./src/javascripts/background.js",
+              panel: "./src/javascripts/panel.js",
+              rules: "./src/javascripts/rules.js",
+              popup: "./src/javascripts/popup.js",
+            sandbox: "./src/javascripts/sandbox.js",
+          codeview: "./src/javascripts/codeview.js",
+      content_script: "./src/javascripts/content_script.js",
+        document_end: "./src/javascripts/document_end.js",
+      document_idle: "./src/javascripts/document_idle.js",
+      document_start: "./src/javascripts/document_start.js",
+    },
+    output: {
+      path: path.resolve(__dirname, `./${buildDir}/js`),
+      filename: "[name].js",
+    },
+    resolve: {
+      modules: [
+        'javascripts/containers',
+        'javascripts/components',
+        'javascripts/utils',
+        'node_modules',
+      ],
+      extensions: [
+        '.js',
+        '.jsx',
+      ],
+    },
+    module: {
+      rules: [
+        { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?presets[]=es2015,presets[]=react,presets[]=stage-0" }
+      ]
+    },
+    plugins: [
+      new webpack.DefinePlugin({
+        'process.env': { NODE_ENV: JSON.stringify(mode || 'development') },
+      }),
+    ],
+    failOnError: true,
+  };
+};
 
 module.exports = function(grunt) {
   grunt.initConfig({
@@ -60,44 +107,10 @@ module.exports = function(grunt) {
     },
 
     webpack: {
-      someName: {
-        mode: "<%= grunt.config.get('webpackMode') %>",
-        devtool: false,
-        entry: {
-             background: "./src/javascripts/background.js",
-                  panel: "./src/javascripts/panel.js",
-                  rules: "./src/javascripts/rules.js",
-                  popup: "./src/javascripts/popup.js",
-                sandbox: "./src/javascripts/sandbox.js",
-              codeview: "./src/javascripts/codeview.js",
-         content_script: "./src/javascripts/content_script.js",
-           document_end: "./src/javascripts/document_end.js",
-          document_idle: "./src/javascripts/document_idle.js",
-          document_start: "./src/javascripts/document_start.js",
-        },
-        output: {
-          path: path.resolve(__dirname, "./<%= grunt.config.get('buildDir') %>/js"),
-          filename: "[name].js",
-        },
-        resolve: {
-          modules: [
-            'javascripts/containers',
-            'javascripts/components',
-            'javascripts/utils',
-            'node_modules',
-          ],
-          extensions: [
-            '.js',
-            '.jsx',
-          ],
-        },
-        module: {
-          rules: [
-            { test: /\.jsx?$/, exclude: /node_modules/, loader: "babel-loader?presets[]=es2015,presets[]=react,presets[]=stage-0" }
-          ]
-        },
-        failOnError: true,
-      },
+      someName: () => webpackConfig({
+        mode: grunt.config.get('webpackMode'),
+        buildDir: grunt.config.get('buildDir'),
+      }),
     },
 
     zip: {
@@ -120,37 +133,6 @@ module.exports = function(grunt) {
     }
   });
 
-  grunt.registerTask("reloadChrome", "reload extension", function() {
-    var exec = require("child_process").exec;
-    var done = this.async();
-    return exec("chrome-cli list links", function(error, stdout, stderr) {
-      var tabId, _ref;
-
-      var openExtensionWindows = stdout.match(/(chrome-extension:\/\/flklgoghmajjcajlpecnkgdheicooaae.+)/g);
-
-      if (tabId = (_ref = stdout.match(/\[(\d+:)?([\d]+)\] chrome:\/\/extensions\/?/)) != null ? _ref[2] : void 0) {
-        return exec("chrome-cli reload -t " + tabId, function(error, stdout, stderr) {
-          for (var urlIndex in openExtensionWindows) {
-            return exec('chrome-cli open ' + openExtensionWindows[urlIndex], function() {
-              return done();
-            });
-          }
-
-          return done();
-        });
-      } else {
-        return exec("chrome-cli open chrome://extensions && chrome-cli reload", function(error, stdout, stderr) {
-          for (var urlIndex in openExtensionWindows) {
-            return exec('chrome-cli open ' + openExtensionWindows[urlIndex], function() {
-              return done();
-            });
-          }
-          return done();
-        });
-      }
-    });
-  });
-
   grunt.loadNpmTasks("grunt-sass");
   grunt.loadNpmTasks("grunt-config");
   grunt.loadNpmTasks("grunt-webpack");
@@ -164,9 +146,6 @@ module.exports = function(grunt) {
   grunt.registerTask("main", ["clean", "webpack", "sass", "copy"]);
 
   var defaultTasks = ["config:dev", "main"];
-  if (grunt.option('reload-extension')) {
-    defaultTasks.push("reloadChrome");
-  }
 
   grunt.registerTask("default", defaultTasks.concat(["watch"]));
   grunt.registerTask("dist", ["config:dist", "main", "zip"]);

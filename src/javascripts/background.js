@@ -9,6 +9,8 @@ import { createResult } from './utils/RuleContext';
 import syncDefaultRules from './utils/syncDefaultRules';
 import { activeForTab } from './utils/activeForTab';
 
+import extensionLiveReload from './utils/extensionLiveReload';
+
 import Config from './config';
 
 const filter = {
@@ -16,10 +18,10 @@ const filter = {
   types: ['main_frame'],
 };
 
-var old_url = "";
-
 const collector = {};
 const currentTabCollectorId = {};
+
+if (process.env.NODE_ENV === 'development') extensionLiveReload();
 
 const setDefaults = (callback = null) => {
   const { panelPosition, sites } = Config.defaults;
@@ -240,7 +242,7 @@ chrome.tabs.onActivated.addListener(() => {
   {
     cleanup();
   }
-  
+
 });*/
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
