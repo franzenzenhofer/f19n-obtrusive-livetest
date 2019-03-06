@@ -18,16 +18,21 @@ export const getGlobals = () => {
   return globals;
 };
 
-export const createResult = (label, message, type = 'info', what = null) => {
-  let result = { label: label, message: message, type: type, what: what };
+export const createResult = (...args) => {
+  const result = {
+    label: null,
+    message: null,
+    type: 'info',
+    what: null,
+    priority: 0,
+  };
 
-  // TODO remove priority argument + warning
-  //if (isNumber(_priority)) {
-  //  console.log('Deprecation warning: `priority` has been removed');
-  //  result = { label, message, type };
-  //}
+  if (args.length > 1) {
+    const [label, message, type, what, priority] = args;
+    return Object.assign(result, { label, message, type, what, priority });
+  }
 
-  return result;
+  return Object.assign(result, args[0]);
 };
 
 /*export const waitForAsync = (message = 'Waiting for async rule.') => {
@@ -79,7 +84,7 @@ export const fetch = (url, options, callback) => {
 }*/
 
 export const utf8TextLink = (str, anchor) => //utf8TextLinkObjectUrl = (str, anchor) =>
-{ 
+{
 
 
   str = str.trim();
