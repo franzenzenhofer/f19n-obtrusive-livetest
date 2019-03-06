@@ -276,13 +276,6 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     });
   }
 
-  if (request.event === 'chrome_load_times') {
-    const { id, url } = sender.tab;
-    ifPanelOpenForTab({ id, url }, () => {
-      findOrCreateCollector(id).pushEvent(request.data, 'chromeLoadTimes');
-    });
-  }
-
   if (request.event === 'window_performance') {
     const { id, url } = sender.tab;
     ifPanelOpenForTab({ id, url }, () => {
