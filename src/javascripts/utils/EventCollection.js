@@ -59,6 +59,16 @@ export default class EventCollection {
     return e.snapshot.timing
   }
 
+  windowPerformanceNavigationTimingEvent()
+  {
+    let event = this.lastEventOfType('windowPerformanceNavigationTiming');
+    return event;
+  }
+
+  getWindowPerformanceNavigationTiming() {
+    return this.windowPerformanceEvent().snapshot;
+  }
+
 
 
 

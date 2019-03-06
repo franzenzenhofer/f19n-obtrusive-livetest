@@ -283,6 +283,13 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     });
   }
 
+  if (request.event === 'window_PerformanceNavigationTiming') {
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'windowPerformanceNavigationTiming');
+    });
+  }
+
   //onHistoryStateUpdated
 
 });
