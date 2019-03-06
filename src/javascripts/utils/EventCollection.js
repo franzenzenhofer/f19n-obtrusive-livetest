@@ -40,17 +40,8 @@ export default class EventCollection {
   }
   */
 
-  chromeLoadTimesEvent()
-  {
-    let event = this.lastEventOfType('chromeLoadTimes');
-    return event;
-  }
-
   getChromeLoadTimes() {
-    let e = this.chromeLoadTimesEvent();
-    //console.log('chromeloadtimes');
-    //console.log(e);
-    return e.snapshot;
+    throw new Error('getChromeLoadTimes() was removed from the API since the underlaying chrome.loadTimes() was deprecated. Instead use <a href="https://developers.google.com/web/updates/2017/12/chrome-loadtimes-deprecated" target="_blank">standardized APIs</a>.');
   }
 
   windowPerformanceEvent()
@@ -66,6 +57,16 @@ export default class EventCollection {
   getWindowPerformanceTiming() {
     let e = this.windowPerformanceEvent();
     return e.snapshot.timing
+  }
+
+  windowPerformanceNavigationTimingEvent()
+  {
+    let event = this.lastEventOfType('windowPerformanceNavigationTiming');
+    return event;
+  }
+
+  getWindowPerformanceNavigationTiming() {
+    return this.windowPerformanceEvent().snapshot;
   }
 
 
@@ -227,7 +228,7 @@ export default class EventCollection {
         let reverse_e = events.slice(0).reverse();
         for (let e of reverse_e)
         {
-          url = e.url; 
+          url = e.url;
           if (url) { break; }
          /* url = e.location.href;
           if (url) {break} */
@@ -237,7 +238,7 @@ export default class EventCollection {
     {
        for (let e of events)
        {
-         url = e.url; 
+         url = e.url;
          if (url) { break; }
         /* url = e.location.href;
          if (url) {break} */

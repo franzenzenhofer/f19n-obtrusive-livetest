@@ -9,6 +9,8 @@ import { createResult } from './utils/RuleContext';
 import syncDefaultRules from './utils/syncDefaultRules';
 import { activeForTab } from './utils/activeForTab';
 
+import extensionLiveReload from './utils/extensionLiveReload';
+
 import Config from './config';
 
 const filter = {
@@ -16,10 +18,10 @@ const filter = {
   types: ['main_frame'],
 };
 
-var old_url = "";
-
 const collector = {};
 const currentTabCollectorId = {};
+
+if (process.env.NODE_ENV === 'development') extensionLiveReload();
 
 const setDefaults = (callback = null) => {
   const { panelPosition, sites } = Config.defaults;
@@ -240,7 +242,7 @@ chrome.tabs.onActivated.addListener(() => {
   {
     cleanup();
   }
-  
+
 });*/
 
 chrome.runtime.onMessage.addListener((request, sender, callback) => {
@@ -274,17 +276,17 @@ chrome.runtime.onMessage.addListener((request, sender, callback) => {
     });
   }
 
-  if (request.event === 'chrome_load_times') {
-    const { id, url } = sender.tab;
-    ifPanelOpenForTab({ id, url }, () => {
-      findOrCreateCollector(id).pushEvent(request.data, 'chromeLoadTimes');
-    });
-  }
-
   if (request.event === 'window_performance') {
     const { id, url } = sender.tab;
     ifPanelOpenForTab({ id, url }, () => {
       findOrCreateCollector(id).pushEvent(request.data, 'windowPerformance');
+    });
+  }
+
+  if (request.event === 'window_PerformanceNavigationTiming') {
+    const { id, url } = sender.tab;
+    ifPanelOpenForTab({ id, url }, () => {
+      findOrCreateCollector(id).pushEvent(request.data, 'windowPerformanceNavigationTiming');
     });
   }
 
