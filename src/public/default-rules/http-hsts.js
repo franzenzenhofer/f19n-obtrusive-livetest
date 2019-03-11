@@ -30,7 +30,7 @@ function(page, done) {
 
   if(hsts_set == false)
   {
-    done(this.createResult('HTTP', "no <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security' target='_blank'>HSTS header</a> set! - <a href='https://hstspreload.org/?domain="+u+"' target='_blank'>Test</a>"+ this.partialCodeLink(hr), 'error'));
+    done(this.createResult('HTTP', "No <a href='https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Strict-Transport-Security' target='_blank'>HSTS header</a> set! - <a href='https://hstspreload.org/?domain="+u+"' target='_blank'>Test</a>"+ this.partialCodeLink(hr), 'error'));
   }
   
   if(hsts_set == true)
