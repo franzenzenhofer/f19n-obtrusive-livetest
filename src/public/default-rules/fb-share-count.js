@@ -1,5 +1,5 @@
 (page,done)=>
-{
+{ 
 	let that = this;
 	let dom = page.getStaticDom();
 	let og_url = (dom.querySelector('meta[property="og:url"]')&&dom.querySelector('meta[property="og:url"]').content);
@@ -17,7 +17,7 @@
       			response.json().then((data) => {
       				
       				let msg = "Facebook share count: "+data.share.share_count+" shares, "+data.share.comment_count+" comment. "+that.stringifyLink(data)+'<br><a href="https://developers.facebook.com/tools/debug/sharing/?q='+url+'" target="_blank">Facebook Debugger</a>';
-      					done(that.createResult('Fb', msg, 'info'));
+      					done(that.createResult('Fb', msg, 'info', null, 800));
       			});
         		//	done(that.createResult('SPEED', 'No Page Speed Insights mobile data. (Response Status '+response.status+' '+response.text+')', "warning"));
         	return;
