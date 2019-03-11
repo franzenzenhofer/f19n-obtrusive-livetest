@@ -28,7 +28,7 @@ export const createResult = (...args) => {
   };
 
   if (args.length > 1) {
-    const [label, message, type, what, priority] = args;
+    const [label, message, type = 'info', what, priority = 0] = args;
     return Object.assign(result, { label, message, type, what, priority });
   }
 
