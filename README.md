@@ -59,7 +59,7 @@ npm install
 Run the build process once (for this you need grunt-cli installed `npm install -g grunt-cli`). It will watch for changed files and automatically reload the extension if necessary.
 
 ```shell
-grunt
+grunt --reload-extension
 ```
 
 Open [chrome://extensions/](chrome://extensions/) and point the installation of an unpacked extension to the ./build folder
