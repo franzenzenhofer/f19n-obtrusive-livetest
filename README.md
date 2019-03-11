@@ -59,10 +59,25 @@ npm install
 Run the build process once (for this you need grunt-cli installed `npm install -g grunt-cli`). It will watch for changed files and automatically reload the extension if necessary.
 
 ```shell
-grunt --reload-extension
+grunt 
 ```
 
-Open [chrome://extensions/](chrome://extensions/) and point the installation of an unpacked extension to the ./build folder
+Open [chrome://extensions/](chrome://extensions/) and point the installation of an unpacked extension to the ./build folder.
+
+After changes on the core of the app, you need to reload the extension via [chrome://extensions/](chrome://extensions/)
+
+Or you onetime install the Chrome-Cli tools
+
+```shell
+brew install chrome-cli
+```
+and then run
+
+```shell
+grunt --reload-extension
+```
+so that after every change the extension will reload itself.
+
 
 ## Rules
 
