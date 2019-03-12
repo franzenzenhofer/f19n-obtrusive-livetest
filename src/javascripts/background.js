@@ -24,13 +24,16 @@ const currentTabCollectorId = {};
 if (process.env.NODE_ENV === 'development') extensionLiveReload();
 
 const setDefaults = (callback = null) => {
-  const { panelPosition, sites } = Config.defaults;
+  const { panelPosition, sites, globalRuleVariables } = Config.defaults;
   chrome.storage.local.get((data) => {
     if (!data.sites) {
       chrome.storage.local.set({ sites }, callback);
     }
     if (!data.panelPosition) {
       chrome.storage.local.set({ panelPosition }, callback);
+    }
+    if (!data.globalRuleVariables) {
+      chrome.storage.local.set({ globalRuleVariables }, callback);
     }
   });
 };

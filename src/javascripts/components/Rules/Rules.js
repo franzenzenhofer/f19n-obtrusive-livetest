@@ -6,8 +6,10 @@ import RulesList from './RulesList';
 import AddRule from './AddRule';
 import ViewRule from './ViewRule';
 import EnabledSites from './EnabledSites';
+import GlobalRuleVariables from './GlobalRuleVariables';
 
 import rulesStore from './../../store/rules';
+import Config from './../../config';
 
 export default class Rules extends Component {
   constructor(props) {
@@ -15,6 +17,7 @@ export default class Rules extends Component {
     this.state = {
       rules: fromJS(props.rules),
       sites: props.sites,
+      globalRuleVariables: props.globalRuleVariables,
       mode: props.mode || 'ALL',
       viewRule: null,
     };
@@ -34,6 +37,9 @@ export default class Rules extends Component {
     }
     if (data && data.mode && data.mode.newValue) {
       this.setState({ mode: data.mode.newValue });
+    }
+    if (data && data.globalRuleVariables && data.globalRuleVariables.newValue) {
+      this.setState({ globalRuleVariables: data.globalRuleVariables.newValue });
     }
   }
 
@@ -58,6 +64,12 @@ export default class Rules extends Component {
 
   handleOnRuleConfigurationChange = (id, { key, value }) => {
     rulesStore.update(id, { configuration: { [key]: value } });
+  }
+
+  handleOnGlobalRuleVariableChange = (name) => ({ target: { value } }) => {
+    chrome.storage.local.get(['globalRuleVariables'], ({ globalRuleVariables }) => {
+      chrome.storage.local.set({ globalRuleVariables: { ...globalRuleVariables, [name]: value } });
+    });
   }
 
   toggleRuleStatus = (id) => {
@@ -121,6 +133,14 @@ export default class Rules extends Component {
 
     const mode = this.state.sites.match(/^\*:\/\/*/) ? 'ALL' : 'CUSTOM';
 
+    const globalRuleVariableEntries = Config.availableGlobalRuleVariables.map(({ name, label }) => {
+      return {
+        name,
+        label,
+        value: this.state.globalRuleVariables[name],
+      };
+    });
+
     return (
       <div className="f19n-rules">
         <header className="Header Section">
@@ -134,6 +154,11 @@ export default class Rules extends Component {
         </header>
 
         <EnabledSites mode={mode} onModeChange={this.updateMode} sites={this.state.sites} onChange={this.updateSites} />
+
+        <GlobalRuleVariables
+          onChange={this.handleOnGlobalRuleVariableChange}
+          entries={globalRuleVariableEntries}
+        />
 
         <div className="Wrapper">
           <div className="Section rules">

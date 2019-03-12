@@ -6,11 +6,14 @@ let proxyIframe = null;
 const stack = [];
 const callbacks = {};
 
-const getRuleContextGlobals = () => {
-  return {
-    codeviewUrl: chrome.extension.getURL('codeview.html'),
-    rulesUrl: chrome.extension.getURL('rules.html'),
-  };
+const getRuleContextGlobals = (callback) => {
+  chrome.storage.local.get(['globalRuleVariables'], ({ globalRuleVariables }) => {
+    return callback({
+      codeviewUrl: chrome.extension.getURL('codeview.html'),
+      rulesUrl: chrome.extension.getURL('rules.html'),
+      variables: globalRuleVariables,
+    });
+  });
 };
 
 window.addEventListener('message', (event) => {
@@ -74,7 +77,8 @@ export const postMessage = (data, origin) => {
 
 export const runRule = (rule, args, callback) => {
   const runId = Math.round(Math.random() * 10000000);
-  const ruleContextGlobals = getRuleContextGlobals();
-  callbacks[runId] = callback;
-  postMessage({ command: 'runRule', configuration: rule.configuration, name: rule.name, body: rule.body, args, runId, ruleContextGlobals }, '*');
+  getRuleContextGlobals((ruleContextGlobals) => {
+    callbacks[runId] = callback;
+    postMessage({ command: 'runRule', configuration: rule.configuration, name: rule.name, body: rule.body, args, runId, ruleContextGlobals }, '*');
+  });
 };

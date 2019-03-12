@@ -7,7 +7,7 @@ import Rules from './components/Rules/Rules';
 
 chrome.storage.local.get((data) => {
   rulesStore.all((rules) => {
-    let { sites, mode } = data;
-    ReactDOM.render(<Rules rules={rules} sites={sites} mode={mode} />, document.getElementById('app'));
+    const { sites, mode, globalRuleVariables } = data;
+    ReactDOM.render(<Rules rules={rules} sites={sites} mode={mode} globalRuleVariables={globalRuleVariables} />, document.getElementById('app'));
   });
 });
