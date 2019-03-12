@@ -10,7 +10,7 @@ function(page, done) {
       murl = medias[0].href.trim();
       more = "<a href='"+murl+"' target='_blank'>"+murl+"</a>"
     }
-    done(this.createResult("DOM","Seperate mobile URL "+more+" discovered."+this.partialCodeLink(medias), "warning", "Idle"));
+    done(this.createResult("HEAD","Seperate mobile URL "+more+" discovered."+this.partialCodeLink(medias), "warning", "Idle"));
   }
   done();
 }

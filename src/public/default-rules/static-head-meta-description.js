@@ -14,7 +14,7 @@ function(page, done) {
         //you can create a link showing only the partial code of a nodeList
         //msg = msg+' '+this.partialCodeLink(dom);
         var type = 'info'; //should be 'info', 'warning', 'error'
-        done(this.createResult(lable, msg, type, what));
+        done(this.createResult(lable, msg, type, what, 760));
     }
     done(this.createResult('BODY', 'No meta description found.', 'error', what));
 }

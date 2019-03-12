@@ -13,7 +13,7 @@ function(page,done)
 		{
 			type = "warning";
 		}
-		done(that.createResult('DOM', 'Shortlink detected: <a href="'+shortlink+'" target="_top">'+shortlink+'</a>'+that.partialCodeLink(shortlink_elem), type));return;
+		done(that.createResult('HEAD', 'Shortlink detected: <a href="'+shortlink+'" target="_top">'+shortlink+'</a>'+that.partialCodeLink(shortlink_elem), type));return;
 	}
 	done();
 }

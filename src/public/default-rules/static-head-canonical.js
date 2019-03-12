@@ -19,7 +19,7 @@ function(page, done) {
                 done(this.createResult('HEAD', text, 'warning', what));
             } else {
                 var text = `<a href="https://support.google.com/webmasters/answer/139066?hl=en">Canonical</a>: <a href='${href}' target='_top'>${href}</a> ` + this.partialCodeLink(c);
-                done(this.createResult('HEAD', text, 'info', what));
+                done(this.createResult('HEAD', text, 'info', what, 850));
             }
         } else {
             done(this.createResult('HEAD', '<a href="https://webmasters.googleblog.com/2013/04/5-common-mistakes-with-relcanonical.html" target="_top">Multiple canonical found within the static HTML.</a> ' + this.partialCodeLink(c), 'error', what));
