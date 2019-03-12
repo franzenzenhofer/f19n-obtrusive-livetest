@@ -12,7 +12,7 @@ function(page,done)
 		let text =  "Unsecure http:// connection (not http<b>s</b>://) with user data elements."+that.partialCodeLink(inputs)+that.highlightLink(selector);
 		let type = 'warning';
 		let what = 'idle';
-		done(that.createResult('DOM', text, type, what)); return;
+		done(that.createResult('BODY', text, type, what)); return;
 	}
 	done();return;
 }
