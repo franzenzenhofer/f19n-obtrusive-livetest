@@ -59,5 +59,5 @@
 		msg = msg + " All "+scripts.length+" scripts:"+that.partialCodeLink(scripts);
 	}
 
-	done(that.createResult(lable, msg, type, what));return; 
+	done(that.createResult(lable, msg, type, what, 550));return; 
 }

@@ -20,7 +20,7 @@ function(page, done) {
       text = `${url} → <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes${anchor}" target="_blank">HTTP ${sc}</a>`;
     }
     text = text + this.partialCodeLink(rawHttpHeader);
-    done(this.createResult('HTTP', text, type)); return;
+    done(this.createResult('HTTP', text, type, null, 700)); return;
   }
   done();
 }

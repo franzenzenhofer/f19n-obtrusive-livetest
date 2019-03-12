@@ -27,7 +27,7 @@ function(page, done) {
           }
         )
         //var rellist='<br><textarea readonly>'+codestring+'</textarea>';
-      done(this.createResult(lable, alternates.length+' link-rel-alternate found. '+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type, what));
+      done(this.createResult(lable, alternates.length+' link-rel-alternate found. '+this.partialCodeLink(canonical, alternates)+'<br>'+linkstring, type, what, 710));
     }
     else {
       //return this.createResult(lable, 'No link-rel-alternate-hreflang found.', type, what);

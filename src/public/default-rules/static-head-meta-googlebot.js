@@ -18,7 +18,7 @@ function(page, done) {
 
     msg = 'Meta Googlebot: <a href="https://developers.google.com/webmasters/control-crawl-index/docs/robots_meta_tag#valid-indexing--serving-directives">'+content+'</a>'+this.partialCodeLink(elements);
 
-    done(this.createResult('HEAD', msg, 'info', what));
+    done(this.createResult('HEAD', msg, 'info', what, 600));
     return null;
   }
 
