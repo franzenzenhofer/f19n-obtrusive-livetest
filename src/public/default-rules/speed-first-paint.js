@@ -3,11 +3,20 @@ firstPaint = window.chrome.loadTimes().firstPaintTime * 1000;
 api.firstPaintTime = firstPaint - window.performance.timing.navigationStart;
 
 */
+
+//based on this spec https://developers.google.com/web/updates/2017/12/chrome-loadtimes-deprecated 
 function(page, done){
-  var clt = page.getChromeLoadTimes();
-  var wt = page.getWindowPerformanceTiming();
-  var first_paint = clt.firstPaintTime * 1000;
-  var first_paint_time = first_paint - wt.navigationStart;
+  var paint =  page.getWindowPerformancePaint();
+  var first_paint_object = paint[0];
+  if(first_paint_object.name==="first-paint")
+  {
+    var first_paint_time = Math.round(first_paint_object.startTime);
+  }
+  else
+  {
+    done();
+    return;
+  }
 
   var text = "Time to first paint: "+first_paint_time+"ms."
 

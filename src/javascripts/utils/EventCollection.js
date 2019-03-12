@@ -51,12 +51,25 @@ export default class EventCollection {
   }
 
   getWindowPerformance() {
-    return this.windowPerformanceEvent().snapshot;
+    let e = this.windowPerformanceEvent().snapshot;
+
+    return e;
   }
 
   getWindowPerformanceTiming() {
-    let e = this.windowPerformanceEvent();
-    return e.snapshot.timing
+    let e = this.getWindowPerformance();
+
+    return e.performance.timing;
+  }
+
+  getWindowPerformanceNavigation() {
+    let e = this.getWindowPerformance();
+    return e.navigation[0];
+  }
+
+  getWindowPerformancePaint() {
+    let e = this.getWindowPerformance();
+    return e.paint;
   }
 
   windowPerformanceNavigationTimingEvent()
