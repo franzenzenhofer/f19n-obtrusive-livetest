@@ -1,9 +1,18 @@
 function(page, callback){
   var that = this;
+  //configuration no longer necessary if global API key is set
   var key = '%GOOGLEAPIKEY%'; //<-- add your API key here https://developers.google.com/speed/docs/insights/v2/first-app#APIKey din't forget to enable it for Google Page Speed Insights
-  if(key==='%'+'GOOGLEAPIKEY%'){
-    callback(that.createResult('SPEED', '"<i>Old</i> Page Speed Insights mobile v2" rule not yet enabled! Set <a href="https://developers.google.com/speed/docs/insights/v4/first-app#APIKey" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
+  const globals = that.getGlobals();
+  if(!globals.variables.google_page_speed_insights_key)
+  {
+    if(key==='%'+'GOOGLEAPIKEY%'){
+    callback(that.createResult('SPEED', '"<i>Old</i> Page Speed Insights desktop v2" rule not yet enabled! Set <a href="https://developers.google.com/speed/docs/insights/v4/first-app#APIKey" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
     return;
+    }
+  }
+  else
+  {
+    key = globals.variables.google_page_speed_insights_key;
   }
   var strategy = 'mobile';
   var url = page.getURL('first');

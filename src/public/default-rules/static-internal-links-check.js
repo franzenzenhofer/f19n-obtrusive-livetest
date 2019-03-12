@@ -4,7 +4,6 @@
   var mx_number_of_urls_tested_by_page = '%MAX_NR_OF_URLS_TO_TEST%'; //how many URLs to test per page
 
   mx_number_of_urls_tested_by_page = parseInt(mx_number_of_urls_tested_by_page);
-  console.log(mx_number_of_urls_tested_by_page);
   if(mx_number_of_urls_tested_by_page <= 0 || isNaN(mx_number_of_urls_tested_by_page)){mx_number_of_urls_tested_by_page = 15;} 
   
   var limit_reached = false;

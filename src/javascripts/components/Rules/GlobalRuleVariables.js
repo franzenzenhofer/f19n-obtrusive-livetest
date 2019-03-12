@@ -4,21 +4,27 @@ export default class GlobalRuleVariables extends Component {
   render() {
     const { onChange, entries } = this.props;
 
-    const renderInput = ({ label, name, value }) => {
+    const renderInput = ({ label, name, value, url, msg }) => {
       return (
-        <div className="" key={`${name}`}>
-          <label>{label}
-            <input type="text" onChange={onChange(name)} value={value} />
+        <li><div className="" key={`${name}`}>
+          <label>
+            <input id={name} type="text" onChange={onChange(name)} value={value} />&nbsp; {label} {url && 
+              <a href={url} target="_blank">{url}</a>
+            } {msg && 
+              <span>- {msg}</span>
+            }
           </label>
-        </div>
+        </div></li>
       );
     };
 
     return (
       <div className="Header-subHeader Section sites">
         <div className="Wrapper">
-          <h2>Global rule variables</h2>
+          <h2>Global Variables</h2>
+          <ul>
           {entries.map(renderInput)}
+          </ul>
           <button className="Button Button--haptic" onClick={() => {}}>Apply</button>
         </div>
       </div>

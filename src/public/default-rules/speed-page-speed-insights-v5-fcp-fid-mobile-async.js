@@ -1,9 +1,18 @@
 function(page, callback){
   var that = this;
-  var key = '%GOOGLEAPIKEY_PSI_NEW%'; //<-- add your API key here https://developers.google.com/speed/docs/insights/v2/first-app#APIKey din't forget to enable it for Google Page Speed Insights
-  if(key==='%'+'GOOGLEAPIKEY_PSI_NEW%'){
-    callback(that.createResult('SPEED', '"Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a>" rule not yet enabled! Set <a href="https://developers.google.com/speed/docs/insights/v5/get-started" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
+  //configuration no longer necessary if global API key is set
+  var key = '%GOOGLEAPIKEY_PSI_NEW%'; //<-- add your API key here https://developers.google.com/speed/docs/insights/v5/get-started 
+  const globals = that.getGlobals();
+  if(!globals.variables.google_page_speed_insights_key)
+  {
+    if(key==='%'+'GOOGLEAPIKEY_PSI_NEW%'){
+    callback(that.createResult('SPEED', '<b>New</b> "Page Speed Insights v5 desktop" rule not yet enabled! Set <a href="https://developers.google.com/speed/docs/insights/v5/get-started" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
     return;
+    }
+  }
+  else
+  {
+    key = globals.variables.google_page_speed_insights_key;
   }
   var strategy = 'mobile';
   var url = page.getURL('first');

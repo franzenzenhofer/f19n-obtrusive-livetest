@@ -133,11 +133,13 @@ export default class Rules extends Component {
 
     const mode = this.state.sites.match(/^\*:\/\/*/) ? 'ALL' : 'CUSTOM';
 
-    const globalRuleVariableEntries = Config.availableGlobalRuleVariables.map(({ name, label }) => {
+    const globalRuleVariableEntries = Config.availableGlobalRuleVariables.map(({ name, label, url, msg }) => {
       return {
         name,
         label,
         value: this.state.globalRuleVariables[name],
+        url,
+        msg,
       };
     });
 

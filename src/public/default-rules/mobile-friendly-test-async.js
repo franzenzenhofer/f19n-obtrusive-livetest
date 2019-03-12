@@ -1,10 +1,21 @@
 function(page, done){
   //warning the mobile friendly API is highly unstable (lots of 429 and 502)
   var that = this;
+  //configuration no longer necessary if global key is set
   var key = '%GOOGLE_API_KEY%';//<-- add your Google API key, get one here https://developers.google.com/webmaster-tools/search-console-api/v1/configure 
-  if(key==='%'+'GOOGLE_API_KEY%'){
-    done(that.createResult('MOBILE', '"Mobile Friendly Test Async" rule not yet enabled! Set <a href="https://developers.google.com/webmaster-tools/search-console-api/v1/configure" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
-    return;
+  console.log('globals');
+  const globals = that.getGlobals();
+  console.log(globals);
+  if(!globals.variables.google_mobile_friendly_test_key)
+  {
+    if(key==='%'+'GOOGLE_API_KEY%'){
+      done(that.createResult('MOBILE', '"Mobile Friendly Test Async" rule not yet enabled! Set <a href="https://developers.google.com/webmaster-tools/search-console-api/v1/configure" target="_blank">Google API Key</a> in <a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.', "warning"));
+      return;
+    }
+  }
+  else
+  {
+    key = globals.variables.google_mobile_friendly_test_key;
   }
   var url2test = page.getURL('first');
   var mft ='https://searchconsole.googleapis.com/v1/urlTestingTools/mobileFriendlyTest:run?key='+key;
