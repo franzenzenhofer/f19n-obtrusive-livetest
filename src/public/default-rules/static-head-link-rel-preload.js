@@ -18,8 +18,11 @@
 		msg = msg + n.length+" link[rel=preload] "+elements+" found."+that.partialCodeLink(n);
 		done(that.createResult(lable, msg, type, what));return; 
 	}
+	//there is a bug in there somewhere
+	//done(that.createResult(lable, "No link[rel=preload] used.", "warning", what));return;
+	done(that.createResult(lable, "No link[rel=preload] used.", "warning", what));return; 
 
-	done(that.createResult(lable, "No link[rel=preload] used.", "warning", what));return;
+
 
 }
 //todo the same for itemtype

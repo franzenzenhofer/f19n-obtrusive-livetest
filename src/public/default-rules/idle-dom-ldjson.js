@@ -2,7 +2,7 @@
 {
 	let that = this; 
 	
-	let lable = "HEAD";
+	let lable = "DOM";
 	let msg = "";
 	let type = "info"; 
 	let what = "Idle";
