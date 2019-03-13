@@ -220,7 +220,7 @@ function(page,done)
       is_done = true;
       return; 
     }
-    done();
+    done(that.createResult('HEAD', "Link-Rel-Alternate-Hreflang was checked succesfully and is correct!", 'info', 'static', 709));
     is_done = true;
     return;
   }

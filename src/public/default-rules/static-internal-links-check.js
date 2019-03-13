@@ -165,7 +165,7 @@
 
   			that.fetch(url_to_fetch, {
 					responseFormat: 'text',
-					method: 'HEAD'
+					method: 'GET'
 					}, (response) =>
           				{
           	if(response.redirected === true)
