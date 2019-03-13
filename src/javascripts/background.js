@@ -153,11 +153,17 @@ const findOrCreateCollector = (tabId) => {
   return collector[tabId];
 };
 
+//include fix that when pages put a history state update to itself it does not trigger a re-evaluation
 chrome.webNavigation.onHistoryStateUpdated.addListener((data) => {
+  let old_url = '';
   const { tabId: id, url } = data;
   ifPanelOpenForTab({ id, url }, () => {
     if (data.frameId === 0) {
-      findOrCreateCollector(id).pushEvent(data, 'onHistoryStateUpdated');
+      if(old_url !== url)
+      {
+        findOrCreateCollector(id).pushEvent(data, 'onHistoryStateUpdated');
+        old_url = url;
+      }
     }
   });
 }, filter);
