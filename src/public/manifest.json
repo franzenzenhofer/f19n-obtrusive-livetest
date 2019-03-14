@@ -46,7 +46,15 @@
     "all_frames": false,
     "js": ["js/document_idle.js", "js/content_script.js"]
   }],
+  "oauth2": {
+    "client_id": "335346275770-p8vif5hh6sj238tq5bh1rmble8r1e9pt.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/webmasters.readonly",
+      "https://www.googleapis.com/auth/analytics.readonly"
+    ]
+  },
   "permissions": [
+    "identity",
     "management",
     "storage",
     "tabs",

@@ -7,11 +7,12 @@ const stack = [];
 const callbacks = {};
 
 const getRuleContextGlobals = (callback) => {
-  chrome.storage.local.get(['globalRuleVariables'], ({ globalRuleVariables }) => {
+  chrome.storage.local.get(['globalRuleVariables', 'googleApiAccessToken'], ({ globalRuleVariables, googleApiAccessToken }) => {
     return callback({
       codeviewUrl: chrome.extension.getURL('codeview.html'),
       rulesUrl: chrome.extension.getURL('rules.html'),
       variables: globalRuleVariables,
+      googleApiAccessToken,
     });
   });
 };

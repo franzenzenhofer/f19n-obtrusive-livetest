@@ -10,15 +10,18 @@ import GlobalRuleVariables from './GlobalRuleVariables';
 
 import rulesStore from './../../store/rules';
 import Config from './../../config';
+import GoogleApiOauth from './GoogleApiOauth';
 
 export default class Rules extends Component {
   constructor(props) {
     super(props);
+    const { sites, googleApiAccessToken, globalRuleVariables, mode, rules } = props;
     this.state = {
-      rules: fromJS(props.rules),
-      sites: props.sites,
-      globalRuleVariables: props.globalRuleVariables,
-      mode: props.mode || 'ALL',
+      rules: fromJS(rules),
+      sites,
+      globalRuleVariables,
+      googleApiAccessToken,
+      mode: mode || 'ALL',
       viewRule: null,
     };
 
@@ -40,6 +43,9 @@ export default class Rules extends Component {
     }
     if (data && data.globalRuleVariables && data.globalRuleVariables.newValue) {
       this.setState({ globalRuleVariables: data.globalRuleVariables.newValue });
+    }
+    if (data && data.googleApiAccessToken) {
+      this.setState({ googleApiAccessToken: data.googleApiAccessToken.newValue });
     }
   }
 
@@ -69,6 +75,20 @@ export default class Rules extends Component {
   handleOnGlobalRuleVariableChange = (name) => ({ target: { value } }) => {
     chrome.storage.local.get(['globalRuleVariables'], ({ globalRuleVariables }) => {
       chrome.storage.local.set({ globalRuleVariables: { ...globalRuleVariables, [name]: value } });
+    });
+  }
+
+  handleGoogleOauthConnect = () => {
+    chrome.identity.getAuthToken({ interactive: true }, (token) => {
+      chrome.storage.local.set({ googleApiAccessToken: token });
+    });
+  }
+
+  handleGoogleOauthRevoke = () => {
+    fetch('https://accounts.google.com/o/oauth2/revoke?token=' + this.state.googleApiAccessToken).then(() => {
+      chrome.identity.removeCachedAuthToken({ token: this.state.googleApiAccessToken }, () => {
+        chrome.storage.local.remove('googleApiAccessToken');
+      });
     });
   }
 
@@ -160,6 +180,12 @@ export default class Rules extends Component {
         <GlobalRuleVariables
           onChange={this.handleOnGlobalRuleVariableChange}
           entries={globalRuleVariableEntries}
+        />
+
+        <GoogleApiOauth
+          onConnect={this.handleGoogleOauthConnect}
+          onRevoke={this.handleGoogleOauthRevoke}
+          connected={this.state.googleApiAccessToken}
         />
 
         <div className="Wrapper">
