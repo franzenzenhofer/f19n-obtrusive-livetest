@@ -29,7 +29,7 @@ function(page, done) {
         status = "warning";
       }
 
-      done(this.createResult('DOM', msg, status));
+      done(this.createResult('DOM', msg, status, null, 1000));
     });
   //if(!(static_dom && idle_dom)){ return null; }
   //wait forever
