@@ -41,10 +41,10 @@
     "draggable": "^4.0.4",
     "immutable": "^3.8.1",
     "lodash": "^4.17.5",
-    "react": "^15.0.2",
+    "react": "^16.8.4",
     "react-addons-update": "^15.0.2",
-    "react-dom": "^15.0.1",
-    "react-frame-component": "^0.6.5",
+    "react-dom": "^16.8.4",
+    "react-frame-component": "^4.1.0",
     "react-highlight": "^0.12.0",
     "react-modal": "^1.2.1",
     "simple-functional-robots-txt-parser": "franzenzenhofer/simple-functional-robots-txt-parser"
