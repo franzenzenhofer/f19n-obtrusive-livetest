@@ -26,5 +26,5 @@
 		msg = "Unkown error! Could not collect the lifecycle of the page. Collected data:"+this.stringifyLink(page);
 		type = "error";
 	}
-	done(that.createResult(lable, msg, type, what));return; 
+	done(that.createResult(lable, msg, type, what, 1000));return; 
 }
