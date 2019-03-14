@@ -6,11 +6,11 @@ export default class GlobalRuleVariables extends Component {
 
     const renderInput = ({ label, name, value, url, msg }) => {
       return (
-        <li><div className="" key={`${name}`}>
+        <li key={`${name}`}><div>
           <label>
-            <input id={name} type="text" onChange={onChange(name)} value={value} />&nbsp; {label} {url && 
+            <input id={name} type="text" onChange={onChange(name)} value={value} />&nbsp; {label} {url &&
               <a href={url} target="_blank">{url}</a>
-            } {msg && 
+            } {msg &&
               <span>- {msg}</span>
             }
           </label>
