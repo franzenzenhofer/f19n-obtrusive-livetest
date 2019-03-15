@@ -54,16 +54,25 @@ If you want to digg deeper, well clone this rep. and then:
 npm install
 ```
 
-### Run the build process
+### Run the build process (Development only)
 
 Run the build process once (for this you need grunt-cli installed `npm install -g grunt-cli`). It will watch for changed files and automatically reload the extension if necessary.
 
 ```shell
-grunt 
+grunt
 ```
 
 Open [chrome://extensions/](chrome://extensions/) and point the installation of an unpacked extension to the ./build folder.
 
+### Build production ready files + archive
+
+Run the following command to build a production ready zip archive which can be uploade to Google Extension Dashboard.
+
+```shell
+grunt dist
+```
+
+Archive will be saved to `/dist/export.zip`.
 
 ## Rules
 

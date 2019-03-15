@@ -1,6 +1,8 @@
 const sass = require('node-sass');
 const path = require('path');
+const fs = require('fs');
 const webpack = require('webpack');
+const jsonFormat = require('json-format');
 
 const webpackConfig = ({ mode, buildDir }) => {
   return {
@@ -57,16 +59,18 @@ module.exports = (grunt) => {
       dev: {
         options: {
           variables: {
-            webpackMode: 'development',
+            mode: 'development',
             buildDir: 'build',
+            googleAppClientId: '335346275770-p8vif5hh6sj238tq5bh1rmble8r1e9pt.apps.googleusercontent.com',
           },
         },
       },
       dist: {
         options: {
           variables: {
-            webpackMode: 'production',
+            mode: 'production',
             buildDir: 'dist',
+            googleAppClientId: '335346275770-6d6s9ja0h7brn24ghf3vqa9kv7ko5vfv.apps.googleusercontent.com',
           },
         },
       },
@@ -117,7 +121,7 @@ module.exports = (grunt) => {
     webpack: {
       someName: () =>
         webpackConfig({
-          mode: grunt.config.get('webpackMode'),
+          mode: grunt.config.get('mode'),
           buildDir: grunt.config.get('buildDir'),
         }),
     },
@@ -152,7 +156,28 @@ module.exports = (grunt) => {
   grunt.loadNpmTasks('grunt-notify');
   grunt.loadNpmTasks('grunt-zip');
 
-  grunt.registerTask('main', ['clean', 'webpack', 'sass', 'copy']);
+  grunt.registerTask('manifest', 'Set manifest keys depending on environment.', function() {
+    const done = this.async();
+    const buildDir = grunt.config.get('buildDir');
+    const manifestFile = path.resolve(__dirname, `./${buildDir}/manifest.json`);
+
+    const manifestContent = fs.readFileSync(manifestFile, 'utf8');
+    const manifestJson = JSON.parse(manifestContent);
+
+    // Set google client id for oauth connect
+    if (manifestJson.oauth2 && manifestJson.oauth2.client_id) {
+      manifestJson.oauth2.client_id = grunt.config.get('googleAppClientId');
+    }
+
+    // Remove "key" (public key) which is only set to have consistent extension IDs in development mode
+    if (grunt.config.get('mode') !== 'development') {
+      delete(manifestJson.key);
+    }
+
+    fs.writeFile(manifestFile, jsonFormat(manifestJson, { type: 'space', size: 2 }).normalize(), 'utf8', done);
+  });
+
+  grunt.registerTask('main', ['clean', 'webpack', 'sass', 'copy', 'manifest']);
 
   const defaultTasks = ['config:dev', 'main'];
 

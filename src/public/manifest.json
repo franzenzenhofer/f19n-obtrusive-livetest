@@ -48,7 +48,7 @@
     "js": ["js/document_idle.js", "js/content_script.js"]
   }],
   "oauth2": {
-    "client_id": "335346275770-p8vif5hh6sj238tq5bh1rmble8r1e9pt.apps.googleusercontent.com",
+    "client_id": "will be set via grunt task 'manifest'",
     "scopes": [
       "https://www.googleapis.com/auth/webmasters.readonly",
       "https://www.googleapis.com/auth/analytics.readonly"
