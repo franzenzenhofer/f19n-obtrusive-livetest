@@ -7,6 +7,7 @@
     "default_title": "Fullstackoptimization Live Test",
     "default_popup": "popup.html"
   },
+  "key": "developmentkeyforconsistentextid",
   "icons": {
     "16": "images/icon.png",
     "48": "images/icon.png",
