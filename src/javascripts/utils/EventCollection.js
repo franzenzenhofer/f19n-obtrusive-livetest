@@ -3,6 +3,10 @@ import { filter, last, first } from 'lodash';
 export default class EventCollection {
   constructor(events) {
     this.events = events;
+    this.cachedIdleDom = false;
+    this.cachedStaticDom = false;
+    this.cacheFetchedStaticDom = false;
+    this.cacheDomContentLoadedDom = false;
     //console.log(chrome.extension.getURL('codeview.html'));
   }
 
@@ -22,11 +26,13 @@ export default class EventCollection {
     return first(this.eventsOfType(type));
   }
 
+  
   documentIdleEvent() {
     let event = this.lastEventOfType('documentIdle');
     if (event && event.html) {
 
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      this.cachedIdleDom = document;
       event = Object.assign(event, { document });
     }
     return event;
@@ -90,6 +96,7 @@ export default class EventCollection {
     if (event && event.html) {
 
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      this.cachedStaticDom = document;
       event = Object.assign(event, { document });
     }
     return event;
@@ -100,6 +107,7 @@ export default class EventCollection {
     if (event && event.html) {
 
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      this.cacheDomContentLoadedDom = document;
       event = Object.assign(event, { document });
     }
     return event;
@@ -110,6 +118,7 @@ export default class EventCollection {
     if (event && event.html) {
 
       const document = (new DOMParser()).parseFromString(event.html, 'text/html');
+      this.cacheFetchedStaticDom = document;
       event = Object.assign(event, { document });
     }
     return event;
@@ -117,6 +126,7 @@ export default class EventCollection {
 
   // helper function to get the static HTML Dom
   getStaticDom() {
+    if(this.cachedStaticDom) { return this.cachedStaticDom;}
     const e = this.documentEndEvent();
     //const e = this.domContentLoadedEvent();
     //const e = this.fetchEvent(); //sadly the fetch event is not relieable enough
@@ -128,11 +138,13 @@ export default class EventCollection {
   }
 
   getFetchedStaticDom() {
+    if(this.cacheFetchedStaticDom){return this.cacheFetchedStaticDom; }
     const e = this.fetchEvent();
     return e && e.document;
   }
 
   getDomContentLoadedDom() {
+    if(this.cacheDomContentLoadedDom){return this.cDomContentLoadedDom; }
     const e = this.domContentLoadedEvent();
     return e && e.document;
   }
@@ -142,6 +154,7 @@ export default class EventCollection {
   }
 
   getIdleDom() {
+    if(this.cachedIdleDom) { return this.cachedIdleDom;}
     const e = this.documentIdleEvent();
     return e && e.document;
   }
@@ -216,23 +229,6 @@ export default class EventCollection {
 
   getURL(what) {
 
-/*
-
-    //last
-    if(what==="last")
-    {
-      var onHeadersReceivedEvent = this.lastEventOfType('onHeadersReceived');
-    }
-    else {
-      var onHeadersReceivedEvent = this.firstEventOfType('onHeadersReceived');
-    }
-      var { url } = onHeadersReceivedEvent;
-
-    if(!url)
-    {
-
-    }
-*/
     let events = this.events;
     let url = undefined;
     //first

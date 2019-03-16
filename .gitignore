@@ -33,3 +33,5 @@ src/.DS_Store
 *.zip
 
 build.zip
+
+package-lock.json
