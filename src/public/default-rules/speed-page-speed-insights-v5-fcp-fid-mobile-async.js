@@ -1,4 +1,6 @@
 function(page, callback){
+  //if this rule does not deliver anything back, we fail silently 
+  //as it's just information response
   var that = this;
   //configuration no longer necessary if global API key is set
   var key = '%GOOGLEAPIKEY_PSI_NEW%'; //<-- add your API key here https://developers.google.com/speed/docs/insights/v5/get-started 
@@ -25,7 +27,8 @@ function(page, callback){
   .then(
     function(response) {
       if (response.status !== 200) {
-        callback(that.createResult('SPEED', 'No Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a> data. (Response Status '+response.status+' '+response.text+')', "warning"));
+        callback();
+        //callback(that.createResult('SPEED', 'No Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a> data. (Response Status '+response.status+' '+response.text+')', "warning"));
         return;
       }
       response.json().then(function(data) {
@@ -36,7 +39,8 @@ function(page, callback){
           var first_contentful_paint_score=data.loadingExperience.metrics.FIRST_CONTENTFUL_PAINT_MS.category;
           var first_input_delay_score=data.loadingExperience.metrics.FIRST_INPUT_DELAY_MS.category;
         } else {
-          callback(that.createResult('SPEED', 'No Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a> data.', "warning"));
+          callback();
+          //callback(that.createResult('SPEED', 'No Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a> data.', "warning"));
           return;
         }
 
@@ -63,7 +67,8 @@ function(page, callback){
     }
   )
   .catch(function(err) {
-    callback(that.createResult('SPEED', 'No Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a> data. '+err+' <a href="https://developers.google.com/speed/pagespeed/insights/?hl=en&url='+url+'" target="_blank">Page Speed Insights</a>', "warning"));
+    callback(); return;
+    //callback(that.createResult('SPEED', 'No Page Speed Insights v5 Mobile <a href="https://developers.google.com/web/tools/lighthouse/audits/first-contentful-paint" target="_blank"> and <a href="https://developers.google.com/web/updates/2018/05/first-input-delay" target="_blank">FID</a> data. '+err+' <a href="https://developers.google.com/speed/pagespeed/insights/?hl=en&url='+url+'" target="_blank">Page Speed Insights</a>', "warning"));
   });
 
   //callback(this.createResult('test', "async test", "warning"));
