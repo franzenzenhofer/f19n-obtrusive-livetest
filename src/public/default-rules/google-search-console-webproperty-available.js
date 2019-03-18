@@ -23,12 +23,16 @@
     console.log('i have the token');
     let url = page.getURL('first');
     let uo = new URL(url);
-    let origin = uo.origin+'/'; 
+    let origin = uo.origin+'/';
     let api = 'https://www.googleapis.com/webmasters/v3/sites/'+encodeURIComponent(origin);
-    api = api +'?key='+googleApiAccessToken; 
-    
+
     console.log(api);
-    fetch(api).then((response)=>{
+
+    const headers = {
+        Authorization: `Bearer ${googleApiAccessToken}`,
+    };
+
+    fetch(api, { headers }).then((response)=>{
         console.log(api);
         console.log('success');
         console.log(response);
@@ -43,7 +47,7 @@
 
 
 
-    
+
 
 
 
