@@ -41,10 +41,10 @@ parser.host;     // => "example.com:3000"
     what_case = "with";
     what_case_opposite = "without";
   }
-  //console.log(new_url);
+  
   this.fetch(new_url, { responseFormat: 'text' }, (response) => {
-    //console.log('fetch response');
-    //console.log(response);
+    
+    
     if(response.status != 200)
     {
       type = 'warning';

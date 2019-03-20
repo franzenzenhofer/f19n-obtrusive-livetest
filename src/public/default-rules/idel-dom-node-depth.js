@@ -6,11 +6,11 @@ function(page, done) {
     		//console.log('new loop')
         var temp = d;
         do {
-        		//console.log(main);
+        		
         		if(main.nodeType == 1)
             {
             	d = d + 1;
-              //console.log(d);
+              
             }
             if(main.hasChildNodes()){
                 loop(main.firstChild,d);

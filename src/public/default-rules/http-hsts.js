@@ -17,7 +17,7 @@ function(page, done) {
     hsts_set = false;
   } else {
     var max_age = hsts.match(/max-age=(\d+)/);
-    console.log(max_age);
+    
     if (max_age) {
       hsts_duration = max_age[0];
       if (max_age[1] < 31536000) {

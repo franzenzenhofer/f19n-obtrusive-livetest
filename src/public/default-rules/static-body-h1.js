@@ -1,5 +1,5 @@
 function(page, done) {
-  //console.log('h1 h1');
+  
   var dom = page.getStaticDom();
   let selector = 'h1';
   var h1 = dom.querySelectorAll(selector);

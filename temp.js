@@ -29,7 +29,7 @@ var nodeToString = (stuff) =>
 
 var allNodesToString = (...stuffs) =>
 {
-	//console.log(stuffs);
+	
   stuffs = Array.prototype.slice.call(stuffs);
 	if(!stuffs){return false;}
 	var s = '';

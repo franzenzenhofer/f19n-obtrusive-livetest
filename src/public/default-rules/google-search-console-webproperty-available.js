@@ -1,6 +1,5 @@
 (page,done) =>
 {
-    console.log('google-search-console-check');
     var that = this;
     let lable = "GSC";
     let msg = "";
@@ -10,49 +9,49 @@
 
     //GSC API
     const { googleApiAccessToken } = this.getGlobals();
-    console.log('googleApiAccessToken');
-    console.log(googleApiAccessToken);
-    if(!googleApiAccessToken)
-    {
-        console.log('i have no token');
-        msg = "To get the most out of this app, connect it with Google Search Console and Google Analytics. "+'<a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>.';
-        type = "warning";
-        done(that.createResult(lable, msg, type, what, prio));
-        return null;
-    }
-    console.log('i have the token');
+
+    if(!googleApiAccessToken) {done();return null; }
+
     let url = page.getURL('first');
     let uo = new URL(url);
     let origin = uo.origin+'/';
     let api = 'https://www.googleapis.com/webmasters/v3/sites/'+encodeURIComponent(origin);
 
-    console.log(api);
+    
 
     const headers = {
         Authorization: `Bearer ${googleApiAccessToken}`,
     };
 
     fetch(api, { headers }).then((response)=>{
-        console.log(api);
-        console.log('success');
-        console.log(response);
-        console.log(response.data);
+        if(response.status!==200)
+        {
+            msg = "No access to "+origin+" in GSC.";
+            prio = 0; 
+            response.clone().json().then((data)=>{
+                msg = msg+" "+data.error.code+": "+data.error.message;
+                done(that.createResult(lable, msg, type, what, prio));
+                return null;
+            }).catch((err)=>{
+                console.log('err no access json parse')
+                console.log(err)
+            });
+        }
         response.json().then((data)=>{
-            console.log(data);
-        });
+            
+            prio = 500;
+            msg = "You have GSC access to "+data.siteUrl+" as \""+data.permissionLevel+"\".";
+            done(that.createResult(lable, msg, type, what, prio))
+            return null;
+            }).catch((err)=>{
+                console.log('err access json parse')
+                console.log(err)
+            });
+        
     }).catch((err)=>{
         console.log('err')
         console.log(err)
     });
-
-
-
-
-
-
-
-
-
-    done();
-    return null;
 }
+
+

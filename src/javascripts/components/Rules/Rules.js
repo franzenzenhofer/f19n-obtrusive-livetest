@@ -79,9 +79,9 @@ export default class Rules extends Component {
   }
 
   handleGoogleOauthConnect = () => {
-    console.log("in handleGoogleOauthConnect");
+    
     chrome.identity.getAuthToken({ interactive: true }, (token) => {
-      console.log("token "+token);
+      
       chrome.storage.local.set({ googleApiAccessToken: token });
     });
   }

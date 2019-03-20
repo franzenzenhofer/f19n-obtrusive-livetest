@@ -32,7 +32,7 @@ function(page, done) {
       }
     }
     var href = x.getAttribute('href');
-    //console.log(maindomain);
+    
     if(!href.includes('//')) {  return true; }
     if(href.includes(maindomain)) {
       return partOfDomain(href,maindomain)
@@ -48,7 +48,7 @@ function(page, done) {
   var diff_idle_paramstuff = [];
   var found = false;
   for (var ei of idle_paramstuff) {
-    //console.log(ei);
+    
     found = false;
     for (var es of static_paramstuff )
     {
@@ -63,8 +63,8 @@ function(page, done) {
     }
 
   }
-  //console.log('diff');
-  //console.log(diff_idle_paramstuff);
+  
+  
 
   if (static_paramstuff .length == 0 && idle_paramstuff.length == 0 && diff_idle_paramstuff == 0)
   {

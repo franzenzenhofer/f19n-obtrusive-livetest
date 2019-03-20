@@ -7,7 +7,8 @@ export default class EventCollection {
     this.cachedStaticDom = false;
     this.cacheFetchedStaticDom = false;
     this.cacheDomContentLoadedDom = false;
-    //console.log(chrome.extension.getURL('codeview.html'));
+    
+    this.does_domain_have_gsc_access = null;
   }
 
   events() {
@@ -259,5 +260,66 @@ export default class EventCollection {
   getUrl(what) { return getURL(what); }
   //TODO
   //getProtokoll
+
+  hasGscAccess = (token, hasF, noF) =>
+  {
+    
+      if(this.does_domain_have_gsc_access === true)
+      {
+        
+          hasF();return true;
+      }
+      if(this.does_domain_have_gsc_access === false)
+      {
+        
+        noF(); return false;
+      }
+      
+      if(!token){noF();return false;};
+
+      let url = this.getURL();
+      let uo = new URL(url);
+      let origin = uo.origin+'/';
+      let api = 'https://www.googleapis.com/webmasters/v3/sites/'+encodeURIComponent(origin);
+
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      fetch(api, { headers }).then((response)=>{
+          
+          if(response.status!==200)
+          {
+              
+              
+              response.clone().json().then((data)=>{
+                  
+                  
+                  
+                  noF();
+                  this.does_domain_have_gsc_access = false;
+                  return false;
+              });
+          } else
+          {
+          
+          
+          response.clone().json().then((data)=>{
+            
+            
+              
+              hasF();
+              this.does_domain_have_gsc_access = true;
+              return true;
+            });
+          }
+          
+          
+      }).catch((err)=>{
+          noF();
+          this.does_domain_have_gsc_access = false;
+          return false;
+      });
+      return null;
+  }
 
 }

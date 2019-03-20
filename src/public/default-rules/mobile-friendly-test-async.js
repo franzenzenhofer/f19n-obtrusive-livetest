@@ -3,9 +3,9 @@ function(page, done){
   var that = this;
   //configuration no longer necessary if global key is set
   var key = '%GOOGLE_API_KEY%';//<-- add your Google API key, get one here https://developers.google.com/webmaster-tools/search-console-api/v1/configure 
-  console.log('globals');
+  
   const globals = that.getGlobals();
-  console.log(globals);
+  
   if(!globals.variables.google_mobile_friendly_test_key)
   {
     if(key==='%'+'GOOGLE_API_KEY%'){

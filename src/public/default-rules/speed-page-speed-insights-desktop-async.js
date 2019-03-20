@@ -31,7 +31,7 @@ function(page, callback){
         return;
       }
       response.json().then(function(data) {
-      	//console.log(data);
+      	
 
         var desktop_speed_score=data.ruleGroups.SPEED.score;
 
