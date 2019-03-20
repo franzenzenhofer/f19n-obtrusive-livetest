@@ -1,3 +1,29 @@
+
+ /*POST https://www.googleapis.com/webmasters/v3/sites/https%3A%2F%2Fwww.fullstackoptimization.com%2F/searchAnalytics/query?fields=responseAggregationType%2Crows&key={YOUR_API_KEY}
+ 
+{
+ "startDate": "2019-02-01",
+ "endDate": "2019-03-03",
+ "dimensions": [
+  "page"
+ ],
+ "dimensionFilterGroups": [
+  {
+   "filters": [
+    {
+     "dimension": "page",
+     "expression": "https://www.fullstackoptimization.com/",
+     "operator": "equals"
+    }
+   ]
+  }
+ ],
+ "aggregationType": "auto"
+}
+ 
+}
+*/
+
 (page,done)=>
 {
     var that = this;
@@ -39,14 +65,14 @@
         let uo = new URL(url);
         let origin = uo.origin+'/';
 
-        let tql = 'https://search.google.com/search-console/performance/search-analytics?resource_id='+encodeURIComponent(origin)+'&breakdown=query&num_of_days=28&page=!'+encodeURIComponent(url);
+        let tql = 'https://search.google.com/search-console/performance/search-analytics?resource_id='+encodeURIComponent(origin)+'&breakdown=page&num_of_days=28&page=!'+encodeURIComponent(url);
         let tql_msg = '<a href="'+tql+'" target="_blank">GSC</a>';
         
         let req = {
             "startDate": sd,
             "endDate": ed,
             "dimensions": [
-             "query"
+             "page"
             ],
             "dimensionFilterGroups": [
              {
@@ -78,40 +104,21 @@
                 {
                     
                     
-                    
                     if(!data.rows)
                     {
                         type = "warning";
-                        msg = "No top query data."+" "+tql_msg
+                        msg = "No Search Analytics global page click/impression/CTR data."+" "+tql_msg
                         done(that.createResult(lable, msg, type, what, prio));
                         return null;
                     };
-                    for(let e of data.rows)
-                    {
-                        //let e = data[key];
-                        if(e.clicks!==0)
-                        {
-                            ca.push(e);
-                        }
-                        else
-                        {
-                            nca.push(e);
-                        }
-                        
-                    }
-                    nca.sort((a,b)=>{return b.impressions-a.impressions;});
-                    ca = ca.concat(nca);
-                    for(let e of ca)
-                    {
                     
-                        let pos = Math.ceil(e.position * 10) / 10
-                        ra.push('['+e.keys.join(" ")+"] ("+e.clicks+"/"+e.impressions+"/"+pos+")");
+                    let clicks = data.rows[0].clicks;
+                    let impressions = data.rows[0].impressions;
+                    let ctr = data.rows[0].ctr;
+                    let pctr = Math.round(ctr* 100 * 100) / 100
                     
-                    }
-                    
-                    let ma = ra.slice(0,5);
-                    prio = 1500;
-                    msg = "Top queries 28 days <span title='(Clicks/Impressions/Average Ranking) no market restriction'>(c/i/r)</span>: "+ma.join(", ")+that.partialCodeLink(ra)+" "+tql_msg;
+                    prio = 1490;
+                    msg = "Search Analytics page metrics (all markets): "+clicks+" clicks, "+impressions+" impressions, "+pctr+"% CTR "+that.partialCodeLink(JSON.stringify(data))+" "+tql_msg;
                     
                     done(that.createResult(lable, msg, type, what, prio));
                     //

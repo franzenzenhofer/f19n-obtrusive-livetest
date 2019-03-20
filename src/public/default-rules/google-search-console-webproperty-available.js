@@ -27,11 +27,16 @@
         if(response.status!==200)
         {
             msg = "No access to "+origin+" in GSC";
+            let msg_interlude="";
+            if(response.status==401)
+            {
+                msg_interlude=' - Have you tried turning "Google OAuth" on and off again? ';
+            }
             prio = 0; 
             response.clone().json().then((data)=>{
                 console.log(data);
                 //msg = msg+" ("+data.error.code+"). "+that.partialCodeLink(data.error.message);
-                msg = data.error.message+" ("+data.error.code+")";
+                msg = data.error.message+" ("+data.error.code+") "+msg_interlude+'<br><a href="'+that.getGlobals().rulesUrl+'" target="_blank">Settings</a>';
                 done(that.createResult(lable, msg, 'warning', what, prio));
                 return null;
             }).catch((err)=>{

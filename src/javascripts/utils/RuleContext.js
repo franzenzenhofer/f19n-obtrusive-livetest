@@ -75,6 +75,22 @@ export const fetch = (url, options, callback) => {
   window.parent.postMessage({ command: 'fetch', url, options, runId }, '*');
 };
 
+export const sinmpleGscFetch= (token, api, requestbody, callback) =>
+{
+    fetch(api,
+        {
+            method: "POST",
+            mode: 'cors',
+            headers: 
+            {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': 'Bearer '+token
+            },
+            body: JSON.stringify(requestbody)
+        }, success);
+}
+
 /*export const utf8TextLink = (str, anchor) =>
 {
   //str = String(str).replace(/"/g, '\\"');
@@ -200,5 +216,19 @@ export const highlightLink = (selector, anchortext="Highlight", bordercss="5px s
   let link = " <a href='javascript://' onclick=\"for(e of window.top.document.querySelectorAll('"+htmlEntitiesEncode(selector)+"')){e.style.border='"+htmlEntitiesEncode(bordercss)+"';}\">"+anchortext+"</a>";
   return link;
 }
+
+
+export const dateMinus = (minus = 0) => {
+  let date = new Date();
+  date.setDate(date.getDate() - minus);
+  
+  
+  let y = date.getFullYear();
+  let m = date.getMonth() + 1;
+  let d = date.getDate();
+  return '' + y + '-' + (m < 10 ? '0' : '') +m + '-' + (d < 10 ? '0' : '') + d;
+}
+
+
 
 
