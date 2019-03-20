@@ -26,11 +26,13 @@
     fetch(api, { headers }).then((response)=>{
         if(response.status!==200)
         {
-            msg = "No access to "+origin+" in GSC.";
+            msg = "No access to "+origin+" in GSC";
             prio = 0; 
             response.clone().json().then((data)=>{
-                msg = msg+" "+data.error.code+": "+data.error.message;
-                done(that.createResult(lable, msg, type, what, prio));
+                console.log(data);
+                //msg = msg+" ("+data.error.code+"). "+that.partialCodeLink(data.error.message);
+                msg = data.error.message+" ("+data.error.code+")";
+                done(that.createResult(lable, msg, 'warning', what, prio));
                 return null;
             }).catch((err)=>{
                 
