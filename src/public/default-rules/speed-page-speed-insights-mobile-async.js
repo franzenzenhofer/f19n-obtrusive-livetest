@@ -20,7 +20,6 @@ function(page, callback){
   var color = 'lightgreen';
   var m_color = 'lightgreen';
   var psi ='https://www.googleapis.com/pagespeedonline/v2/runPagespeed?strategy='+strategy+'&url='+url+'&key='+key;
-
   fetch(psi)
   .then(
     function(response) {

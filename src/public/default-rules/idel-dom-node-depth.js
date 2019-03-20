@@ -3,7 +3,7 @@ function(page, done) {
   function countDomDepth(main) {
     var depth = 0;
     var loop = function(main, d) {
-    		//console.log('new loop')
+    		
         var temp = d;
         do {
         		

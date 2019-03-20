@@ -307,12 +307,12 @@ function(page)
   var idle_text = parser.parseFromString(page.getIdleDom().body.innerText, "text/html").body.innerText;
   var static_text = parser.parseFromString(page.getStaticDom().body.innerText, "text/html").body.innerText;
 
-  console.log('hi');
-  console.log(idle_text);
-  console.log(static_text);                     //skfhjdsjfd
+  
+  
+                       //skfhjdsjfd
   if(idle_text && static_text)
   {
-    console.log('hiho');
+    
     var diff = Sh.similarity(Sh.of(static_text),Sh.of(idle_text));
     var diff_p = Math.round(diff*100).toFixed(2);
     return this.createResult('BODY', "Diff. static text / idle_text: "+diff_p+" ("+diff+")", 'info');

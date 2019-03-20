@@ -24,11 +24,11 @@
 		      "q": stringistring
 	   })
   }).then(function(response){
-  	console.log(response);
+  	
     if(response.status == 200)
     {
       response.json().then(function(data){
-      	console.log(data);
+      	
         if(data.mobileFriendliness=="MOBILE_FRIENDLY")
         {
           //done(that.createResult('MOBILE', "Page is <a href='"+mft_link+"' target='_blank'>Mobile Friendly</a>.", "info"));

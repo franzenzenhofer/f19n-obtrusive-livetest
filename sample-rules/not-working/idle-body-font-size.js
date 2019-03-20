@@ -15,9 +15,9 @@ function(page, done) {
   {
   	for (let i=0, max=elems.length; i < max; i++) {
      let f = window.getComputedStyle(elems[i]).fontSize;
-     console.log(elems[i]);
-     console.log("window.getComputedStyle");
-     console.log(f);
+     
+     
+     
      msg = msg+" "+f
 	}
     done(this.createResult('BODY',msg,'info','idle'));

@@ -1,5 +1,5 @@
 function (page, done) {
-	//console.log('robots.txt exists')
+	
 	let url = page.getURL("last")
 	if(!url){ done(); return; }
 	let u = new URL(url);

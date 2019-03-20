@@ -18,7 +18,7 @@ function(page, done) {
 	    	}
 	    	else
 	    	{
-	    		//console.log('URLS TESTEd'+urls_tested);
+	    		
 	    	}
 		}
 
@@ -60,7 +60,7 @@ function(page, done) {
 						catch(e)
 						{
 							//wehardcrash
-							console.log(e);
+							
 							done(that.createResult('URL', 'Could not finish robots.txt disallow check.', 'unfinished'));
 							return;
 						}

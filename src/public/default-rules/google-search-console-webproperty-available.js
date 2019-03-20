@@ -33,8 +33,8 @@
                 done(that.createResult(lable, msg, type, what, prio));
                 return null;
             }).catch((err)=>{
-                console.log('err no access json parse')
-                console.log(err)
+                
+                
             });
         }
         response.json().then((data)=>{
@@ -44,13 +44,13 @@
             done(that.createResult(lable, msg, type, what, prio))
             return null;
             }).catch((err)=>{
-                console.log('err access json parse')
-                console.log(err)
+                
+                
             });
         
     }).catch((err)=>{
-        console.log('err')
-        console.log(err)
+        
+        
     });
 }
 
