@@ -6,7 +6,7 @@ function(page, done) {
   if (h1.length>0) {
     if(h1.length === 1) {
       if(h1[0].innerText.trim()!='') {
-        done(this.createResult('BODY', 'H1: '+h1[0].innerText+this.partialCodeLink(h1)+this.highlightLink(selector, "Highlight H1", '5px solid green'), 'info', 'static', 900));
+        done(this.createResult('BODY', 'H1: '+h1[0].innerText+this.partialCodeLink(h1)+this.highlightLink(selector, "Highlight H1", '5px solid green'), 'info', 'static', 990));
         return null;
       }
       else {

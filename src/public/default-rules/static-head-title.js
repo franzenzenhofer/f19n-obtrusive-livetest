@@ -10,7 +10,7 @@ function(page, done) {
     var lable = 'HEAD';
     if (titletags.length > 0) {
         if (titletags.length === 1) {
-            done(this.createResult(lable, 'Meta-Title: ' + titletags[0].innerText + this.partialCodeLink(titletags), 'info', what, 1000));
+            done(this.createResult(lable, 'SEO-&lt;title&gt;: ' + titletags[0].innerText + this.partialCodeLink(titletags), 'info', what, 1000));
             //check size //throw to short, throw to long
             //check brand
             //TODO check for common non descriptive titles

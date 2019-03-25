@@ -1,4 +1,4 @@
-function(page, done) {
+ (page, done) =>  {
   var hh = page.getHttpHeaders("last");
   //var staticdom = page.getDom();
   if(!hh){
