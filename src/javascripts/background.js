@@ -98,10 +98,11 @@ const findOrCreateCollector = (tabId) => {
     },
     onFinished: (events, id) => {
       // Fetch rules from storage
-      chrome.storage.local.get('rules', (data) => {
+      chrome.storage.local.get((data) => {
         // Take only enabled rules
         const enabledRules = (data.rules || []).filter(r => r.status === 'enabled');
         const storeKey = resultStoreKey(tabId);
+        const { googleApiAccessToken } = data;
 
         let storeLocked = false;
 
@@ -128,23 +129,39 @@ const findOrCreateCollector = (tabId) => {
         };
 
         chrome.storage.local.set({ [storeKey]: initialRulesResult }, () => {
-          enabledRules.forEach((rule) => {
-            const r = new Promise((resolve) => {
-              runRule(rule, events, (result) => {
-                if (currentTabCollectorId[tabId] === id) {
-                  resolve(result);
+          const runRules = () => {
+            enabledRules.forEach((rule) => {
+              const r = new Promise((resolve) => {
+                runRule(rule, events, (result) => {
+                  if (currentTabCollectorId[tabId] === id) {
+                    resolve(result);
+                  }
+                });
+              });
+
+              r.then((res) => {
+                if (!isEmpty(res)) {
+                  updateStore(storeKey, res);
                 }
               });
-            });
 
-            r.then((res) => {
-              if (!isEmpty(res)) {
-                updateStore(storeKey, res);
+              return r;
+            });
+          };
+
+          // If googleApiAccessToken is set, try to get fresh token vom chrome.identity
+          // If googleApiAccessToken is not set, don't get fresh token and run without googleApiAccessToken in globals
+          if (googleApiAccessToken) {
+            return chrome.identity.getAuthToken((freshToken) => {
+              if (freshToken) {
+                chrome.storage.local.set({ googleApiAccessToken: freshToken }, runRules);
+              } else {
+                chrome.storage.local.remove('googleApiAccessToken', runRules);
               }
             });
+          }
 
-            return r;
-          });
+          return runRules();
         });
       });
     },
