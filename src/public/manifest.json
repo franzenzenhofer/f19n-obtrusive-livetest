@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
-  "name": "Full Stack Optimization Live Test",
-  "description": "Fullstackoptimization Live Test is a extendable tool to run webperformance, technical SEO tests on webpages while browsing!",
+  "name": "Franz Enzenhofer SEO Live Test",
+  "description": "Franz SEO Live Test is a extendable tool to run webperformance, technical SEO tests on webpages while browsing!",
   "version": "1.4.1",
   "browser_action": {
-    "default_title": "Fullstackoptimization Live Test",
+    "default_title": "Franz Enzenhofer SEO Live Test",
     "default_popup": "popup.html"
   },
   "key": "developmentkeyforconsistentextid",

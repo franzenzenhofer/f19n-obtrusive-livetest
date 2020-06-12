@@ -10,9 +10,7 @@ export default function Panel(props) {
 
   var url_parts = new URL(url);
 
-  var fagbd="https://www.google.com/webmasters/tools/googlebot-fetch?hl=en&authuser=0&siteUrl="+encodeURIComponent(url_parts.origin)+"/&path="+encodeURIComponent(url_parts.pathname.substr(1)+url_parts.search)+"&type=DESKTOP";
 
-  var fagbm="https://www.google.com/webmasters/tools/googlebot-fetch?hl=en&authuser=0&siteUrl="+encodeURIComponent(url_parts.origin)+"/&path="+encodeURIComponent(url_parts.pathname.substr(1)+url_parts.search)+"&type=SMARTPHONE_NEW";
 
   var q = "https://search.google.com/search-console/performance/search-analytics?resource_id="+encodeURIComponent(url_parts.origin)+"&breakdown=query&num_of_days=28&page=!"+encodeURIComponent(url);
 
@@ -28,8 +26,6 @@ export default function Panel(props) {
       <a href={`https://search.google.com/test/mobile-friendly?hl=en&url=${url}`} target="_blank" title="Mobile Friendly Test"><button className="Button Button--haptic">Mf</button></a>
       <a href={`https://search.google.com/structured-data/testing-tool?hl=en&url=${url}`} target="_blank" title="Structured Data Testing Tool"><button className="Button Button--haptic">Sd</button></a>
       <a href={`https://search.google.com/test/rich-results?hl=en&url=${url}`} target="_blank" title="Rich Results Test"><button className="Button Button--haptic">Rr</button></a>
-      <a href={`${fagbd}`} target="_blank" title="Fetch as Googlebot Desktop"><button className="Button Button--haptic">Fd</button></a>
-      <a href={`${fagbm}`} target="_blank" title="Fetch as Googlebot Mobile"><button className="Button Button--haptic">Fm</button></a>
       <a href={`http://webcache.googleusercontent.com/search?hl=en&strip=1&q=cache:${url}`} target="_blank" title="Google Cache Text Only"><button className="Button Button--haptic">C</button></a>
       <a href={`${q}`} target="_blank" title="Query Performance Google Search Console"><button className="Button Button--haptic">Q</button></a>
       <a href={`${p}`} target="_blank" title="Page Performance Google Search Console"><button className="Button Button--haptic">P</button></a>
