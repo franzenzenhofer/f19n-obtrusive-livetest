@@ -41,7 +41,7 @@
     "classnames": "^2.2.6",
     "draggable": "^4.2.0",
     "immutable": "^3.8.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "react": "^16.13.1",
     "react-addons-update": "^15.0.2",
     "react-dom": "^16.13.1",
