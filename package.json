@@ -32,7 +32,7 @@
     "json-format": "^1.0.1",
     "node-bourbon": "^4.2.8",
     "node-neat": "^1.7.2",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "webpack": "^4.43.0",
     "webpack-dev-server": "^3.11.0"
   },
