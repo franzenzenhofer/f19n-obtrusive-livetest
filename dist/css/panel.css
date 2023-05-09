@@ -1,0 +1,305 @@
+body,
+html,
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal; }
+
+body {
+  background: #FFFFFF;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  font-size: 10.5px;
+  border-right: 1px solid #CCCCCC; }
+
+.ic {
+  width: 14px;
+  height: 14px;
+  padding-right: 4px; }
+
+.f19n-rules .ic {
+  width: 14px;
+  height: 24px; }
+
+.ic--rules {
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 0.5em; }
+
+.ic--panelHead {
+  width: 16px !important;
+  height: 16px !important;
+  padding-right: 0 !important; }
+
+.u-none {
+  display: none !important; }
+
+.u-cf:before,
+.u-cf:after {
+  content: " ";
+  display: table; }
+
+.u-cf:after {
+  clear: both; }
+
+.u-floatLeft {
+  float: left; }
+
+.u-floatRight {
+  float: right; }
+
+/**
+ * src: https://github.com/suitcss/components-button/blob/master/lib/button.css
+ *
+ * The button classes are best applied to links, buttons, and submit inputs.
+ * These components can be used in forms, as calls to action, or as part of the
+ * general UI of the site/app.
+ */
+.Button {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 2px;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  white-space: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  overflow: hidden;
+  outline: none;
+  vertical-align: middle;
+  text-transform: capitalize; }
+
+.Button--haptic {
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+  color: #444;
+  font: inherit;
+  margin: 0 1px 0 0;
+  outline: none;
+  text-shadow: 0 1px 0 #f0f0f0;
+  font-size: 12px; }
+
+.Button--haptic:active,
+.Button--haptic:hover {
+  background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+  box-shadow: none;
+  text-shadow: none; }
+
+.Button--haptic:active {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15) inset, 0 0 2px rgba(0, 0, 0, 0.2) inset; }
+
+.Button--inline {
+  font-size: 8px;
+  padding: 0 3px; }
+
+/**
+ * Remove excess padding and border in Firefox 4+
+ */
+.Button::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * UI states
+ */
+.Button:hover,
+.Button:focus,
+.Button:active {
+  text-decoration: none; }
+
+a, a:visited {
+  color: #333333; }
+
+.Header {
+  position: relative;
+  font-size: 12px;
+  letter-spacing: -0.5px; }
+  .Header button {
+    font-size: 10px !important; }
+  .Header h2, .Header svg {
+    margin: 4px 0; }
+
+.Header-brand {
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: #E8E8E8;
+  border-bottom: 1px solid #CCCCCC;
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  z-index: +1;
+  box-sizing: border-box; }
+
+.Header-brand * {
+  display: inline-block;
+  vertical-align: middle; }
+
+.Header-brand h2 {
+  padding-left: 4px;
+  font-weight: 400;
+  font-size: 12px; }
+
+.Header-controls {
+  background: #F3F3F3;
+  padding-top: 37px;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 4px;
+  font-size: 12px;
+  border-bottom: 1px solid #CCCCCC;
+  height: 15px; }
+
+.Header-controls a:hover {
+  text-decoration: underline; }
+
+.ResultsTable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  font-size: 10.5px;
+  width: 100%;
+  border-bottom: 1px solid #CCCCCC;
+  margin-bottom: 27px; }
+
+.ResultsTable thead {
+  text-align: left;
+  vertical-align: bottom;
+  border-bottom: 1px solid #CCCCCC; }
+
+.ResultsTable tr {
+  background-color: #FFFFFF; }
+
+.ResultsTable tr a, .ResultsTable tr a:visited {
+  color: darkblue; }
+
+.ResultsTable--striped tr:nth-child(2n-1) td {
+  background-color: #F5F5F5; }
+
+.ResultsTable td {
+  border-left: 1px solid #E1E1E1;
+  padding: 6px 4px; }
+
+.ResultsTable th {
+  border-left: 1px solid #CCCCCC;
+  padding: 8px 4px;
+  font-weight: 400px; }
+
+.ResultsTable td,
+.ResultsTable th {
+  margin: 0;
+  overflow: visible;
+  font-weight: 400; }
+
+.ResultsTable td:first-child,
+.ResultsTable th:first-child {
+  border-left-width: 0; }
+
+.ResultsTable .message {
+  word-break: break-all; }
+
+.ResultsTable .label {
+  word-break: keep-all; }
+
+.filter {
+  color: #333333; }
+
+.type {
+  color: transparent;
+  font-size: 0; }
+
+.what {
+  text-transform: capitalize; }
+
+tr.unfinished td {
+  opacity: 0.7; }
+
+tr.error td {
+  background: #FFF0F0 !important;
+  border-top: 1px solid #FED7D7 !important;
+  border-bottom: 1px solid #FED7D7 !important; }
+
+tr.error a, tr.error a:visited {
+  color: red; }
+
+.error .type:before {
+  content: " ";
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAKlBMVEX/8PD/yMr/hor/UVf/HSX/oaT/REr/1tf/rrD/KTH/Nz7/4+P/bHH/eX1nWwSVAAAAnklEQVR42oWT4Q6EMAiD2dbhUO/9X/fMSQ6yafr9IrbZKgMJSm340WqRla5IaJ/krWGibVkfhgUb6Xg80sUZeGH4/YYX7M7h+XastBRAj5TkLBYx9D7tSFlPEXfoVcVH6UuJIhXZEYVTPWIIoXvMf+nSZ2qcYHK4vhrCkXVu4FfQkPQ3aaNoq9lj0edmA0NHjg0tHXu+OHz1+PLS9f8C+FUNjfyUzBkAAAAASUVORK5CYII=") no-repeat;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 2px;
+  width: 12px;
+  height: 12px;
+  background-size: 100%;
+  cursor: pointer; }
+
+tr.warning td {
+  background: #FFFBE6 !important;
+  border-top: 1px solid #FFF6C6 !important;
+  border-bottom: 1px solid #FFF6C6 !important; }
+
+.warning .type:before {
+  content: " ";
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAcCAMAAAA3HE0QAAAAM1BMVEVHcEzvvwDxugDxuwDxuwDyuwDxuwDyvADyugDyuwDvtwDxugDzuwDyuwD0uQDxuQDyugAchlUaAAAAEXRSTlMAEHCAwP/QUODwILBAkDBgoF95Rm4AAACSSURBVHgBfM5FkkMxEARRUX4W3P+yM2a7RLXtjOhndNZ5a2YLsMyKFcCP73YD2I9h4HnsHN0PXrvGwue2iRCGTrs/L37kjHyDnjPxDbrOoMFS3zMa4FqhBrtthBpQVNgG4gy9YFFhG+BUqIE4I4MVFQJsIWx8l0TYvICgwjYgixAo11WAX2dkumhgvv8RVEDQCgDzWQra++2EkAAAAABJRU5ErkJggg==") no-repeat;
+  display: inline-block;
+  width: 11px;
+  height: 12px;
+  vertical-align: middle;
+  margin-right: 2px;
+  background-size: 100%;
+  cursor: pointer; }
+
+.info .type:before {
+  content: " ";
+  background: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAHlBMVEVHcEwqVc8pU80qUswqU80pUswpU8wqUswnT88qUs1R5y5wAAAACnRSTlMAMIDA/1DQYCDwWNoC6wAAAIVJREFUeNq9k0EOAyEMA01syPL/D6/UVrTAktw654kSgY0vxagXtIKd2vRDc8xc1AKvabxro1cMXI/4mNeB+tnfdaC/76COcDvAAFuXtEhoQFEkqMAUYqBCCCUsAs24CduRfxcYC4TFgqVPnX8WaiR4Fpg0cllo89jnxcmrN/C5vGM8rf8NA/wND7cP9ZwAAAAASUVORK5CYII=") no-repeat;
+  display: inline-block;
+  width: 11px;
+  height: 12px;
+  vertical-align: middle;
+  margin-right: 2px;
+  background-size: 100%;
+  cursor: pointer; }
+
+textarea {
+  white-space: pre;
+  display: block;
+  height: 50px;
+  width: 100%;
+  overflow: scroll;
+  resize: both;
+  background-color: white;
+  border: 1px solid black;
+  font-family: monospace; }
+
+.show-partial-source {
+  text-decoration: none; }
+
+footer {
+  position: fixed;
+  bottom: 0px;
+  width: 100%;
+  box-sizing: border-box;
+  background: #F3F3F3;
+  padding: 4px;
+  font-size: 12px;
+  border: 1px solid #CCCCCC; }
+  footer a:first-child button {
+    line-height: 1.2 !important; }
+  footer button {
+    all: revert;
+    -webkit-appearance: button;
+    appearance: button;
+    font-size: 10px !important; }

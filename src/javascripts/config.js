@@ -11,8 +11,10 @@ export default {
 !file:*
 !data:*
 !*://*google\\.*
+!https://*.web.dev*
 !*://*webcache.googleusercontent\\.*
 !*://validator.ampproject.org*
+!*://validator.schema.org*
 !*://*webpagetest.org*
 !*://*facebook.com*
 !*://*stackoverflow.com*

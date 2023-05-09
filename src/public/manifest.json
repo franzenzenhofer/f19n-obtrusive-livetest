@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Franz Enzenhofer SEO Live Test",
   "description": "Franz SEO Live Test is a extendable tool to run webperformance, technical SEO tests on webpages while browsing!",
-  "version": "2.0.1",
+  "version": "2.3.1",
   "browser_action": {
     "default_title": "Franz Enzenhofer SEO Live Test",
     "default_popup": "popup.html"

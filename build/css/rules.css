@@ -1,0 +1,302 @@
+body,
+html,
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal; }
+
+body {
+  background: #FFFFFF;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  font-size: 10.5px;
+  border-right: 1px solid #CCCCCC; }
+
+.ic {
+  width: 14px;
+  height: 14px;
+  padding-right: 4px; }
+
+.f19n-rules .ic {
+  width: 14px;
+  height: 24px; }
+
+.ic--rules {
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 0.5em; }
+
+.ic--panelHead {
+  width: 16px !important;
+  height: 16px !important;
+  padding-right: 0 !important; }
+
+.u-none {
+  display: none !important; }
+
+.u-cf:before,
+.u-cf:after {
+  content: " ";
+  display: table; }
+
+.u-cf:after {
+  clear: both; }
+
+.u-floatLeft {
+  float: left; }
+
+.u-floatRight {
+  float: right; }
+
+/**
+ * src: https://github.com/suitcss/components-button/blob/master/lib/button.css
+ *
+ * The button classes are best applied to links, buttons, and submit inputs.
+ * These components can be used in forms, as calls to action, or as part of the
+ * general UI of the site/app.
+ */
+.Button {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 2px;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  white-space: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  overflow: hidden;
+  outline: none;
+  vertical-align: middle;
+  text-transform: capitalize; }
+
+.Button--haptic {
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+  color: #444;
+  font: inherit;
+  margin: 0 1px 0 0;
+  outline: none;
+  text-shadow: 0 1px 0 #f0f0f0;
+  font-size: 12px; }
+
+.Button--haptic:active,
+.Button--haptic:hover {
+  background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+  box-shadow: none;
+  text-shadow: none; }
+
+.Button--haptic:active {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15) inset, 0 0 2px rgba(0, 0, 0, 0.2) inset; }
+
+.Button--inline {
+  font-size: 8px;
+  padding: 0 3px; }
+
+/**
+ * Remove excess padding and border in Firefox 4+
+ */
+.Button::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * UI states
+ */
+.Button:hover,
+.Button:focus,
+.Button:active {
+  text-decoration: none; }
+
+/*
+
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
+
+*/
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  color: #383a42;
+  background: #fafafa; }
+
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic; }
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4; }
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649; }
+
+.hljs-literal {
+  color: #0184bb; }
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta-string {
+  color: #50a14f; }
+
+.hljs-built_in,
+.hljs-class .hljs-title {
+  color: #c18401; }
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801; }
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2; }
+
+.hljs-emphasis {
+  font-style: italic; }
+
+.hljs-strong {
+  font-weight: bold; }
+
+.hljs-link {
+  text-decoration: underline; }
+
+body.ReactModal__Body--open {
+  overflow: hidden; }
+
+.Wrapper {
+  margin-left: 16px;
+  max-width: 800px; }
+
+.Header {
+  background: #E8E8E8; }
+
+.Header .Wrapper * {
+  display: inline-block;
+  vertical-align: middle; }
+
+.Header-subHeader {
+  background: #F3F3F3; }
+
+.Header-brandLink a,
+.Header-brandLink a:hover {
+  color: #859900;
+  line-height: 24px; }
+
+.Header-brandLink a:nth-last-child(2),
+.Header-brandLink a:nth-last-child(2):hover {
+  color: #000; }
+
+.Header-brandLink a:last-child,
+.Header-brandLink a:last-child:hover {
+  color: #000; }
+
+.Section {
+  padding: 1em 0;
+  border-bottom: 1px solid #CCCCCC; }
+
+.Section h2 {
+  margin-bottom: 6px; }
+
+.RuleTable {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+  font-size: 12px;
+  margin-top: 1em;
+  width: 100%;
+  border: 1px solid #CCCCCC; }
+
+.RuleTable tr {
+  background-color: #FFFFFF;
+  border-top: 1px solid #CCCCCC; }
+
+.RuleTable--striped tr:nth-child(2n-1) td {
+  background-color: #F5F5F5; }
+
+.RuleTable td {
+  padding: 1em 1em;
+  overflow: visible; }
+
+.RuleTable-ruleName {
+  cursor: pointer; }
+
+.RuleTable-ruleName div {
+  margin-top: 1em; }
+
+.RuleTable button + button {
+  margin-left: 2px !important; }
+
+.RuleTable-ruleName span.rule-meta {
+  color: #A3A3A3;
+  display: block; }
+
+.RuleTable-ruleName span.rule-configurable {
+  background: cornflowerblue;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: white; }
+
+.RuleTable-ruleName span.rule-missing-configuration {
+  background: red;
+  padding: 2px 4px;
+  border-radius: 4px;
+  color: white; }
+
+.RuleTable-ruleActions {
+  width: 240px;
+  text-align: right;
+  vertical-align: top; }
+
+.disabled .RuleTable-ruleName {
+  text-decoration: line-through; }
+
+.Section.sites .radios {
+  padding: 8px 0; }
+  .Section.sites .radios label {
+    margin-left: 10px; }
+    .Section.sites .radios label:first-child {
+      margin-left: 0; }
+  .Section.sites .radios input {
+    margin-right: 5px; }

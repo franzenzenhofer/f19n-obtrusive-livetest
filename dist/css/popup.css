@@ -1,0 +1,193 @@
+body,
+html,
+h1,
+h2,
+h3 {
+  margin: 0;
+  padding: 0;
+  font-weight: normal; }
+
+body {
+  background: #FFFFFF;
+  color: #333333;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  font-size: 10.5px;
+  border-right: 1px solid #CCCCCC; }
+
+.ic {
+  width: 14px;
+  height: 14px;
+  padding-right: 4px; }
+
+.f19n-rules .ic {
+  width: 14px;
+  height: 24px; }
+
+.ic--rules {
+  width: 24px !important;
+  height: 24px !important;
+  margin-right: 0.5em; }
+
+.ic--panelHead {
+  width: 16px !important;
+  height: 16px !important;
+  padding-right: 0 !important; }
+
+.u-none {
+  display: none !important; }
+
+.u-cf:before,
+.u-cf:after {
+  content: " ";
+  display: table; }
+
+.u-cf:after {
+  clear: both; }
+
+.u-floatLeft {
+  float: left; }
+
+.u-floatRight {
+  float: right; }
+
+/**
+ * src: https://github.com/suitcss/components-button/blob/master/lib/button.css
+ *
+ * The button classes are best applied to links, buttons, and submit inputs.
+ * These components can be used in forms, as calls to action, or as part of the
+ * general UI of the site/app.
+ */
+.Button {
+  -webkit-appearance: none;
+  border: none;
+  border-radius: 2px;
+  color: #333333;
+  cursor: pointer;
+  display: inline-block;
+  line-height: normal;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  white-space: normal;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen-Sans", "Ubuntu", "Cantarell", "Helvetica Neue", sans-serif;
+  overflow: hidden;
+  outline: none;
+  vertical-align: middle;
+  text-transform: capitalize; }
+
+.Button--haptic {
+  -webkit-appearance: none;
+  -webkit-user-select: none;
+  background-image: -webkit-linear-gradient(#ededed, #ededed 38%, #dedede);
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08), inset 0 1px 2px rgba(255, 255, 255, 0.75);
+  color: #444;
+  font: inherit;
+  margin: 0 1px 0 0;
+  outline: none;
+  text-shadow: 0 1px 0 #f0f0f0;
+  font-size: 12px; }
+
+.Button--haptic:active,
+.Button--haptic:hover {
+  background-image: -webkit-linear-gradient(#e7e7e7, #e7e7e7 38%, #d7d7d7);
+  box-shadow: none;
+  text-shadow: none; }
+
+.Button--haptic:active {
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0.15) inset, 0 0 2px rgba(0, 0, 0, 0.2) inset; }
+
+.Button--inline {
+  font-size: 8px;
+  padding: 0 3px; }
+
+/**
+ * Remove excess padding and border in Firefox 4+
+ */
+.Button::-moz-focus-inner {
+  border: 0;
+  padding: 0; }
+
+/**
+ * UI states
+ */
+.Button:hover,
+.Button:focus,
+.Button:active {
+  text-decoration: none; }
+
+html {
+  box-sizing: border-box; }
+
+*, *:before, *:after {
+  box-sizing: inherit; }
+
+html, body {
+  min-width: 300px;
+  min-height: 250px; }
+
+body {
+  background: #F3F3F3;
+  border: none !important;
+  line-height: 1.25;
+  font-size: 75%; }
+
+#app {
+  width: 100% !important;
+  height: 100%;
+  padding: 1rem; }
+
+#app header {
+  background: #E8E8E8;
+  border-bottom: 1px solid #CCCCCC;
+  display: flex;
+  align-items: center;
+  padding: .5rem;
+  margin: -1rem -1rem 0 -1rem; }
+
+#app header h1 {
+  font-size: .85rem;
+  letter-spacing: -.5px; }
+
+#app .logo {
+  width: 1rem;
+  height: 1rem;
+  margin-right: .5rem; }
+
+#app > div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+#app > div > * + * {
+  margin-top: .5rem; }
+
+#app > div * {
+  white-space: nowrap; }
+
+#app h3 {
+  font-size: .8rem; }
+
+ul {
+  margin-left: 1rem;
+  padding: 0; }
+
+li + li {
+  margin-top: .25rem; }
+
+.popup-actions {
+  display: flex;
+  background: #E8E8E8;
+  border-top: 1px solid #CCCCCC;
+  padding: .5rem;
+  margin: -1rem -1rem -1rem -1rem; }
+
+.Button {
+  white-space: nowrap;
+  flex-grow: 1; }
+
+.Button + .Button {
+  margin-left: .5rem; }

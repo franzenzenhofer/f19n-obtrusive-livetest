@@ -20,8 +20,6 @@
 node_modules
 /.tmp
 npm-debug.log
-/dist
-/build
 /.idea
 
 .DS_Store
@@ -30,8 +28,5 @@ src/.DS_Store
 
 src/.DS_Store
 
-*.zip
-
-build.zip
 
 package-lock.json
